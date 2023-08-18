@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'injection_container.dart' as di; //Dependency injector
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await di
       .init(); //Inject all the dependencies and wait for it is done (i.e. UI won't built until all the dependencies are injected)
+
   runApp(const MainApp());
 }
 
