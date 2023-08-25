@@ -1,5 +1,4 @@
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
-import 'package:dental_hero/features/auth/presentation/page/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'injection_container.dart' as di; //Dependency injector
 
