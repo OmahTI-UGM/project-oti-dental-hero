@@ -1,3 +1,5 @@
+import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
+import 'package:dental_hero/features/auth/presentation/page/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'injection_container.dart' as di; //Dependency injector
 
@@ -7,20 +9,18 @@ void main() async {
   await di
       .init(); //Inject all the dependencies and wait for it is done (i.e. UI won't built until all the dependencies are injected)
 
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        // theme: theme(),
+        // onGenerateRoute: AppRoutes.onGenerateRoutes,
+        home: LoginScreen());
   }
 }
