@@ -25,3 +25,7 @@ class RegisterEvent extends AuthEvent {
     this.disability,
   });
 }
+
+class CheckAuthEvent extends AuthEvent {
+  const CheckAuthEvent();
+}
