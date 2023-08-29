@@ -16,11 +16,11 @@ class StartTimer extends TimerEvent {
   List<Object> get props => [duration];
 }
 
-// class UpdateTimer extends TimerEvent {
-//   final int currentDuration;
+class UpdateTimer extends TimerEvent {
+  final int currentDuration;
 
-//   UpdateTimer(this.currentDuration);
+  UpdateTimer(this.currentDuration);
 
-//   @override
-//   List<Object> get props => [currentDuration];
-// }
+  @override
+  List<Object> get props => [currentDuration];
+}

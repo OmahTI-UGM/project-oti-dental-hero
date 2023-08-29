@@ -2,7 +2,7 @@ import 'package:dental_hero/config/routes/routes.dart';
 import 'package:dental_hero/core/common/activity.dart';
 import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_bloc.dart';
-import 'package:dental_hero/features/activity/presentation/page/activity_screen.dart';
+import 'package:dental_hero/features/activity/presentation/page/activity_screen/activity_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

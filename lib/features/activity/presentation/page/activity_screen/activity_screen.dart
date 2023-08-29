@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dental_hero/core/widgets/video_background.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_event.dart';
@@ -6,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivityScreen extends StatelessWidget {
+  final int seconds = 10;
   const ActivityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final TimerBloc timerBloc = BlocProvider.of<TimerBloc>(context);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -44,8 +48,7 @@ class ActivityScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      timerBloc.add(
-                          StartTimer(10)); // Start countdown for 10 seconds
+                      _startTimer(timerBloc, seconds);
                     },
                     child: const Text('Mulai'),
                   ),
@@ -93,5 +96,18 @@ class ActivityScreen extends StatelessWidget {
         return Container();
       },
     );
+  }
+
+  void _startTimer(TimerBloc timerBloc, int duration) {
+    timerBloc.add(StartTimer(duration));
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      timerBloc.add(UpdateTimer(duration));
+      duration--;
+
+      if (duration < 0) {
+        timer.cancel();
+      }
+    });
   }
 }

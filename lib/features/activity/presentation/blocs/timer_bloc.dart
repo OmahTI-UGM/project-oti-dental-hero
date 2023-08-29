@@ -4,11 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   TimerBloc() : super(TimerInitial()) {
-    on<TimerEvent>((event, emit) {
-      if (event is StartTimer) {
-        emit(TimerInProgress(event.duration));
-      }
-    });
+    on<StartTimer>(onStartTimer);
+    on<UpdateTimer>(onUpdateTimer);
+  }
+  void onStartTimer(event, emit) {
+    print(event.duration);
+    emit(TimerInProgress(event.duration));
+  }
+
+  void onUpdateTimer(event, emit) {
+    print(event.currentDuration);
+    emit(TimerInProgress(event.currentDuration));
+    //if timer is finished
+    if (event.currentDuration == 0) {
+      emit(CountdownCompleted());
+    }
   }
 
   // Stream<TimerState> mapEventToState(TimerEvent event) async* {
