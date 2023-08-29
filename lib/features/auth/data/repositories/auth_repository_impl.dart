@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dental_hero/core/resources/data_state.dart';
 import 'package:dental_hero/features/auth/data/data_sources/remote/auth_api_service.dart';
 import 'package:dental_hero/features/auth/domain/entities/user.dart';
 
@@ -10,29 +12,44 @@ class AuthRepositoryImpl implements AuthRepository {
       : _authApiService = authApiService;
 
   @override
-  Future<UserEntity> login({
+  Future<DataState<UserEntity>> login({
     String? fullName,
     DateTime? birthDate,
   }) async {
-    UserEntity user = await _authApiService.login(
-      fullName: fullName,
-      birthDate: birthDate,
-    );
+    try {
+      UserEntity? user = await _authApiService.login(
+        fullName: fullName,
+        birthDate: birthDate,
+      );
 
-    return user;
+      if (user == null) {
+        return DataFailed(error: Exception("User not found"));
+      }
+
+      return DataSuccess(data: user);
+    } on FirebaseException catch (e) {
+      return DataFailed(error: e);
+    }
   }
 
   @override
-  Future<UserEntity> register({
+  Future<DataState<UserEntity>> register({
     required String fullName,
     required DateTime birthDate,
     required String email,
     String? disability,
-  }) async =>
-      await _authApiService.register(
+  }) async {
+    try {
+      UserEntity user = await _authApiService.register(
         fullName: fullName,
         birthDate: birthDate,
         email: email,
         disability: disability,
       );
+
+      return DataSuccess(data: user);
+    } on FirebaseException catch (e) {
+      return DataFailed(error: e);
+    }
+  }
 }

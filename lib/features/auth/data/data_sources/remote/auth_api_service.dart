@@ -1,7 +1,4 @@
 // firebase service
-
-import 'dart:js_interop';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dental_hero/features/auth/data/models/user.dart';
 
@@ -11,7 +8,7 @@ class AuthApiService {
   AuthApiService({required FirebaseFirestore firestore})
       : _firestore = firestore;
 
-  Future<UserModel> login({
+  Future<UserModel?> login({
     required fullName,
     required birthDate,
   }) async {
@@ -22,7 +19,7 @@ class AuthApiService {
         .get();
 
     if (user.docs.isEmpty) {
-      throw Exception('User not found');
+      return null;
     }
 
     return UserModel.fromJson(user.docs.first.data());
@@ -40,10 +37,6 @@ class AuthApiService {
       'email': email,
       'disability': disability,
     });
-
-    if (user.isNull) {
-      throw Exception('Failed to register user.');
-    }
 
     return UserModel(
       id: user.id,

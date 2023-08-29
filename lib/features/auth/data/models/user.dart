@@ -19,7 +19,7 @@ class UserModel extends UserEntity {
     return UserModel(
       id: map['id'],
       fullName: map['fullName'],
-      birthDate: map['birthDate'],
+      birthDate: map['birthDate'].toDate(),
       email: map['email'],
       disability: map['disability'],
     );
