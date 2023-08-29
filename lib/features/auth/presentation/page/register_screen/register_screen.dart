@@ -1,12 +1,13 @@
+import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/auth_bloc.dart';
-import '../../blocs/auth_event.dart';
-import '../../blocs/auth_state.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,14 @@ class SignupScreen extends StatelessWidget {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController birthDateController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
+
+    final dropDownItems =
+        ['blind', 'deaf', 'autism', 'down syndrome'].map((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList();
 
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -62,15 +71,17 @@ class SignupScreen extends StatelessWidget {
             controller: emailController,
           ),
           const Text('Jenis disabilitas'),
-          DropdownButton(
-            items: ['blind', 'deaf', 'autism', 'down syndrome']
-                .map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
+          BlocBuilder<DropdownBloc, DropdownState>(
+            builder: (context, state) {
+              return DropdownButton<String>(
+                value: state.selectedValue,
+                items: dropDownItems,
+                onChanged: (value) {
+                  BlocProvider.of<DropdownBloc>(context)
+                      .add(DropdownEvent(value!));
+                },
               );
-            }).toList(),
-            onChanged: (value) {},
+            },
           ),
           ElevatedButton(
             child: const Text('Buat Akun'),
@@ -89,12 +100,28 @@ class SignupScreen extends StatelessWidget {
                     fullName: nameController.text,
                     birthDate: DateTime.parse(birthDateController.text),
                     email: emailController.text,
-                    disability: 'blind',
+                    disability: BlocProvider.of<DropdownBloc>(context)
+                        .state
+                        .selectedValue,
                   ),
                 );
               }
             },
-          )
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            child: Text(
+              'Masuk ke Akun',
+              style: TextStyle(
+                color: Colors.grey[700],
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (_) => false);
+            },
+          ),
         ]);
   }
 

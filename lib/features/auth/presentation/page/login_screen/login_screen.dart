@@ -1,9 +1,9 @@
-import 'package:dental_hero/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/auth_event.dart';
-import '../../blocs/auth_state.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -96,7 +96,21 @@ class LoginScreen extends StatelessWidget {
               );
             }
           },
-        )
+        ),
+        const SizedBox(height: 20),
+        TextButton(
+          child: Text(
+            'Buat Akun Baru',
+            style: TextStyle(
+              color: Colors.grey[700],
+              decoration: TextDecoration.underline,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/register', (_) => false);
+          },
+        ),
       ]),
     );
   }
