@@ -1,10 +1,12 @@
+import 'package:dental_hero/config/routes/routes.dart';
 import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
+import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
-import 'package:dental_hero/features/auth/presentation/page/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'injection_container.dart'; //Dependency injector
 
 void main() async {
@@ -28,12 +30,16 @@ class MyApp extends StatelessWidget {
           BlocProvider<AuthBloc>(
             create: (context) => sl(),
           ),
+          BlocProvider<DropdownBloc>(
+            create: (context) => sl(),
+          ),
         ],
         child: MaterialApp(
           title: 'Dental Hero',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
+          onGenerateRoute: AppRoutes.onGenerateRoutes,
           home: const LoginScreen(),
         ));
   }
