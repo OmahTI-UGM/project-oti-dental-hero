@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dental_hero/features/activity/presentation/blocs/timer_bloc.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
@@ -35,4 +38,5 @@ Future<void> initializeDependencies() async {
   // Blocs
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
+  sl.registerFactory<TimerBloc>(() => TimerBloc());
 }
