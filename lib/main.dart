@@ -1,6 +1,6 @@
 import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
+import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth_bloc.dart';
-import 'package:dental_hero/features/auth/presentation/page/home_screen/home_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/signup_screen/signup_screen.dart';
 import 'package:flutter/material.dart';
