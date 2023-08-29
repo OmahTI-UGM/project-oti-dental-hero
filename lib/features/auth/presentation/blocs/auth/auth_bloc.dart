@@ -3,7 +3,6 @@ import 'package:dental_hero/core/resources/data_state.dart';
 import 'package:dental_hero/features/auth/domain/entities/user.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
-
 import 'auth_event.dart';
 import 'auth_state.dart';
 

@@ -20,6 +20,7 @@ class LoginScreen extends StatelessWidget {
                   content: Text('Success, hello ${state.user?.fullName}'),
                 ),
               );
+              Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
             }
 
             if (state is AuthFailed) {

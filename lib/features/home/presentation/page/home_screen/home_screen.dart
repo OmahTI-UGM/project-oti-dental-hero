@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
   _buildBody() {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
-        int index = state.index;
+        // int index = state.index;
         List<Step> steps = [
           Step(
             title: Container(
