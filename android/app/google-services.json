@@ -29,6 +29,13 @@
             {
               "client_id": "78734624650-clepsj8h6m3t210cbe317a9aj166secj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "78734624650-fd0u8qp9c28lj13qi83f3vpccmr85ua6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dentalHero"
+              }
             }
           ]
         }

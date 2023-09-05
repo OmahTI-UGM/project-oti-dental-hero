@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -55,15 +58,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '78734624650',
     projectId: 'dental-hero-7ccbc',
     storageBucket: 'dental-hero-7ccbc.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCD3JqU0e030qG00hXM-W2MmWMClzdADAY',
-    appId: '1:78734624650:ios:47de040ecb04fa6b482a73',
-    messagingSenderId: '78734624650',
-    projectId: 'dental-hero-7ccbc',
-    storageBucket: 'dental-hero-7ccbc.appspot.com',
-    iosClientId: '78734624650-fd0u8qp9c28lj13qi83f3vpccmr85ua6.apps.googleusercontent.com',
-    iosBundleId: 'com.example.dentalHero',
   );
 }
