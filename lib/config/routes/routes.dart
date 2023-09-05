@@ -1,3 +1,4 @@
+import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
@@ -21,6 +22,12 @@ class AppRoutes {
               value: context.read<DropdownBloc>(),
               child: const RegisterScreen());
         });
+
+      case '/result':
+        return MaterialPageRoute(
+            builder: (_) => ResultScreen(
+                  duration: settings.arguments as int,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
