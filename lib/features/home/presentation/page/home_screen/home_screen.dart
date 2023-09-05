@@ -106,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                   height: height * 0.08,
                   width: width * 0.35,
                   color: Colors.blue,
-                  child: const Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.qr_code_scanner_outlined),
@@ -121,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                   height: height * 0.08,
                   width: width * 0.35,
                   color: Colors.blue,
-                  child: const Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.bar_chart),

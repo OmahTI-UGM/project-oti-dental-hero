@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const Column(
+        Column(
           children: [
             Text("Selamat Datang ke", style: TextStyle(fontSize: 24)),
             Text(

@@ -23,7 +23,7 @@ class ResultScreen extends StatelessWidget {
               ':' +
               _countTime(duration!)[1].toString()),
           StarWidget(star: _countScore(duration!)[1]),
-          ElevatedButton(onPressed: () => (), child: Text('Kembali ke menu')),
+          ElevatedButton(onPressed: () {}, child: Text('Kembali ke menu')),
         ],
       ),
     );
