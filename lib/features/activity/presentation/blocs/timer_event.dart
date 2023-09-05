@@ -24,3 +24,12 @@ class UpdateTimer extends TimerEvent {
   @override
   List<Object> get props => [currentDuration];
 }
+
+class StopTimer extends TimerEvent {
+  final int currentDuration;
+
+  StopTimer(this.currentDuration);
+
+  @override
+  List<Object> get props => [currentDuration];
+}

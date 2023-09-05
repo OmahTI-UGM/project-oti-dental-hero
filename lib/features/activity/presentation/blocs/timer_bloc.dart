@@ -6,6 +6,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   TimerBloc() : super(TimerInitial()) {
     on<StartTimer>(onStartTimer);
     on<UpdateTimer>(onUpdateTimer);
+    on<StopTimer>(onStopTimer);
   }
   void onStartTimer(event, emit) {
     print(event.duration);
@@ -17,27 +18,12 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     emit(TimerInProgress(event.currentDuration));
     //if timer is finished
     if (event.currentDuration == 0) {
-      emit(CountdownCompleted());
+      emit(TimerStop(event.currentDuration));
     }
   }
 
-  // Stream<TimerState> mapEventToState(TimerEvent event) async* {
-  //   if (event is StartTimer) {
-  //     yield* _mapStartCountdownToState(event);
-  //   } else if (event is UpdateTimer) {
-  //     yield* _mapUpdateCountdownToState(event);
-  //   }
-  // }
-
-  // Stream<TimerState> _mapStartCountdownToState(StartTimer event) async* {
-  //   for (int i = event.duration; i >= 0; i--) {
-  //     yield TimerInProgress(i);
-  //     await Future.delayed(const Duration(seconds: 1));
-  //   }
-  //   yield CountdownCompleted();
-  // }
-
-  // Stream<TimerState> _mapUpdateCountdownToState(UpdateTimer event) async* {
-  //   yield TimerInProgress(event.currentDuration);
-  // }
+  void onStopTimer(event, emit) {
+    print(event.currentDuration);
+    emit(TimerStop(event.currentDuration));
+  }
 }

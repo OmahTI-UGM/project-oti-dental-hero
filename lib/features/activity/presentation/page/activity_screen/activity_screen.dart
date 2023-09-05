@@ -4,12 +4,14 @@ import 'package:dental_hero/core/widgets/video_background.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_event.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer_state.dart';
+import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivityScreen extends StatelessWidget {
-  final int seconds = 10;
-  const ActivityScreen({super.key});
+  int remainingTime = 0;
+  final int seconds = 180;
+  ActivityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,15 +85,21 @@ class ActivityScreen extends StatelessWidget {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/result', (route) => false,
+                          arguments: remainingTime);
+                    },
                     child: const Text('Selesai'),
                   ),
                 ],
               ),
             ),
           ]);
-        } else if (state is CountdownCompleted) {
-          return const Center(child: Text('Countdown Completed'));
+        } else if (state is TimerStop) {
+          return ResultScreen(
+            duration: remainingTime,
+          );
         }
         return Container();
       },
@@ -103,8 +111,8 @@ class ActivityScreen extends StatelessWidget {
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
       timerBloc.add(UpdateTimer(duration));
+      remainingTime = duration;
       duration--;
-
       if (duration < 0) {
         timer.cancel();
       }

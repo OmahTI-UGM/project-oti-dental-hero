@@ -18,4 +18,11 @@ class TimerInProgress extends TimerState {
   List<Object> get props => [currentDuration];
 }
 
-class CountdownCompleted extends TimerState {}
+class TimerStop extends TimerState {
+  final int currentDuration;
+
+  TimerStop(this.currentDuration);
+
+  @override
+  List<Object> get props => [currentDuration];
+}
