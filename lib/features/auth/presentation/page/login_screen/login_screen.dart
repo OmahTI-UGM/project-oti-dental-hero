@@ -9,7 +9,9 @@ import '../../blocs/auth/auth_event.dart';
 import '../../blocs/auth/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +45,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   _buildBody(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController birthDateController = TextEditingController();
-
     return SafeArea(
       child: Stack(
         children: [
@@ -99,22 +98,21 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               child: TextFormField(
-                                textInputAction: TextInputAction.next,
-                                style: GoogleFonts.fredoka(
-                                  fontSize: 15,
-                                ),
-                                decoration: const InputDecoration(
-                                  hintText:
-                                      'Ketik nama lengkap anak tanpa disingkat',
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 12),
-                                  border: InputBorder.none,
-                                ),
-                                controller: nameController,
-                                onChanged: (value) {
-                                  print(value);
-                                },
-                              ),
+                                  textInputAction: TextInputAction.next,
+                                  style: GoogleFonts.fredoka(
+                                    fontSize: 15,
+                                  ),
+                                  decoration: const InputDecoration(
+                                    hintText:
+                                        'Ketik nama lengkap anak tanpa disingkat',
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 12),
+                                    border: InputBorder.none,
+                                  ),
+                                  controller: nameController,
+                                  validator: (val) => val!.isEmpty
+                                      ? 'Nama lengkap tidak boleh kosong'
+                                      : null),
                             ),
                             // Birth Date
                             const SizedBox(height: 18),

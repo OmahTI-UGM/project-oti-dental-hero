@@ -10,7 +10,12 @@ import '../../blocs/auth/auth_event.dart';
 import '../../blocs/auth/auth_state.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
+  RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +36,6 @@ class RegisterScreen extends StatelessWidget {
   }
 
   _buildBody(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController nicknameController = TextEditingController();
-    final TextEditingController birthDateController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-
     final dropDownItems =
         ['blind', 'deaf', 'autism', 'down syndrome'].map((String value) {
       return DropdownMenuItem<String>(
@@ -100,19 +100,21 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            child: TextField(
-                              textInputAction: TextInputAction.next,
-                              style: GoogleFonts.fredoka(
-                                fontSize: 15,
-                              ),
-                              decoration: const InputDecoration(
-                                  hintText:
-                                      'Ketik nama lengkap anak tanpa disingkat',
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 12),
-                                  border: InputBorder.none),
-                              controller: nameController,
-                            ),
+                            child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 15,
+                                ),
+                                decoration: const InputDecoration(
+                                    hintText:
+                                        'Ketik nama lengkap anak tanpa disingkat',
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 12),
+                                    border: InputBorder.none),
+                                controller: nameController,
+                                validator: (val) => val!.isEmpty
+                                    ? 'Nama lengkap tidak boleh kosong'
+                                    : null),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -130,18 +132,20 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            child: TextField(
-                              textInputAction: TextInputAction.next,
-                              style: GoogleFonts.fredoka(
-                                fontSize: 15,
-                              ),
-                              decoration: const InputDecoration(
-                                  hintText: 'Ketik nama panggilan anak',
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 12),
-                                  border: InputBorder.none),
-                              controller: nicknameController,
-                            ),
+                            child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 15,
+                                ),
+                                decoration: const InputDecoration(
+                                    hintText: 'Ketik nama panggilan anak',
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 12),
+                                    border: InputBorder.none),
+                                controller: nicknameController,
+                                validator: (val) => val!.isEmpty
+                                    ? 'Nama panggilan tidak boleh kosong'
+                                    : null),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -159,7 +163,7 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               textInputAction: TextInputAction.next,
                               style: GoogleFonts.fredoka(
                                 fontSize: 15,
@@ -191,20 +195,22 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            child: TextField(
-                              textInputAction: TextInputAction.next,
-                              style: GoogleFonts.fredoka(
-                                fontSize: 15,
-                              ),
-                              decoration: const InputDecoration(
-                                hintText:
-                                    'Email anak atau orang tua yang dapat dihubungi',
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 12),
-                                border: InputBorder.none,
-                              ),
-                              controller: emailController,
-                            ),
+                            child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 15,
+                                ),
+                                decoration: const InputDecoration(
+                                  hintText:
+                                      'Email anak atau orang tua yang dapat dihubungi',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                  border: InputBorder.none,
+                                ),
+                                controller: emailController,
+                                validator: (val) => val!.isEmpty
+                                    ? 'Email tidak boleh kosong'
+                                    : null),
                           ),
                           const SizedBox(height: 20),
                           Text(
