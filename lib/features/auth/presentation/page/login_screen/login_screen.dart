@@ -14,28 +14,31 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<AuthBloc, dynamic>(
-          listener: (_, state) {
-            if (state is AuthSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.green,
-                  content: Text('Success, hello ${state.user?.fullName}'),
-                ),
-              );
-              Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
-            }
+      resizeToAvoidBottomInset: false,
+      body: BlocListener<AuthBloc, dynamic>(listener: (_, state) {
+        if (state is AuthSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.green,
+              content: Text('Success, hello ${state.user?.fullName}'),
+            ),
+          );
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+        }
 
-            if (state is AuthFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.red,
-                  content: Text(state.message),
-                ),
-              );
-            }
-          },
-          child: _buildBody(context)),
+        if (state is AuthFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.message),
+            ),
+          );
+        }
+      }, child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return _buildBody(context);
+        },
+      )),
     );
   }
 
@@ -96,21 +99,22 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               child: TextFormField(
-                                  // controller: emailController,
-                                  // cursorColor: lightBrownColor,
-                                  style: GoogleFonts.fredoka(
-                                    fontSize: 15,
-                                  ),
-                                  decoration: const InputDecoration(
-                                    hintText:
-                                        'Ketik nama lengkap anak tanpa disingkat',
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 12),
-                                    border: InputBorder.none,
-                                  ),
-                                  validator: (val) => val!.isEmpty
-                                      ? 'Email tidak boleh kosong.'
-                                      : null),
+                                textInputAction: TextInputAction.next,
+                                style: GoogleFonts.fredoka(
+                                  fontSize: 15,
+                                ),
+                                decoration: const InputDecoration(
+                                  hintText:
+                                      'Ketik nama lengkap anak tanpa disingkat',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                  border: InputBorder.none,
+                                ),
+                                controller: nameController,
+                                onChanged: (value) {
+                                  print(value);
+                                },
+                              ),
                             ),
                             // Birth Date
                             const SizedBox(height: 18),
@@ -129,14 +133,13 @@ class LoginScreen extends StatelessWidget {
                                   color: Colors.black,
                                 ),
                               ),
-                              child: TextField(
+                              child: TextFormField(
                                 style: GoogleFonts.fredoka(
                                   fontSize: 15,
                                 ),
                                 decoration: const InputDecoration(
                                   hintText: 'dd/mm/yyyy',
                                   prefixIcon: Icon(Icons.calendar_today),
-                                  filled: true,
                                   border: InputBorder.none,
                                 ),
                                 readOnly: true,

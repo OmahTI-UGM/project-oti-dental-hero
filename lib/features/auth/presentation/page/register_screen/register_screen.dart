@@ -32,6 +32,7 @@ class RegisterScreen extends StatelessWidget {
 
   _buildBody(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
+    final TextEditingController nicknameController = TextEditingController();
     final TextEditingController birthDateController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
 
@@ -48,7 +49,7 @@ class RegisterScreen extends StatelessWidget {
         child: Stack(
           children: [
             Image.asset('assets/images/background.png'),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Padding(
@@ -100,6 +101,7 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               style: GoogleFonts.fredoka(
                                 fontSize: 15,
                               ),
@@ -129,6 +131,7 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               style: GoogleFonts.fredoka(
                                 fontSize: 15,
                               ),
@@ -137,7 +140,7 @@ class RegisterScreen extends StatelessWidget {
                                   contentPadding:
                                       EdgeInsets.symmetric(horizontal: 12),
                                   border: InputBorder.none),
-                              controller: nameController,
+                              controller: nicknameController,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -157,13 +160,13 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               style: GoogleFonts.fredoka(
                                 fontSize: 15,
                               ),
                               decoration: const InputDecoration(
                                 hintText: 'dd/mm/yyyy',
                                 prefixIcon: Icon(Icons.calendar_today),
-                                filled: true,
                                 border: InputBorder.none,
                               ),
                               readOnly: true,
@@ -189,6 +192,7 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             ),
                             child: TextField(
+                              textInputAction: TextInputAction.next,
                               style: GoogleFonts.fredoka(
                                 fontSize: 15,
                               ),
@@ -335,6 +339,7 @@ class RegisterScreen extends StatelessWidget {
 
     if (picked != null) {
       dateController.text = picked.toString();
+      TextInputAction.next;
     }
   }
 }

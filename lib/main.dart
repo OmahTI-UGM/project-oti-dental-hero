@@ -7,15 +7,16 @@ import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.da
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'injection_container.dart'; //Dependency injector
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeDependencies(); //Inject all the dependencies and wait for it is done (i.e. UI won't built until all the dependencies are injected)
-
   runApp(const MyApp());
+  FlutterNativeSplash.remove(); //Remove the splash screen
 }
 
 class MyApp extends StatelessWidget {
