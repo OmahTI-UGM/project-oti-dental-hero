@@ -1,9 +1,15 @@
 import 'package:dental_hero/core/common/activity.dart';
+import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
+import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
+import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
+import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xffE9F3FF),
+      backgroundColor: lightBlueColor,
       appBar: _buildAppbar(height, width),
       body: _buildBody(height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
@@ -145,7 +151,53 @@ class HomeScreen extends StatelessWidget {
   //   );
   // }
 
-  _buildBody(double height, double width) {}
+  _buildBody(double height, double width) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 30.0,
+      ),
+      child: ListView(
+        children: [
+          CustomTimelineTile(
+            isFirst: true,
+            isLast: false,
+            isPast: false,
+            isActive: true,
+            child: FotoGigi(isCompleted: true),
+            number: 1,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: false,
+            child: FotoGigi(isCompleted: false),
+            number: 2,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: true,
+            child: ActivityCard(
+              isActive: true,
+            ),
+            number: 3,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+        ],
+      ),
+    );
+  }
 
   _buildBottomNavbar(double height, double width) {
     return Container(

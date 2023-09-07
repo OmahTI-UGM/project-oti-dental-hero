@@ -19,6 +19,7 @@ dependencies:
   flutter_native_splash: ^2.3.2
   get_it: ^7.6.0
   google_fonts: ^5.1.0
+  timeline_tile: ^2.0.0
   video_player: ^2.7.0
 
 dev_dependencies:
