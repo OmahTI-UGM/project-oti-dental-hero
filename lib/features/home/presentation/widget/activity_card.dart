@@ -13,8 +13,8 @@ class ActivityCard extends StatelessWidget {
     return isActive
         ? Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(25),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: shadeBlueColor, width: 2),
@@ -37,7 +37,7 @@ class ActivityCard extends StatelessWidget {
                       isCompleted: true,
                       time: 'day',
                     ),
-                    Spacer(),
+                    const Spacer(),
                     DayCard(
                       isCompleted: false,
                       time: 'night',
@@ -48,8 +48,8 @@ class ActivityCard extends StatelessWidget {
             ))
         : Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(25),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               // color: Colors.white,
               border: Border.all(color: lightBlueColor, width: 2),
@@ -73,7 +73,7 @@ class ActivityCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('assets/images/day_bw.png'),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       width: 115,
@@ -111,7 +111,7 @@ class ActivityCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('assets/images/night_bw.png'),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                       width: 115,

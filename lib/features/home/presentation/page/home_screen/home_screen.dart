@@ -23,6 +23,12 @@ class HomeScreen extends StatelessWidget {
       appBar: _buildAppbar(height, width),
       body: _buildBody(height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
+      floatingActionButton: IconButton(
+          icon: Image.asset('assets/images/icon_calendar.png'),
+          iconSize: 70,
+          padding: const EdgeInsets.only(left: 8),
+          onPressed: () {}),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 
@@ -158,6 +164,9 @@ class HomeScreen extends StatelessWidget {
       ),
       child: ListView(
         children: [
+          SizedBox(
+            height: 20,
+          ),
           CustomTimelineTile(
             isFirst: true,
             isLast: false,
@@ -178,6 +187,16 @@ class HomeScreen extends StatelessWidget {
             isFirst: false,
             isLast: false,
             isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
             isActive: true,
             child: ActivityCard(
               isActive: true,
@@ -187,6 +206,16 @@ class HomeScreen extends StatelessWidget {
           CustomTimelineTile(
             isFirst: false,
             isLast: false,
+            isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: true,
             isPast: false,
             isActive: false,
             child: ActivityCard(

@@ -25,9 +25,11 @@ class CustomTimelineTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return TimelineTile(
       isFirst: isFirst,
+      isLast: isLast,
       beforeLineStyle: const LineStyle(color: grayColor, thickness: 1),
       afterLineStyle: const LineStyle(color: grayColor, thickness: 1),
       indicatorStyle: IndicatorStyle(
+        drawGap: true,
         padding: const EdgeInsets.symmetric(
           vertical: 5,
         ),

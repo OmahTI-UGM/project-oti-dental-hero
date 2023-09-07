@@ -13,7 +13,7 @@ class FotoGigi extends StatelessWidget {
     return isCompleted
         ? Container(
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.all(25),
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -63,7 +63,7 @@ class FotoGigi extends StatelessWidget {
           )
         : Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(25),
+            margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class DayCard extends StatelessWidget {
   final String time;
-  bool isCompleted;
-  bool done = false;
+  final bool isCompleted;
+  final bool done = false;
   DayCard({super.key, required this.time, required this.isCompleted});
 
   @override
@@ -15,11 +15,11 @@ class DayCard extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/$time.png'),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
-      width: 115,
-      height: 135,
+      width: 114,
+      height: 134,
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
