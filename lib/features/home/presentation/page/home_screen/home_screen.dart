@@ -1,7 +1,15 @@
 import 'package:dental_hero/core/common/activity.dart';
+import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
+import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
+import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,124 +19,247 @@ class HomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: _buildAppbar(),
-      body: _buildBody(),
+      backgroundColor: lightBlueColor,
+      appBar: _buildAppbar(height, width),
+      body: _buildBody(height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
+      floatingActionButton: IconButton(
+          icon: Image.asset('assets/images/icon_calendar.png'),
+          iconSize: 70,
+          padding: const EdgeInsets.only(left: 8),
+          onPressed: () {}),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 
-  _buildAppbar() {
-    return AppBar(
-      title: Text("Dental Hero"),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Icon(Icons.photo),
-          onPressed: () {},
-        ),
-      ],
-    );
-  }
-
-  _buildBody() {
-    return BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (context, state) {
-        // int index = state.index;
-        List<Step> steps = [
-          Step(
-            title: Container(
-              height: 80,
-              width: double.infinity,
-              // color: Colors.green,
+  _buildAppbar(double height, double width) {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height * 0.1),
+      child: AppBar(
+        backgroundColor: Color(0xffE9F3FF),
+        elevation: 0,
+        flexibleSpace: SafeArea(
+          child: Container(
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.blue,
-                  width: 4,
+                color: Colors.white,
+                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.40),
+                    offset: const Offset(4, -4),
+                    blurRadius: 0,
+                    spreadRadius: 0,
+                    inset: true,
+                  ),
+                ],
               ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // clipBehavior: Clip.antiAlias,
+              width: double.infinity,
+              height: height * 0.1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Foto Gigi'),
-                    ElevatedButton(onPressed: () {}, child: Text('Ambil'))
-                  ]),
-            ),
-            content: SizedBox.shrink(),
-          ),
-          Step(
-            title: Text('11 Agustus 2023'),
-            content: Activity(),
-          ),
-          Step(
-            title: Text('11 Agustus 2023'),
-            content: Activity(),
-          ),
-        ];
+                    Text(
+                      "Halo, Anya!",
+                      style: GoogleFonts.fredoka(
+                          color: Color(0xff6A658A),
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/images/icon_settings.png',
+                          ),
+                          iconSize: 48,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {},
+                        ),
+                        SizedBox(width: 4),
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/images/icon_album.png',
+                          ),
+                          iconSize: 48,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {},
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              )),
+        ),
+      ),
+    );
+  }
 
-        return ListView(
-          children: [
-            Stepper(
-              currentStep:
-                  steps.length - 1 - state.index, // Reverse the step index
-              onStepTapped: (index) {
-                context.read<NavigationCubit>(); //Change the navbar item
-              },
-              steps: steps.reversed.toList(), // Reverse the order of steps
-              controlsBuilder: (context, details) {
-                return const SizedBox.shrink();
-              },
-            )
-          ],
-        );
-      },
+  // _buildBody() {
+  //   return BlocBuilder<NavigationCubit, NavigationState>(
+  //     builder: (context, state) {
+  //       // int index = state.index;
+  //       List<Step> steps = [
+  //         Step(
+  //           title: Container(
+  //             height: 80,
+  //             width: double.infinity,
+  //             // color: Colors.green,
+  //             decoration: BoxDecoration(
+  //               border: Border.all(
+  //                 color: Colors.blue,
+  //                 width: 4,
+  //               ),
+  //               borderRadius: BorderRadius.circular(12),
+  //             ),
+  //             child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                 children: [
+  //                   Text('Foto Gigi'),
+  //                   ElevatedButton(onPressed: () {}, child: Text('Ambil'))
+  //                 ]),
+  //           ),
+  //           content: SizedBox.shrink(),
+  //         ),
+  //         Step(
+  //           title: Text('11 Agustus 2023'),
+  //           content: Activity(),
+  //         ),
+  //         Step(
+  //           title: Text('11 Agustus 2023'),
+  //           content: Activity(),
+  //         ),
+  //       ];
+
+  //       return ListView(
+  //         children: [
+  //           Stepper(
+  //             currentStep:
+  //                 steps.length - 1 - state.index, // Reverse the step index
+  //             onStepTapped: (index) {
+  //               context.read<NavigationCubit>(); //Change the navbar item
+  //             },
+  //             steps: steps.reversed.toList(), // Reverse the order of steps
+  //             controlsBuilder: (context, details) {
+  //               return const SizedBox.shrink();
+  //             },
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  _buildBody(double height, double width) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 30.0,
+      ),
+      child: ListView(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          CustomTimelineTile(
+            isFirst: true,
+            isLast: false,
+            isPast: false,
+            isActive: true,
+            child: FotoGigi(isCompleted: true),
+            number: 1,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: false,
+            child: FotoGigi(isCompleted: false),
+            number: 2,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: true,
+            child: ActivityCard(
+              isActive: true,
+            ),
+            number: 3,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: false,
+            isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+          CustomTimelineTile(
+            isFirst: false,
+            isLast: true,
+            isPast: false,
+            isActive: false,
+            child: ActivityCard(
+              isActive: false,
+            ),
+            number: 4,
+          ),
+        ],
+      ),
     );
   }
 
   _buildBottomNavbar(double height, double width) {
     return Container(
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.blue)),
+          color: Colors.white,
+          border: Border.all(color: Color(0xff6A658A), width: 1.0),
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(8.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.40),
+              offset: const Offset(4, -4),
+              blurRadius: 0,
+              spreadRadius: 0,
+              inset: true,
+            ),
+          ],
         ),
+        // clipBehavior: Clip.antiAlias,
         width: double.infinity,
-        height: height * 0.08,
+        height: height * 0.1,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  height: height * 0.08,
-                  width: width * 0.35,
-                  color: Colors.blue,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.qr_code_scanner_outlined),
-                        SizedBox(width: 8),
-                        Text('Scan \nAR Card')
-                      ]),
-                ),
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  height: height * 0.08,
-                  width: width * 0.35,
-                  color: Colors.blue,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.bar_chart),
-                        SizedBox(width: 8),
-                        Text('Statistik'),
-                      ]),
-                ),
+              GestureDetector(
+                  child: Image.asset('assets/images/scan.png',
+                      width: width * 0.42)),
+              GestureDetector(
+                child:
+                    Image.asset('assets/images/rank.png', width: width * 0.42),
               ),
             ],
           ),

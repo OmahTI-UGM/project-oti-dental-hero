@@ -5,6 +5,7 @@ import 'package:dental_hero/features/activity/presentation/blocs/timer_bloc.dart
 import 'package:dental_hero/features/activity/presentation/page/activity_screen/activity_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
+import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           onGenerateRoute: AppRoutes.onGenerateRoutes,
-          home: LoginScreen(),
+          // home: LoginScreen(),
+          home: HomeScreen(),
         ));
   }
 }
