@@ -1,3 +1,5 @@
+import 'package:dental_hero/core/constants/time_state_enum.dart';
+import 'package:dental_hero/features/activity/presentation/page/activity_screen/activity_screen.dart';
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
@@ -27,6 +29,13 @@ class AppRoutes {
             builder: (_) => ResultScreen(
                   duration: settings.arguments as int,
                 ));
+
+      case '/activity':
+        return MaterialPageRoute(builder: (_) {
+          return ActivityScreen(
+            timeState: settings.arguments as TimeState?,
+          );
+        });
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

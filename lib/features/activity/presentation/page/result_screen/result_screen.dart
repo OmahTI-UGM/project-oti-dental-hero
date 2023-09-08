@@ -2,28 +2,31 @@ import 'package:dental_hero/core/widgets/star.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
-  late int? duration;
-  ResultScreen({super.key, this.duration});
+  final int? duration;
+  const ResultScreen({super.key, this.duration});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 
-  _buildBody() {
+  _buildBody(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Skor' + _countScore(duration!)[0].toString()),
-          Text('Waktu' +
-              _countTime(duration!)[0].toString() +
-              ':' +
-              _countTime(duration!)[1].toString()),
+          Text('Skor${_countScore(duration!)[0]}'),
+          Text('Waktu${_countTime(duration!)[0]}:${_countTime(duration!)[1]}'),
           StarWidget(star: _countScore(duration!)[1]),
-          ElevatedButton(onPressed: () {}, child: Text('Kembali ke menu')),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/home', (route) => false);
+            },
+            child: const Text('Kembali ke menu'),
+          ),
         ],
       ),
     );
