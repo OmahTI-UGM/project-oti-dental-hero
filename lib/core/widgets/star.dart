@@ -10,14 +10,14 @@ class StarWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (int i = 0; i < star; i++)
-          Icon(
-            Icons.star,
-            color: Colors.yellow,
+          Image.asset(
+            'assets/images/star.png',
+            width: MediaQuery.of(context).size.width * 0.08,
           ),
         for (int i = 0; i < 3 - star; i++)
-          Icon(
-            Icons.star,
-            color: Colors.grey,
+          Image.asset(
+            'assets/images/star_white.png',
+            width: MediaQuery.of(context).size.width * 0.08,
           ),
       ],
     );
