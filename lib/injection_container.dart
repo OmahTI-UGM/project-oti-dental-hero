@@ -12,6 +12,7 @@ import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.da
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
+import 'core/constants/ticker.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
 import 'features/auth/data/data_sources/remote/auth_api_service.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
@@ -58,5 +59,5 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<ActivityBloc>(
       () => ActivityBloc(saveActivityUseCase: sl()));
-  sl.registerFactory<TimerBloc>(() => TimerBloc());
+  sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
 }

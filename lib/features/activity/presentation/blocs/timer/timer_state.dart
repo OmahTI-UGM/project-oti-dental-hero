@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:equatable/equatable.dart';
 
 abstract class TimerState extends Equatable {
-  final Timer? timer;
   final int currentDuration;
 
-  const TimerState({this.currentDuration = 0, this.timer});
+  const TimerState({this.currentDuration = 0});
 
   @override
   List<Object> get props => [

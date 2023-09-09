@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dental_hero/core/constants/time_state_enum.dart';
 import 'package:dental_hero/core/widgets/video_background.dart';
 import 'package:dental_hero/features/activity/domain/entities/activity.dart';
@@ -84,7 +82,9 @@ class ActivityScreen extends StatelessWidget {
               if (state is TimerInitial) {
                 return ElevatedButton(
                   onPressed: () {
-                    _startTimer(BlocProvider.of<TimerBloc>(context), seconds);
+                    // _startTimer(BlocProvider.of<TimerBloc>(context), seconds)
+                    BlocProvider.of<TimerBloc>(context)
+                        .add(StartTimer(seconds));
                   },
                   child: const Text('Mulai'),
                 );
@@ -120,18 +120,6 @@ class ActivityScreen extends StatelessWidget {
     int score = 100 - (duration / maxDuration * 100).round();
 
     return score;
-  }
-
-  void _startTimer(TimerBloc timerBloc, int duration) {
-    timerBloc.add(StartTimer(duration));
-
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      timerBloc.add(UpdateTimer(duration));
-      duration--;
-      if (duration < 0) {
-        timer.cancel();
-      }
-    });
   }
 
   void _resetState(BuildContext context) {
