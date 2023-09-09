@@ -22,7 +22,10 @@ class AuthApiService {
       return null;
     }
 
-    return UserModel.fromJson(user.docs.first.data());
+    final id = user.docs.first.id;
+
+    return UserModel.fromJson(
+        Map<String, dynamic>.from(user.docs.first.data())..addAll({'id': id}));
   }
 
   Future<UserModel> register({

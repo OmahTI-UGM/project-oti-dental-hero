@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Image.asset(
@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
@@ -78,140 +78,138 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Nama Lengkap',
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.fredoka(
-                                  fontSize: 15, fontWeight: FontWeight.w400),
-                            ),
-                            const SizedBox(height: 4),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nama Lengkap',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.fredoka(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.black,
                               ),
-                              child: TextFormField(
-                                  textInputAction: TextInputAction.next,
-                                  style: GoogleFonts.fredoka(
-                                    fontSize: 15,
-                                  ),
-                                  decoration: const InputDecoration(
-                                    hintText:
-                                        'Ketik nama lengkap anak tanpa disingkat',
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 12),
-                                    border: InputBorder.none,
-                                  ),
-                                  controller: nameController,
-                                  validator: (val) => val!.isEmpty
-                                      ? 'Nama lengkap tidak boleh kosong'
-                                      : null),
                             ),
-                            // Birth Date
-                            const SizedBox(height: 18),
-                            Text(
-                              'Tanggal Lahir',
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.fredoka(
-                                  fontSize: 15, fontWeight: FontWeight.w400),
-                            ),
-                            const SizedBox(height: 4),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              child: TextFormField(
+                            child: TextFormField(
+                                textInputAction: TextInputAction.next,
                                 style: GoogleFonts.fredoka(
                                   fontSize: 15,
                                 ),
                                 decoration: const InputDecoration(
-                                  hintText: 'dd/mm/yyyy',
-                                  prefixIcon: Icon(Icons.calendar_today),
+                                  hintText:
+                                      'Ketik nama lengkap anak tanpa disingkat',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 12),
                                   border: InputBorder.none,
                                 ),
-                                readOnly: true,
-                                controller: birthDateController,
-                                onTap: () =>
-                                    _selectDate(context, birthDateController),
+                                controller: nameController,
+                                validator: (val) => val!.isEmpty
+                                    ? 'Nama lengkap tidak boleh kosong'
+                                    : null),
+                          ),
+                          // Birth Date
+                          const SizedBox(height: 18),
+                          Text(
+                            'Tanggal Lahir',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.fredoka(
+                                fontSize: 15, fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.black,
                               ),
                             ),
-                            const SizedBox(height: 18),
-                            GestureDetector(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: shadeBlueColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Colors.black,
+                            child: TextFormField(
+                              style: GoogleFonts.fredoka(
+                                fontSize: 15,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'dd/mm/yyyy',
+                                prefixIcon: Icon(Icons.calendar_today),
+                                border: InputBorder.none,
+                              ),
+                              readOnly: true,
+                              controller: birthDateController,
+                              onTap: () =>
+                                  _selectDate(context, birthDateController),
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          GestureDetector(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: shadeBlueColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.black,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.40),
+                                    offset: const Offset(4, -4),
+                                    blurRadius: 0,
+                                    spreadRadius: 0,
+                                    inset: true,
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.40),
-                                      offset: const Offset(4, -4),
-                                      blurRadius: 0,
-                                      spreadRadius: 0,
-                                      inset: true,
+                                ],
+                              ),
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: Center(
+                                child: Stack(
+                                  children: [
+                                    Text(
+                                      'Masuk ke Akun',
+                                      style: GoogleFonts.fredoka(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        foreground: Paint()
+                                          ..style = PaintingStyle.stroke
+                                          ..strokeWidth = 3
+                                          ..color = Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Masuk ke Akun',
+                                      style: GoogleFonts.fredoka(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ],
                                 ),
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                child: Center(
-                                  child: Stack(
-                                    children: [
-                                      Text(
-                                        'Masuk ke Akun',
-                                        style: GoogleFonts.fredoka(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                          foreground: Paint()
-                                            ..style = PaintingStyle.stroke
-                                            ..strokeWidth = 3
-                                            ..color = Colors.black,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Masuk ke Akun',
-                                        style: GoogleFonts.fredoka(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ),
-                              onTap: () {
-                                print({
-                                  'name': nameController.text,
-                                  'birthDate': birthDateController.text,
-                                });
-                                if (birthDateController.text.isNotEmpty &&
-                                    nameController.text.isNotEmpty) {
-                                  BlocProvider.of<AuthBloc>(context).add(
-                                    LoginEvent(
-                                      fullName: nameController.text,
-                                      birthDate: DateTime.parse(
-                                          birthDateController.text),
-                                    ),
-                                  );
-                                }
-                              },
                             ),
-                          ]),
-                    ),
+                            onTap: () {
+                              print({
+                                'name': nameController.text,
+                                'birthDate': birthDateController.text,
+                              });
+                              if (birthDateController.text.isNotEmpty &&
+                                  nameController.text.isNotEmpty) {
+                                BlocProvider.of<AuthBloc>(context).add(
+                                  LoginEvent(
+                                    fullName: nameController.text,
+                                    birthDate: DateTime.parse(
+                                        birthDateController.text),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ]),
                     const SizedBox(height: 20),
                     TextButton(
                       child: Text(

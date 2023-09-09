@@ -1,12 +1,13 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/core/constants/time_state_enum.dart';
 import 'package:dental_hero/features/home/presentation/widget/day_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ActivityCard extends StatelessWidget {
   final bool isActive;
-  ActivityCard({super.key, required this.isActive});
+  const ActivityCard({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +33,15 @@ class ActivityCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Row(
-                  children: [
+                  children: const [
                     DayCard(
                       isCompleted: true,
-                      time: 'day',
+                      time: TimeState.day,
                     ),
-                    const Spacer(),
+                    Spacer(),
                     DayCard(
                       isCompleted: false,
-                      time: 'night',
+                      time: TimeState.night,
                     ),
                   ],
                 )
@@ -70,7 +71,7 @@ class ActivityCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('assets/images/day_bw.png'),
                           fit: BoxFit.fill,
@@ -108,7 +109,7 @@ class ActivityCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage('assets/images/night_bw.png'),
                           fit: BoxFit.contain,
