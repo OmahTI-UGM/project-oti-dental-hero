@@ -4,6 +4,7 @@ import 'package:dental_hero/features/activity/presentation/page/result_screen/re
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
+import 'package:dental_hero/features/settings/presentation/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,6 +37,9 @@ class AppRoutes {
             timeState: settings.arguments as TimeState?,
           );
         });
+
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
