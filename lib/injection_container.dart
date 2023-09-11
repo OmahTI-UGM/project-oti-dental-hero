@@ -5,12 +5,16 @@ import 'package:dental_hero/features/activity/data/data_sources/remote/activity_
 import 'package:dental_hero/features/activity/domain/usecases/get_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
+import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
+import 'package:dental_hero/features/auth/domain/usecases/check_auth.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
+import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constants/ticker.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
@@ -30,22 +34,29 @@ Future<void> initializeDependencies() async {
   final FirebaseApp app = await Firebase.initializeApp();
   sl.registerSingleton<FirebaseApp>(app);
 
+  final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+  sl.registerSingleton<SharedPreferences>(sharedPrefs);
+
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   sl.registerSingleton<FirebaseFirestore>(firestore);
 
   // Data Sources
   sl.registerSingleton<AuthApiService>(AuthApiService(firestore: sl()));
+  sl.registerSingleton<AuthSharedPrefsService>(
+      AuthSharedPrefsService(sharedPrefs: sl()));
   sl.registerSingleton<ActivityApiService>(ActivityApiService(firestore: sl()));
 
 // Repositories
   sl.registerSingleton<AuthRepository>(
-      AuthRepositoryImpl(authApiService: sl()));
+      AuthRepositoryImpl(authApiService: sl(), authSharedPrefsService: sl()));
   sl.registerSingleton<ActivityRepository>(
       ActivityRepositoryImpl(activityApiService: sl()));
 
   // Use Cases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(repository: sl()));
   sl.registerSingleton<RegisterUseCase>(RegisterUseCase(repository: sl()));
+  sl.registerSingleton<CheckAuthUseCase>(CheckAuthUseCase(repository: sl()));
+  sl.registerSingleton<LogoutUseCase>(LogoutUseCase(repository: sl()));
 
   sl.registerSingleton<GetActivityUseCase>(
       GetActivityUseCase(repository: sl()));
@@ -55,7 +66,7 @@ Future<void> initializeDependencies() async {
       SaveActivityUseCase(repository: sl()));
 
   // Blocs
-  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl()));
+  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<ActivityBloc>(
       () => ActivityBloc(saveActivityUseCase: sl()));

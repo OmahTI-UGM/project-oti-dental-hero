@@ -13,4 +13,8 @@ abstract class AuthRepository {
     required String fullName,
     required DateTime birthDate,
   });
+
+  UserEntity? checkAuth();
+
+  Future<bool> logout();
 }

@@ -301,12 +301,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          print({
-                            'name': nameController.text,
-                            'birthDate': birthDateController.text,
-                            'email': emailController.text,
-                          });
-
                           if (birthDateController.text.isNotEmpty &&
                               nameController.text.isNotEmpty &&
                               emailController.text.isNotEmpty) {

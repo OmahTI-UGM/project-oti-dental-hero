@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(BlocProvider.of<AuthBloc>(context).state);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<AuthBloc, dynamic>(listener: (_, state) {
@@ -193,10 +194,6 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              print({
-                                'name': nameController.text,
-                                'birthDate': birthDateController.text,
-                              });
                               if (birthDateController.text.isNotEmpty &&
                                   nameController.text.isNotEmpty) {
                                 BlocProvider.of<AuthBloc>(context).add(

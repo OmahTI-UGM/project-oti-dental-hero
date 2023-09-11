@@ -29,3 +29,7 @@ class RegisterEvent extends AuthEvent {
 class CheckAuthEvent extends AuthEvent {
   const CheckAuthEvent();
 }
+
+class LogoutEvent extends AuthEvent {
+  const LogoutEvent();
+}

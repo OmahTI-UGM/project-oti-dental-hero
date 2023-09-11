@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dental_hero/features/auth/domain/entities/user.dart';
 
 class UserModel extends UserEntity {
@@ -16,10 +17,18 @@ class UserModel extends UserEntity {
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) {
+    if (map['birthDate'] is Timestamp) {
+      map['birthDate'] = (map['birthDate'] as Timestamp).toDate();
+    }
+
+    if (map['birthDate'] is String) {
+      map['birthDate'] = DateTime.parse(map['birthDate']);
+    }
+
     return UserModel(
       id: map['id'],
       fullName: map['fullName'],
-      birthDate: map['birthDate'].toDate(),
+      birthDate: map['birthDate'],
       email: map['email'],
       disability: map['disability'],
     );
@@ -33,5 +42,17 @@ class UserModel extends UserEntity {
       email: entity.email,
       disability: entity.disability,
     );
+  }
+
+  String toJson() {
+    return '''
+    {
+      "id": "$id",
+      "fullName": "$fullName",
+      "birthDate": "$birthDate",
+      "email": "$email",
+      "disability": "$disability"
+    }
+    ''';
   }
 }
