@@ -6,6 +6,7 @@ import 'package:dental_hero/features/activity/presentation/page/activity_screen/
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
+import 'package:dental_hero/features/statistic/presentation/page/statistic_screen/statistic_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           ),
           onGenerateRoute: AppRoutes.onGenerateRoutes,
           // home: LoginScreen(),
-          home: HomeScreen(),
+          home: StatisticScreen(),
         ));
   }
 }
