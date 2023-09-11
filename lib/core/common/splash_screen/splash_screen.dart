@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: on prod, add delay
-    Future<void>.delayed(const Duration(seconds: 0), () {
+    Future<void>.delayed(const Duration(seconds: 2), () {
       BlocProvider.of<AuthBloc>(context).add(const CheckAuthEvent());
     });
 
