@@ -1,5 +1,7 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
 import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
 import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
 import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
@@ -15,16 +17,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    _fetchActivities(context);
+
     return Scaffold(
       backgroundColor: lightBlueColor,
       appBar: _buildAppbar(context, height, width),
       body: _buildBody(height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
       floatingActionButton: IconButton(
-          icon: Image.asset('assets/images/icon_calendar.png'),
-          iconSize: 70,
-          padding: const EdgeInsets.only(left: 8),
-          onPressed: () {}),
+        icon: Image.asset('assets/images/icon_calendar.png'),
+        iconSize: 70,
+        padding: const EdgeInsets.only(left: 8),
+        onPressed: () {},
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
@@ -33,13 +39,13 @@ class HomeScreen extends StatelessWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
-        backgroundColor: Color(0xffE9F3FF),
+        backgroundColor: const Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
           child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                border: Border.all(color: const Color(0xff6A658A), width: 1.0),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(8.0),
                 ),
@@ -64,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       "Halo, ${BlocProvider.of<AuthBloc>(context).state.user?.fullName ?? "null"}!",
                       style: GoogleFonts.fredoka(
-                          color: Color(0xff6A658A),
+                          color: const Color(0xff6A658A),
                           fontSize: 21,
                           fontWeight: FontWeight.w500),
                     ),
@@ -99,6 +105,11 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _fetchActivities(BuildContext context) {
+    final userId = BlocProvider.of<AuthBloc>(context).state.user?.id ?? "";
+    BlocProvider.of<HomeBloc>(context).add(LoadActivitiesEvent(userId: userId));
   }
 
   // _buildBody() {
@@ -158,12 +169,12 @@ class HomeScreen extends StatelessWidget {
 
   _buildBody(double height, double width) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 30.0,
       ),
       child: ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           CustomTimelineTile(
@@ -182,7 +193,7 @@ class HomeScreen extends StatelessWidget {
             child: FotoGigi(isCompleted: false),
             number: 2,
           ),
-          CustomTimelineTile(
+          const CustomTimelineTile(
             isFirst: false,
             isLast: false,
             isPast: false,
@@ -192,7 +203,7 @@ class HomeScreen extends StatelessWidget {
             ),
             number: 4,
           ),
-          CustomTimelineTile(
+          const CustomTimelineTile(
             isFirst: false,
             isLast: false,
             isPast: false,
@@ -202,7 +213,7 @@ class HomeScreen extends StatelessWidget {
             ),
             number: 3,
           ),
-          CustomTimelineTile(
+          const CustomTimelineTile(
             isFirst: false,
             isLast: false,
             isPast: false,
@@ -212,7 +223,7 @@ class HomeScreen extends StatelessWidget {
             ),
             number: 4,
           ),
-          CustomTimelineTile(
+          const CustomTimelineTile(
             isFirst: false,
             isLast: true,
             isPast: false,
@@ -231,7 +242,7 @@ class HomeScreen extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Color(0xff6A658A), width: 1.0),
+          border: Border.all(color: const Color(0xff6A658A), width: 1.0),
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(8.0),
           ),

@@ -68,7 +68,9 @@ class ActivityApiService {
     }
 
     return activities.docs
-        .map((e) => ActivityModel.fromJson(e.data()))
+        .map((e) => ActivityModel.fromJson(
+              Map<String, dynamic>.from(e.data())..addAll({'id': e.id}),
+            ))
         .toList();
   }
 }

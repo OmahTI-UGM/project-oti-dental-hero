@@ -69,7 +69,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void onCheckAuth(CheckAuthEvent event, Emitter<AuthState> emit) {
     final user = _checkAuthUseCase();
-    print('here, user: $user');
 
     if (user != null) {
       emit(AuthSuccess(user: user));

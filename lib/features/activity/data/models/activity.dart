@@ -25,7 +25,7 @@ class ActivityModel extends ActivityEntity {
       date: map['date'].toDate(),
       duration: map['duration'],
       score: map['score'],
-      timeState: map['timeState'],
+      timeState: TimeStateExtension.fromString(map['timeState']),
     );
   }
 
