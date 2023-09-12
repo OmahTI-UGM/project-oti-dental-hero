@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PhotoStep2Screen extends StatelessWidget {
-  const PhotoStep2Screen({super.key});
+class PhotoStep3Screen extends StatelessWidget {
+  const PhotoStep3Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class PhotoStep2Screen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Langkah 2/4',
+                        'Langkah 3/4',
                         style: GoogleFonts.fredoka(
                             fontSize: 21,
                             fontWeight: FontWeight.w500,
@@ -108,7 +108,7 @@ class PhotoStep2Screen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        'Foto Permukaan Depan Gigi',
+                        'Foto Permukaan Kunyah Gigi Bawah',
                         style: GoogleFonts.fredoka(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -141,7 +141,7 @@ class PhotoStep2Screen extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                           const PhotoBox(
-                            image: 'assets/images/photo_step_2.png',
+                            image: 'assets/images/photo_step_3.png',
                           ),
                           const SizedBox(height: 12),
                           ClipRRect(
@@ -176,7 +176,7 @@ class PhotoStep2Screen extends StatelessWidget {
                                     BlocProvider.of<ImagePickerBloc>(context)
                                         .add(StepChangeEvent());
                                     Navigator.pushNamedAndRemoveUntil(context,
-                                        '/photo-step-3', (route) => false);
+                                        '/photo-step-4', (route) => false);
                                   },
                                 ),
                               ),
@@ -196,18 +196,19 @@ class PhotoStep2Screen extends StatelessWidget {
                           ),
                           BulletList(
                             const [
-                              'Buka mulut yang lebar dan gigi dalam posisi menggigit.',
-                              'Pastikan seluruh gigi depan tidak terhalang oleh bibir.',
-                              'Arahkan kamera sejajar dengan permukaan depan gigi. ',
+                              'Buka mulut dengan lebar dan tundukkan kepala',
+                              'Angkat lidah sehingga seluruh permukaan kunyah bawah tidak terhalangi.',
+                              'Arahkan kamera ke permukaan kunyah gigi bawah.',
+                              'Gunakan flash untuk pencahayaan yang lebih baik'
                             ],
                           ),
                           const SizedBox(height: 12),
                           const PhotoBox(
-                            image: 'assets/images/photo_step_2.png',
+                            image: 'assets/images/photo_step_3.png',
                           ),
                           const SizedBox(height: 12),
                           Button(
-                            text: 'Ambil Foto Langkah 2',
+                            text: 'Ambil Foto Langkah 3',
                             width: double.infinity,
                             onTap: () {
                               BlocProvider.of<ImagePickerBloc>(context)

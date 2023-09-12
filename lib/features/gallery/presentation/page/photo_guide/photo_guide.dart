@@ -1,5 +1,6 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/widgets/button.dart';
+import 'package:dental_hero/features/gallery/presentation/widget/bullet_list.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -104,12 +105,12 @@ class PhotoGuideScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       color: purpleColor),
                 ),
-                Text(
-                  '\u2022 Kondisi pencahayaan ruangan yang cukup\n\u2022 Handphone dengan kamera yang memadai\n\u2022 Bantuan dari orang sekitar',
-                  style: GoogleFonts.fredoka(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: purpleColor),
+                BulletList(
+                  const [
+                    'Kondisi pencahayaan ruangan yang cukup',
+                    'Handphone dengan kamera yang memadai',
+                    'Bantuan dari orang sekitar',
+                  ],
                 ),
                 Text(
                   '\nSetelah semua dipersiapkan, teman-teman dapat mulai foto dengan mengikuti panduan yang akan ditampilkan!',

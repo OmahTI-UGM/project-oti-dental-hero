@@ -3,6 +3,8 @@ import 'package:dental_hero/features/auth/presentation/page/login_screen/login_s
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_1.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_2.dart';
+import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_3.dart';
+import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_4.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,10 +33,16 @@ class AppRoutes {
                 ));
 
       case '/photo-steps':
-        return MaterialPageRoute(builder: (_) => PhotoStep1Screen());
+        return MaterialPageRoute(builder: (_) => const PhotoStep1Screen());
 
       case '/photo-step-2':
-        return MaterialPageRoute(builder: (_) => PhotoStep2Screen());
+        return MaterialPageRoute(builder: (_) => const PhotoStep2Screen());
+
+      case '/photo-step-3':
+        return MaterialPageRoute(builder: (_) => const PhotoStep3Screen());
+
+      case '/photo-step-4':
+        return MaterialPageRoute(builder: (_) => const PhotoStep4Screen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
