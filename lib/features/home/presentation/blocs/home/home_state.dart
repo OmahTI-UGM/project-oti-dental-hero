@@ -5,7 +5,12 @@ import 'package:equatable/equatable.dart';
 abstract class HomeState extends Equatable {
   final List<ActivityEntity>? activities;
 
-  const HomeState({this.activities});
+  final Map<DateTime, List<ActivityEntity>>? activityGroups;
+
+  const HomeState({
+    this.activities,
+    this.activityGroups,
+  });
 
   @override
   List<Object?> get props => [activities];
@@ -16,8 +21,10 @@ class HomeLoading extends HomeState {
 }
 
 class HomeSuccess extends HomeState {
-  const HomeSuccess({required List<ActivityEntity> activities})
-      : super(activities: activities);
+  const HomeSuccess(
+      {required List<ActivityEntity> activities,
+      required Map<DateTime, List<ActivityEntity>> activityGroups})
+      : super(activities: activities, activityGroups: activityGroups);
 }
 
 class HomeFailed extends HomeState {

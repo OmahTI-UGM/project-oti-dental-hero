@@ -21,8 +21,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     DataState<List<ActivityEntity>?> result =
         await getUserActivitiesUseCase(params: params);
 
-    if (result is DataSuccess) {
-      emit(HomeSuccess(activities: result.data!));
+    if (result is DataSuccess && result.data != null) {
+      final activities = result.data!;
+
+      Map<DateTime, List<ActivityEntity>> groupedData = {};
+      for (var activity in activities) {
+        var date = activity.date;
+
+        if (!groupedData.containsKey(date)) {
+          groupedData[date!] = [];
+        }
+
+        groupedData[date]!.add(activity);
+      }
+
+      emit(HomeSuccess(activities: result.data!, activityGroups: groupedData));
+    }
+
+    if (result.data == null) {
+      emit(const HomeLoading());
     }
 
     if (result is DataFailed) {

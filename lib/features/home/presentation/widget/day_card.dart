@@ -7,8 +7,13 @@ import 'package:flutter/material.dart';
 class DayCard extends StatelessWidget {
   final TimeState time;
   final bool isCompleted;
-  final bool done = false;
-  const DayCard({super.key, required this.time, required this.isCompleted});
+  final int? score;
+  const DayCard({
+    super.key,
+    required this.time,
+    required this.isCompleted,
+    this.score,
+  });
 
   @override
   Widget build(BuildContext context) {

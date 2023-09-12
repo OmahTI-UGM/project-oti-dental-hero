@@ -114,16 +114,35 @@ class ActivityApiService {
     final now = DateTime.now();
     final currentDate = DateTime(now.year, now.month, now.day);
 
-    final activities = List.generate(
+    final activitiesDay = List.generate(
       days,
       (index) => ActivityModel(
         date: currentDate.add(Duration(days: index)),
+        timeState: TimeState.day,
+      ),
+    );
+
+    final activitiesNight = List.generate(
+      days,
+      (index) => ActivityModel(
+        date: currentDate.add(Duration(days: index)),
+        timeState: TimeState.night,
       ),
     );
 
     var batch = _firestore.batch();
 
-    for (var doc in activities) {
+    for (var doc in activitiesDay) {
+      final docRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('activities')
+          .doc();
+
+      batch.set(docRef, doc.toMap());
+    }
+
+    for (var doc in activitiesNight) {
       final docRef = _firestore
           .collection('users')
           .doc(userId)

@@ -1,7 +1,9 @@
 import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_state.dart';
 import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
 import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
 import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
@@ -23,7 +25,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: lightBlueColor,
       appBar: _buildAppbar(context, height, width),
-      body: _buildBody(height, width),
+      body: _buildBody(context, height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
       floatingActionButton: IconButton(
         icon: Image.asset('assets/images/icon_calendar.png'),
@@ -112,75 +114,65 @@ class HomeScreen extends StatelessWidget {
     BlocProvider.of<HomeBloc>(context).add(LoadActivitiesEvent(userId: userId));
   }
 
-  _buildBody(double height, double width) {
+  _buildBody(BuildContext context, double height, double width) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 30.0,
       ),
-      child: ListView(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          CustomTimelineTile(
-            isFirst: true,
-            isLast: false,
-            isPast: false,
-            isActive: true,
-            child: FotoGigi(isCompleted: true),
-            number: 1,
-          ),
-          CustomTimelineTile(
-            isFirst: false,
-            isLast: false,
-            isPast: false,
-            isActive: false,
-            child: FotoGigi(isCompleted: false),
-            number: 2,
-          ),
-          const CustomTimelineTile(
-            isFirst: false,
-            isLast: false,
-            isPast: false,
-            isActive: false,
-            child: ActivityCard(
-              isActive: false,
-            ),
-            number: 4,
-          ),
-          const CustomTimelineTile(
-            isFirst: false,
-            isLast: false,
-            isPast: false,
-            isActive: true,
-            child: ActivityCard(
-              isActive: true,
-            ),
-            number: 3,
-          ),
-          const CustomTimelineTile(
-            isFirst: false,
-            isLast: false,
-            isPast: false,
-            isActive: false,
-            child: ActivityCard(
-              isActive: false,
-            ),
-            number: 4,
-          ),
-          const CustomTimelineTile(
-            isFirst: false,
-            isLast: true,
-            isPast: false,
-            isActive: false,
-            child: ActivityCard(
-              isActive: false,
-            ),
-            number: 4,
-          ),
-        ],
-      ),
+      child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+        final activityGroups = state.activityGroups ?? {};
+        final keys = activityGroups.keys.toList();
+
+        keys.sort((a, b) => a.compareTo(b));
+
+        if (state is HomeLoading || state is HomeInitial) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: 32,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return CustomTimelineTile(
+                isFirst: true,
+                isActive: true,
+                number: 1,
+                child: FotoGigi(isCompleted: true),
+              );
+            }
+
+            if (index == 31) {
+              return CustomTimelineTile(
+                isLast: true,
+                isActive: false,
+                number: 32,
+                child: FotoGigi(isCompleted: false),
+              );
+            }
+
+            final groupDate = keys[index - 1];
+
+            return CustomTimelineTile(
+                isActive: _isNow(groupDate),
+                number: index + 1,
+                child: ActivityCard(
+                  activityGroup: activityGroups[groupDate] ?? [],
+                  isActive: _isNow(keys[index - 1]),
+                  date: groupDate,
+                ));
+          },
+        );
+      }),
     );
+  }
+
+  bool _isNow(DateTime date) {
+    final now = DateTime.now();
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 
   _buildBottomNavbar(double height, double width) {

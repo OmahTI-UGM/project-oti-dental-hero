@@ -7,16 +7,15 @@ import 'package:timeline_tile/timeline_tile.dart';
 class CustomTimelineTile extends StatelessWidget {
   final bool isFirst;
   final bool isActive;
-  final bool isPast;
   final bool isLast;
   final Widget child;
   final int number;
+
   const CustomTimelineTile({
     super.key,
-    required this.isFirst,
-    required this.isActive,
-    required this.isPast,
-    required this.isLast,
+    this.isFirst = false,
+    this.isActive = false,
+    this.isLast = false,
     required this.child,
     required this.number,
   });
