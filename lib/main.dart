@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<DropdownBloc>(
             create: (context) => sl(),
           ),
+          BlocProvider<ImagePickerBloc>(
+            create: (context) => sl(),
+          ),
           BlocProvider<ActivityBloc>(
             create: (context) => sl(),
           )
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           onGenerateRoute: AppRoutes.onGenerateRoutes,
+
           home: const SplashScreen(),
           // home: ActivityScreen(),
         ));

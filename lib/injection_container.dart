@@ -12,6 +12,7 @@ import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,6 +69,10 @@ Future<void> initializeDependencies() async {
   // Blocs
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
+//   sl.registerFactory<TimerBloc>(() => TimerBloc());
+  sl.registerFactory<ImagePickerBloc>(
+    () => ImagePickerBloc(),
+  );
   sl.registerFactory<ActivityBloc>(
       () => ActivityBloc(saveActivityUseCase: sl()));
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));

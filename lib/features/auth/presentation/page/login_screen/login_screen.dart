@@ -66,12 +66,16 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       child: Column(
                         children: [
                           Text("Selamat Datang ke",
                               style: GoogleFonts.fredoka(
                                   fontSize: 17, fontWeight: FontWeight.w500)),
-                          Image.asset('assets/images/logo.png'),
+                          Image.asset(
+                            'assets/images/logo.png',
+                            width: MediaQuery.of(context).size.width * 0.45,
+                          ),
                           Text('Mulai Perjalananmu ke Gigi Sehat!',
                               style: GoogleFonts.fredoka(
                                   fontSize: 15, fontWeight: FontWeight.w400)),
