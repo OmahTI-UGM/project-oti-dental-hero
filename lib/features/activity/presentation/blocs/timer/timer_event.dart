@@ -10,7 +10,7 @@ abstract class TimerEvent extends Equatable {
 class StartTimer extends TimerEvent {
   final int duration;
 
-  StartTimer(this.duration);
+  const StartTimer(this.duration);
 
   @override
   List<Object> get props => [duration];
@@ -19,7 +19,7 @@ class StartTimer extends TimerEvent {
 class UpdateTimer extends TimerEvent {
   final int currentDuration;
 
-  UpdateTimer(this.currentDuration);
+  const UpdateTimer(this.currentDuration);
 
   @override
   List<Object> get props => [currentDuration];
@@ -28,8 +28,13 @@ class UpdateTimer extends TimerEvent {
 class StopTimer extends TimerEvent {
   final int currentDuration;
 
-  StopTimer(this.currentDuration);
+  const StopTimer(this.currentDuration);
 
   @override
   List<Object> get props => [currentDuration];
+}
+
+class ResetTimer extends TimerEvent {
+  @override
+  List<Object> get props => [];
 }

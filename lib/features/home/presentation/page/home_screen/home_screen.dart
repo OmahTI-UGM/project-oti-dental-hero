@@ -1,15 +1,12 @@
-import 'package:dental_hero/core/common/activity.dart';
 import 'package:dental_hero/core/common/color.dart';
-import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
-import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
 import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
 import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -65,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Halo, Anya!",
+                      "Halo, ${BlocProvider.of<AuthBloc>(context).state.user?.fullName ?? "null"}!",
                       style: GoogleFonts.fredoka(
                           color: purpleColor,
                           fontSize: 21,
@@ -80,7 +77,9 @@ class HomeScreen extends StatelessWidget {
                           iconSize: 48,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/settings');
+                          },
                         ),
                         const SizedBox(width: 4),
                         IconButton(
