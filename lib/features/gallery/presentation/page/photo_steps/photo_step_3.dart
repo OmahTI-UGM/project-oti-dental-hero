@@ -29,6 +29,7 @@ class PhotoStep3Screen extends StatelessWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
@@ -175,8 +176,8 @@ class PhotoStep3Screen extends StatelessWidget {
                                   onTap: () {
                                     BlocProvider.of<ImagePickerBloc>(context)
                                         .add(StepChangeEvent());
-                                    Navigator.pushNamedAndRemoveUntil(context,
-                                        '/photo-step-4', (route) => false);
+                                    Navigator.pushNamed(
+                                        context, '/photo-step-4');
                                   },
                                 ),
                               ),

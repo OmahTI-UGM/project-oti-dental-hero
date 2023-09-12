@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: lightBlueColor,
-      appBar: _buildAppbar(height, width),
+      appBar: _buildAppbar(height, width, context),
       body: _buildBody(height, width),
       bottomNavigationBar: _buildBottomNavbar(height, width),
       floatingActionButton: IconButton(
@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  _buildAppbar(double height, double width) {
+  _buildAppbar(double height, double width, BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                border: Border.all(color: purpleColor, width: 1.0),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(8.0),
                 ),
@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       "Halo, Anya!",
                       style: GoogleFonts.fredoka(
-                          color: Color(0xff6A658A),
+                          color: purpleColor,
                           fontSize: 21,
                           fontWeight: FontWeight.w500),
                     ),
@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                           constraints: const BoxConstraints(),
                           onPressed: () {},
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         IconButton(
                           icon: Image.asset(
                             'assets/images/icon_album.png',
@@ -90,7 +90,9 @@ class HomeScreen extends StatelessWidget {
                           iconSize: 48,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/album');
+                          },
                         ),
                       ],
                     )

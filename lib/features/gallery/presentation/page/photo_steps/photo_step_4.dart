@@ -29,6 +29,7 @@ class PhotoStep4Screen extends StatelessWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
@@ -172,10 +173,7 @@ class PhotoStep4Screen extends StatelessWidget {
                                 child: Button(
                                   text: 'Selesai',
                                   width: double.infinity,
-                                  onTap: () {
-                                    // Navigator.pushNamed(
-                                    //     context, '/photo_step_');
-                                  },
+                                  onTap: () {},
                                 ),
                               ),
                             ],

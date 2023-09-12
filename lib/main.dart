@@ -6,6 +6,7 @@ import 'package:dental_hero/features/activity/presentation/page/activity_screen/
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'package:dental_hero/features/gallery/presentation/page/photo_album/photo_album.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_guide/photo_guide.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:dental_hero/features/statistic/presentation/page/statistic_screen/statistic_sceen.dart';
@@ -53,7 +54,9 @@ class MyApp extends StatelessWidget {
           ),
           onGenerateRoute: AppRoutes.onGenerateRoutes,
           // home: LoginScreen(),
-          home: PhotoGuideScreen(),
+          // home: PhotoGuideScreen(),
+          // home: AlbumScreen(),
+          home: HomeScreen(),
         ));
   }
 }

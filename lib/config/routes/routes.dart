@@ -1,6 +1,7 @@
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
+import 'package:dental_hero/features/gallery/presentation/page/photo_album/photo_album.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_1.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_2.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_3.dart';
@@ -31,6 +32,9 @@ class AppRoutes {
             builder: (_) => ResultScreen(
                   duration: settings.arguments as int,
                 ));
+
+      case '/album':
+        return MaterialPageRoute(builder: (_) => AlbumScreen());
 
       case '/photo-steps':
         return MaterialPageRoute(builder: (_) => const PhotoStep1Screen());

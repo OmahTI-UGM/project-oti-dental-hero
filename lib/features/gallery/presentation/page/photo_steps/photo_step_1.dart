@@ -20,15 +20,16 @@ class PhotoStep1Screen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: lightBlueColor,
-      appBar: _buildAppbar(height, width),
+      appBar: _buildAppbar(height, width, context),
       body: _buildBody(height, width, context),
     );
   }
 
-  _buildAppbar(double height, double width) {
+  _buildAppbar(double height, double width, BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
@@ -62,7 +63,9 @@ class PhotoStep1Screen extends StatelessWidget {
                       iconSize: 36,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     const SizedBox(width: 12),
                     Text(
@@ -175,8 +178,8 @@ class PhotoStep1Screen extends StatelessWidget {
                                   onTap: () {
                                     BlocProvider.of<ImagePickerBloc>(context)
                                         .add(StepChangeEvent());
-                                    Navigator.pushNamedAndRemoveUntil(context,
-                                        '/photo-step-2', (route) => false);
+                                    Navigator.pushNamed(
+                                        context, '/photo-step-2');
                                   },
                                 ),
                               ),

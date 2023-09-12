@@ -124,8 +124,7 @@ class PhotoGuideScreen extends StatelessWidget {
                     text: 'Mulai Foto',
                     width: double.infinity,
                     onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/photo-steps', (route) => false);
+                      Navigator.pushNamed(context, '/photo-steps');
                     }),
               ],
             ),
