@@ -15,11 +15,6 @@ class StatisticScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    // return Scaffold(
-    //   backgroundColor: lightBlueColor,
-    //   appBar: _buildAppbar(height, width),
-    //   body: _buildBody(height, width, context),
-    // );
     return BlocProvider(
       create: (context) => StatisticSwitchCubit(),
       child: Scaffold(
@@ -73,7 +68,7 @@ class StatisticScreen extends StatelessWidget {
                     Text(
                       "Statistik",
                       style: GoogleFonts.fredoka(
-                          color: Color(0xff6A658A),
+                          color: const Color(0xff6A658A),
                           fontSize: 21,
                           fontWeight: FontWeight.w500),
                     ),
