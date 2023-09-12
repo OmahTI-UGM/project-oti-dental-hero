@@ -71,4 +71,48 @@ class ActivityRepositoryImpl implements ActivityRepository {
       return DataFailed(error: e);
     }
   }
+
+  @override
+  Future<DataState<ActivityEntity?>> updateActivity({
+    required String userId,
+    required DateTime date,
+    required int duration,
+    required int score,
+    required TimeState timeState,
+  }) async {
+    try {
+      ActivityEntity? activity = await _activityApiService.updateActivity(
+        userId: userId,
+        date: date,
+        duration: duration,
+        score: score,
+        timeState: timeState,
+      );
+
+      if (activity == null) {
+        return DataFailed(error: Exception("Failed to update activity"));
+      }
+
+      return DataSuccess(data: activity);
+    } on Exception catch (e) {
+      return DataFailed(error: e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> createInitialActivities({
+    required String userId,
+    int days = 30,
+  }) async {
+    try {
+      await _activityApiService.createInitialActivities(
+        userId: userId,
+        days: days,
+      );
+
+      return const DataSuccess(data: null);
+    } on Exception catch (e) {
+      return DataFailed(error: e);
+    }
+  }
 }

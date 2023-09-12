@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dental_hero/features/activity/data/data_sources/remote/activity_api_service.dart';
+import 'package:dental_hero/features/activity/domain/usecases/create_initial_activities.dart';
 import 'package:dental_hero/features/activity/domain/usecases/get_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart';
+import 'package:dental_hero/features/activity/domain/usecases/update_activity.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
@@ -65,9 +67,13 @@ Future<void> initializeDependencies() async {
       GetUserActivitiesUseCase(repository: sl()));
   sl.registerSingleton<SaveActivityUseCase>(
       SaveActivityUseCase(repository: sl()));
+  sl.registerSingleton<UpdateActivityUseCase>(
+      UpdateActivityUseCase(repository: sl()));
+  sl.registerSingleton<CreateInitialActivitiesUseCase>(
+      CreateInitialActivitiesUseCase(repository: sl()));
 
   // Blocs
-  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<ActivityBloc>(

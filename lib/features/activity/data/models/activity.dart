@@ -25,7 +25,9 @@ class ActivityModel extends ActivityEntity {
       date: map['date'].toDate(),
       duration: map['duration'],
       score: map['score'],
-      timeState: TimeStateExtension.fromString(map['timeState']),
+      timeState: map['timeState'] != null
+          ? TimeStateExtension.fromString(map['timeState'])
+          : null,
     );
   }
 
@@ -39,4 +41,26 @@ class ActivityModel extends ActivityEntity {
       timeState: entity.timeState,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'userId': userId,
+      'date': date,
+      'duration': duration,
+      'score': score,
+      'timeState': timeState?.value,
+    };
+  }
+
+  String toJson() => '''
+  {
+    "id": "$id",
+    "userId": "$userId",
+    "date": "$date",
+    "duration": $duration,
+    "score": $score,
+    "timeState": "${timeState?.value}"
+  }
+  ''';
 }

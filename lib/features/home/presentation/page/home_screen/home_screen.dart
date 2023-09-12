@@ -112,61 +112,6 @@ class HomeScreen extends StatelessWidget {
     BlocProvider.of<HomeBloc>(context).add(LoadActivitiesEvent(userId: userId));
   }
 
-  // _buildBody() {
-  //   return BlocBuilder<NavigationCubit, NavigationState>(
-  //     builder: (context, state) {
-  //       // int index = state.index;
-  //       List<Step> steps = [
-  //         Step(
-  //           title: Container(
-  //             height: 80,
-  //             width: double.infinity,
-  //             // color: Colors.green,
-  //             decoration: BoxDecoration(
-  //               border: Border.all(
-  //                 color: Colors.blue,
-  //                 width: 4,
-  //               ),
-  //               borderRadius: BorderRadius.circular(12),
-  //             ),
-  //             child: Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //                 children: [
-  //                   Text('Foto Gigi'),
-  //                   ElevatedButton(onPressed: () {}, child: Text('Ambil'))
-  //                 ]),
-  //           ),
-  //           content: SizedBox.shrink(),
-  //         ),
-  //         Step(
-  //           title: Text('11 Agustus 2023'),
-  //           content: Activity(),
-  //         ),
-  //         Step(
-  //           title: Text('11 Agustus 2023'),
-  //           content: Activity(),
-  //         ),
-  //       ];
-
-  //       return ListView(
-  //         children: [
-  //           Stepper(
-  //             currentStep:
-  //                 steps.length - 1 - state.index, // Reverse the step index
-  //             onStepTapped: (index) {
-  //               context.read<NavigationCubit>(); //Change the navbar item
-  //             },
-  //             steps: steps.reversed.toList(), // Reverse the order of steps
-  //             controlsBuilder: (context, details) {
-  //               return const SizedBox.shrink();
-  //             },
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   _buildBody(double height, double width) {
     return Padding(
       padding: const EdgeInsets.only(

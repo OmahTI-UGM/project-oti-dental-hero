@@ -73,4 +73,66 @@ class ActivityApiService {
             ))
         .toList();
   }
+
+  Future<ActivityModel?> updateActivity({
+    required String userId,
+    required DateTime date,
+    required int duration,
+    required int score,
+    required TimeState timeState,
+  }) async {
+    final activity = await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('activities')
+        .where('date', isEqualTo: date)
+        .get();
+
+    if (activity.docs.isEmpty) {
+      return null;
+    }
+
+    await activity.docs.first.reference.update({
+      'duration': duration,
+      'score': score,
+      'timeState': timeState.value,
+    });
+
+    return ActivityModel(
+      id: activity.docs.first.id,
+      date: date,
+      duration: duration,
+      score: score,
+      timeState: timeState,
+    );
+  }
+
+  Future<void> createInitialActivities({
+    required String userId,
+    int days = 30,
+  }) async {
+    final now = DateTime.now();
+    final currentDate = DateTime(now.year, now.month, now.day);
+
+    final activities = List.generate(
+      days,
+      (index) => ActivityModel(
+        date: currentDate.add(Duration(days: index)),
+      ),
+    );
+
+    var batch = _firestore.batch();
+
+    for (var doc in activities) {
+      final docRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('activities')
+          .doc();
+
+      batch.set(docRef, doc.toMap());
+    }
+
+    batch.commit();
+  }
 }
