@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
           child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: const Color(0xff6A658A), width: 1.0),
+                border: Border.all(color: purpleColor, width: 1.0),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(8.0),
                 ),
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       "Halo, ${BlocProvider.of<AuthBloc>(context).state.user?.fullName ?? "null"}!",
                       style: GoogleFonts.fredoka(
-                          color: const Color(0xff6A658A),
+                          color: purpleColor,
                           fontSize: 21,
                           fontWeight: FontWeight.w500),
                     ),
@@ -97,7 +97,9 @@ class HomeScreen extends StatelessWidget {
                           iconSize: 48,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/album');
+                          },
                         ),
                       ],
                     )

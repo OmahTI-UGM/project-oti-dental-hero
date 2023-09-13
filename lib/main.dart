@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
 import 'features/auth/domain/entities/user.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'features/gallery/presentation/blocs/image_picker_bloc.dart';
 import 'injection_container.dart'; //Dependency injector
 
 void main() async {
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<DropdownBloc>(
             create: (context) => sl(),
           ),
+          BlocProvider<ImagePickerBloc>(
+            create: (context) => sl(),
+          ),
           BlocProvider<ActivityBloc>(
             create: (context) => sl(),
           )
@@ -49,6 +53,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           onGenerateRoute: AppRoutes.onGenerateRoutes,
+
           home: const SplashScreen(),
           // home: ActivityScreen(),
         ));
