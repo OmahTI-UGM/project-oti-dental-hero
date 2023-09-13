@@ -1,14 +1,22 @@
+import 'package:dental_hero/core/common/calculate_star.dart';
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
 import 'package:dental_hero/core/constants/time_state_enum.dart';
 import 'package:dental_hero/core/widgets/star.dart';
+import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:flutter/material.dart';
 
 class DayCard extends StatelessWidget {
   final TimeState time;
-  final bool isCompleted;
-  final bool done = false;
-  const DayCard({super.key, required this.time, required this.isCompleted});
+  final ActivityEntity activity;
+  const DayCard({
+    super.key,
+    required this.time,
+    required this.activity,
+  });
+
+  bool get isCompleted => activity.score != null;
+  int get stars => calculateStar(activity.score!);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,7 @@ class DayCard extends StatelessWidget {
               : const EdgeInsets.all(8.0),
           child: isCompleted
               ? StarWidget(
-                  star: 2,
+                  star: stars,
                 )
               : GestureDetector(
                   child: Container(

@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dental_hero/features/activity/data/data_sources/remote/activity_api_service.dart';
+import 'package:dental_hero/features/activity/domain/usecases/create_initial_activities.dart';
 import 'package:dental_hero/features/activity/domain/usecases/get_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart';
+import 'package:dental_hero/features/activity/domain/usecases/update_activity.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
@@ -12,6 +14,7 @@ import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
@@ -65,15 +68,21 @@ Future<void> initializeDependencies() async {
       GetUserActivitiesUseCase(repository: sl()));
   sl.registerSingleton<SaveActivityUseCase>(
       SaveActivityUseCase(repository: sl()));
+  sl.registerSingleton<UpdateActivityUseCase>(
+      UpdateActivityUseCase(repository: sl()));
+  sl.registerSingleton<CreateInitialActivitiesUseCase>(
+      CreateInitialActivitiesUseCase(repository: sl()));
 
   // Blocs
-  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
+  sl.registerFactory<ActivityBloc>(() =>
+      ActivityBloc(saveActivityUseCase: sl(), updateActivityUseCase: sl()));
 //   sl.registerFactory<TimerBloc>(() => TimerBloc());
   sl.registerFactory<ImagePickerBloc>(
     () => ImagePickerBloc(),
   );
-  sl.registerFactory<ActivityBloc>(
-      () => ActivityBloc(saveActivityUseCase: sl()));
+
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
 }

@@ -16,8 +16,7 @@ class ActivityLoading extends ActivityState {
 }
 
 class ActivitySuccess extends ActivityState {
-  const ActivitySuccess({required ActivityEntity activity})
-      : super(activity: activity);
+  const ActivitySuccess({ActivityEntity? activity}) : super(activity: activity);
 }
 
 class ActivityFailed extends ActivityState {

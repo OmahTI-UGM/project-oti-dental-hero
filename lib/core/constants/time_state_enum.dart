@@ -14,4 +14,15 @@ extension TimeStateExtension on TimeState {
         return 'unknown';
     }
   }
+
+  static TimeState fromString(String value) {
+    switch (value) {
+      case 'day':
+        return TimeState.day;
+      case 'night':
+        return TimeState.night;
+      default:
+        return TimeState.day;
+    }
+  }
 }

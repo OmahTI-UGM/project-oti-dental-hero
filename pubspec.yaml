@@ -7,10 +7,10 @@ environment:
   sdk: '>=2.19.6 <3.0.0'
 
 dependencies:
+  ar_flutter_plugin: ^0.7.3
   arcore_flutter_plugin: ^0.1.0
   bloc: ^8.1.2
   bulleted_list: ^0.0.1+0.1a
-  ar_flutter_plugin: ^0.7.3
   cloud_firestore: ^4.8.5
   equatable: ^2.0.5
   firebase_core: ^2.15.1
@@ -21,8 +21,9 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   flutter_native_splash: ^2.2.19
   get_it: ^7.6.0
-  image_picker: ^1.0.4
   google_fonts: ^4.0.3
+  image_picker: ^1.0.4
+  intl: ^0.18.1
   path_provider: ^2.1.1
   shared_preferences: ^2.2.1
   timeline_tile: ^2.0.0

@@ -1,14 +1,14 @@
 import 'package:dental_hero/config/routes/routes.dart';
-import 'package:dental_hero/core/common/navigation/navigation_cubit.dart';
 import 'package:dental_hero/core/common/splash_screen/splash_screen.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
-import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
 import 'features/auth/domain/entities/user.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'features/gallery/presentation/blocs/image_picker_bloc.dart';
 import 'injection_container.dart'; //Dependency injector
 
 void main() async {
@@ -28,10 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => NavigationCubit(),
-          ),
           BlocProvider<AuthBloc>(
+            create: (context) => sl(),
+          ),
+          BlocProvider<HomeBloc>(
             create: (context) => sl(),
           ),
           BlocProvider<TimerBloc>(

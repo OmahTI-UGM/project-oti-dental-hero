@@ -1,4 +1,5 @@
 import 'package:dental_hero/core/resources/data_state.dart';
+import 'package:dental_hero/features/activity/domain/usecases/create_initial_activities.dart';
 import 'package:dental_hero/features/auth/domain/entities/user.dart';
 import 'package:dental_hero/features/auth/domain/usecases/check_auth.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
@@ -13,9 +14,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUseCase _registerUseCase;
   final CheckAuthUseCase _checkAuthUseCase;
   final LogoutUseCase _logoutUseCase;
+  final CreateInitialActivitiesUseCase _createInitialActivitiesUseCase;
 
   AuthBloc(this._loginUseCase, this._registerUseCase, this._checkAuthUseCase,
-      this._logoutUseCase)
+      this._logoutUseCase, this._createInitialActivitiesUseCase)
       : super(const AuthInitial()) {
     on<LoginEvent>(onLogin);
     on<RegisterEvent>(onRegister);
@@ -43,7 +45,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthInitial());
       }
     } catch (e) {
-      print(e);
       emit(AuthFailed(error: Exception("Failed to login. Try again.")));
     }
   }
@@ -60,6 +61,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (dataState is DataSuccess && dataState.data != null) {
       emit(AuthSuccess(user: dataState.data!));
+      await _createInitialActivitiesUseCase(
+          params: CreateInitialActivitiesParams(
+        userId: dataState.data!.id!,
+        days: 30,
+      ));
     }
 
     if (dataState is DataFailed) {
@@ -69,7 +75,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void onCheckAuth(CheckAuthEvent event, Emitter<AuthState> emit) {
     final user = _checkAuthUseCase();
-    print('here, user: $user');
 
     if (user != null) {
       emit(AuthSuccess(user: user));

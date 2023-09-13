@@ -29,6 +29,17 @@ class RegisterScreen extends StatelessWidget {
                   content: Text('Success'),
                 ),
               );
+
+              Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+            }
+
+            if (state is AuthFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text('error: ${state.error}'),
+                ),
+              );
             }
           },
           child: _buildBody(context)),
@@ -317,6 +328,22 @@ class RegisterScreen extends StatelessWidget {
                               ),
                             );
                           }
+                        },
+                      ),
+                      const SizedBox(height: 18),
+                      TextButton(
+                        child: Text(
+                          'Sudah Punya Akun? Masuk',
+                          style: GoogleFonts.fredoka(
+                            color: darkBlueColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (_) => false);
                         },
                       ),
                     ]),

@@ -19,4 +19,17 @@ abstract class ActivityRepository {
     required String userId,
     required DateTime date,
   });
+
+  Future<DataState<void>> updateActivity({
+    required String userId,
+    required DateTime date,
+    required int duration,
+    required int score,
+    required TimeState timeState,
+  });
+
+  Future<DataState<void>> createInitialActivities({
+    required String userId,
+    int days = 30,
+  });
 }
