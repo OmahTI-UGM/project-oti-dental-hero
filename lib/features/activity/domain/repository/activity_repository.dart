@@ -20,7 +20,7 @@ abstract class ActivityRepository {
     required DateTime date,
   });
 
-  Future<DataState<ActivityEntity?>> updateActivity({
+  Future<DataState<void>> updateActivity({
     required String userId,
     required DateTime date,
     required int duration,

@@ -1,7 +1,9 @@
+import 'package:dental_hero/core/common/calculate_star.dart';
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/date_formatter.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
 import 'package:dental_hero/core/constants/time_state_enum.dart';
+import 'package:dental_hero/core/widgets/star.dart';
 import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/home/presentation/widget/day_card.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +37,6 @@ class ActivityCard extends StatelessWidget {
         .where((element) => element.timeState == TimeState.night)
         .first;
 
-    print('dayActivity: $dayActivity\nnightActivity: $nightActivity');
-
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -58,15 +58,15 @@ class ActivityCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Row(
-              children: const [
+              children: [
                 DayCard(
-                  isCompleted: true,
                   time: TimeState.day,
+                  activity: dayActivity,
                 ),
-                Spacer(),
+                const Spacer(),
                 DayCard(
-                  isCompleted: false,
                   time: TimeState.night,
+                  activity: nightActivity,
                 ),
               ],
             )
@@ -75,6 +75,14 @@ class ActivityCard extends StatelessWidget {
   }
 
   _buildInactiveCard(BuildContext context, List<ActivityEntity> activityGroup) {
+    final dayActivity = activityGroup
+        .where((element) => element.timeState == TimeState.day)
+        .first;
+
+    final nightActivity = activityGroup
+        .where((element) => element.timeState == TimeState.night)
+        .first;
+
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -95,89 +103,75 @@ class ActivityCard extends StatelessWidget {
                   color: purpleColor),
             ),
             const SizedBox(height: 6),
+            // Activity here v
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/day_bw.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  width: 115,
-                  height: 135,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: shadeGrayColor,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: purpleColor,
-                            ),
-                          ),
-                          height: 40,
-                          child: Center(
-                              child: OutlineText(
-                            color: Colors.white,
-                            text: 'Belum',
-                            size: 18,
-                            outlineColor: Colors.grey.shade700,
-                            fontWeight: FontWeight.w600,
-                          )),
-                        ),
-                        onTap: () {},
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/night_bw.png'),
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  width: 115,
-                  height: 135,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: shadeGrayColor,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: purpleColor,
-                            ),
-                          ),
-                          height: 40,
-                          child: Center(
-                              child: OutlineText(
-                            color: Colors.white,
-                            text: 'Belum',
-                            size: 18,
-                            outlineColor: Colors.grey.shade700,
-                            fontWeight: FontWeight.w600,
-                          )),
-                        ),
-                        onTap: () {},
-                      ),
-                    ),
-                  ),
-                )
+                _buildInactiveDayCard(
+                    time: TimeState.day, activity: dayActivity),
+                _buildInactiveDayCard(
+                    time: TimeState.night, activity: nightActivity),
               ],
             )
           ],
         ));
-    ;
+  }
+
+  _buildInactiveDayCard({
+    required TimeState time,
+    required ActivityEntity activity,
+  }) {
+    final String imgStr = (time == TimeState.day) ? 'day_bw' : 'night_bw';
+
+    final bool isCompleted = activity.score != null;
+
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/$imgStr.png'),
+          fit: BoxFit.fill,
+        ),
+      ),
+      width: 115,
+      height: 135,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: shadeGrayColor,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: purpleColor,
+                ),
+              ),
+              height: 40,
+              child: isCompleted
+                  ? Container(
+                      foregroundDecoration: const BoxDecoration(
+                        color: Colors.grey,
+                        backgroundBlendMode: BlendMode.saturation,
+                      ),
+                      child: StarWidget(
+                        star: calculateStar(activity.score!),
+                      ),
+                    )
+                  : Center(
+                      child: OutlineText(
+                      color: Colors.white,
+                      text: 'Belum',
+                      size: 18,
+                      outlineColor: Colors.grey.shade700,
+                      fontWeight: FontWeight.w600,
+                    )),
+            ),
+            onTap: () {},
+          ),
+        ),
+      ),
+    );
   }
 }

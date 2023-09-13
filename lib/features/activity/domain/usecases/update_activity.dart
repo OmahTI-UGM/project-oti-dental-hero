@@ -7,14 +7,13 @@ import '../entities/activity.dart';
 import '../repository/activity_repository.dart';
 
 class UpdateActivityUseCase
-    implements UseCase<DataState<ActivityEntity?>?, UpdateActivityParams> {
+    implements UseCase<DataState<void>?, UpdateActivityParams> {
   final ActivityRepository repository;
 
   const UpdateActivityUseCase({required this.repository});
 
   @override
-  Future<DataState<ActivityEntity?>?> call(
-      {UpdateActivityParams? params}) async {
+  Future<DataState<void>?> call({UpdateActivityParams? params}) async {
     return await repository.updateActivity(
       userId: params!.userId,
       date: params.date,
@@ -39,6 +38,16 @@ class UpdateActivityParams extends Equatable {
     required this.score,
     required this.timeState,
   });
+
+  factory UpdateActivityParams.fromActivityEntity(ActivityEntity activity) {
+    return UpdateActivityParams(
+      userId: activity.userId!,
+      date: activity.date!,
+      duration: activity.duration!,
+      score: activity.score!,
+      timeState: activity.timeState!,
+    );
+  }
 
   @override
   List<Object?> get props => [

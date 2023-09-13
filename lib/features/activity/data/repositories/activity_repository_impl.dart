@@ -73,7 +73,7 @@ class ActivityRepositoryImpl implements ActivityRepository {
   }
 
   @override
-  Future<DataState<ActivityEntity?>> updateActivity({
+  Future<DataState<void>> updateActivity({
     required String userId,
     required DateTime date,
     required int duration,
@@ -81,7 +81,7 @@ class ActivityRepositoryImpl implements ActivityRepository {
     required TimeState timeState,
   }) async {
     try {
-      ActivityEntity? activity = await _activityApiService.updateActivity(
+      await _activityApiService.updateActivity(
         userId: userId,
         date: date,
         duration: duration,
@@ -89,11 +89,7 @@ class ActivityRepositoryImpl implements ActivityRepository {
         timeState: timeState,
       );
 
-      if (activity == null) {
-        return DataFailed(error: Exception("Failed to update activity"));
-      }
-
-      return DataSuccess(data: activity);
+      return const DataSuccess(data: null);
     } on Exception catch (e) {
       return DataFailed(error: e);
     }

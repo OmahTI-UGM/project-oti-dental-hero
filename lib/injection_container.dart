@@ -76,7 +76,7 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
-  sl.registerFactory<ActivityBloc>(
-      () => ActivityBloc(saveActivityUseCase: sl()));
+  sl.registerFactory<ActivityBloc>(() =>
+      ActivityBloc(saveActivityUseCase: sl(), updateActivityUseCase: sl()));
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
 }

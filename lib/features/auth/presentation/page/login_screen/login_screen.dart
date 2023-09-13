@@ -15,7 +15,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(BlocProvider.of<AuthBloc>(context).state);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<AuthBloc, dynamic>(listener: (_, state) {

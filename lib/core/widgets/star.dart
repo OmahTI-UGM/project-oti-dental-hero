@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StarWidget extends StatelessWidget {
-  late int star;
-  StarWidget({super.key, required this.star});
+  final int star;
+  const StarWidget({super.key, required this.star});
 
   @override
   Widget build(BuildContext context) {
