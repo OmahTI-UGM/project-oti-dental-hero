@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: lightBlueColor,
       appBar: _buildAppbar(context, height, width),
       body: _buildBody(context, height, width),
-      bottomNavigationBar: _buildBottomNavbar(height, width),
+      bottomNavigationBar: _buildBottomNavbar(context, height, width),
       floatingActionButton: IconButton(
         icon: Image.asset('assets/images/icon_calendar.png'),
         iconSize: 70,
@@ -177,7 +177,7 @@ class HomeScreen extends StatelessWidget {
         date.day == now.day;
   }
 
-  _buildBottomNavbar(double height, double width) {
+  _buildBottomNavbar(BuildContext context, height, double width) {
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -205,7 +205,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               GestureDetector(
                   child: Image.asset('assets/images/scan.png',
-                      width: width * 0.42)),
+                      width: width * 0.42),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/ar');
+                  }),
               GestureDetector(
                 child:
                     Image.asset('assets/images/rank.png', width: width * 0.42),

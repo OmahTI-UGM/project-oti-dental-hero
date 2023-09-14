@@ -7,6 +7,12 @@ import 'package:dental_hero/features/activity/domain/usecases/get_activity.dart'
 import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/update_activity.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
+import 'package:dental_hero/features/augmented_reality/data/data_sources/remote/ar_api_service.dart';
+import 'package:dental_hero/features/augmented_reality/data/repositories/ar_repository_impl.dart';
+import 'package:dental_hero/features/augmented_reality/domain/repository/ar_repository.dart';
+import 'package:dental_hero/features/augmented_reality/domain/usecases/get_ar_document.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/blocs/ar/ar_bloc.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/blocs/qr/qr_bloc.dart';
 import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
 import 'package:dental_hero/features/auth/domain/usecases/check_auth.dart';
@@ -49,12 +55,19 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AuthSharedPrefsService>(
       AuthSharedPrefsService(sharedPrefs: sl()));
   sl.registerSingleton<ActivityApiService>(ActivityApiService(firestore: sl()));
+  sl.registerSingleton<ArApiService>(ArApiService(firestore: sl()));
 
 // Repositories
-  sl.registerSingleton<AuthRepository>(
-      AuthRepositoryImpl(authApiService: sl(), authSharedPrefsService: sl()));
-  sl.registerSingleton<ActivityRepository>(
-      ActivityRepositoryImpl(activityApiService: sl()));
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(
+    authApiService: sl(),
+    authSharedPrefsService: sl(),
+  ));
+  sl.registerSingleton<ActivityRepository>(ActivityRepositoryImpl(
+    activityApiService: sl(),
+  ));
+  sl.registerSingleton<ArRepository>(ArRepositoryImpl(
+    arApiService: sl(),
+  ));
 
   // Use Cases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(repository: sl()));
@@ -73,16 +86,20 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<CreateInitialActivitiesUseCase>(
       CreateInitialActivitiesUseCase(repository: sl()));
 
+  sl.registerSingleton<GetArDocumentUseCase>(
+      GetArDocumentUseCase(repository: sl()));
+
   // Blocs
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<ActivityBloc>(() =>
       ActivityBloc(saveActivityUseCase: sl(), updateActivityUseCase: sl()));
-//   sl.registerFactory<TimerBloc>(() => TimerBloc());
+  sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
   sl.registerFactory<ImagePickerBloc>(
     () => ImagePickerBloc(),
   );
 
-  sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
+  sl.registerFactory<QrBloc>(() => QrBloc(getArDocumentUseCase: sl()));
+  sl.registerFactory<ArBloc>(() => ArBloc());
 }
