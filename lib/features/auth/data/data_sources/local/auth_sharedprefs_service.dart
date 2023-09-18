@@ -1,4 +1,3 @@
-// firebase service
 import 'dart:convert';
 
 import 'package:dental_hero/features/auth/data/models/user.dart';
@@ -22,11 +21,12 @@ class AuthSharedPrefsService {
   }
 
   void saveUserModel(UserModel user) async {
-    await _prefs.setString("user", user.toJson());
+    await _prefs.setString("user", jsonEncode(user.toJson()));
   }
 
   void saveUserEntity(UserEntity user) async {
-    await _prefs.setString("user", UserModel.fromEntity(user).toJson());
+    await _prefs.setString(
+        "user", jsonEncode(UserModel.fromEntity(user).toJson()));
   }
 
   Future<bool> removeUser() async {
