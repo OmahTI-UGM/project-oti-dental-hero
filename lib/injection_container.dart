@@ -29,6 +29,7 @@ import 'features/auth/data/data_sources/remote/auth_api_service.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repository/user_repository.dart';
 import 'features/auth/domain/usecases/get_leaderboard.dart';
+import 'features/auth/domain/usecases/increment_score.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 
 import 'features/activity/data/repositories/activity_repository_impl.dart';
@@ -74,6 +75,8 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetLeaderboardUseCase>(
       GetLeaderboardUseCase(repository: sl()));
+  sl.registerSingleton<IncrementScoreUseCase>(
+      IncrementScoreUseCase(repository: sl()));
 
   sl.registerSingleton<GetActivityUseCase>(
       GetActivityUseCase(repository: sl()));
@@ -91,8 +94,11 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<LeaderboardBloc>(() => LeaderboardBloc(sl()));
-  sl.registerFactory<ActivityBloc>(() =>
-      ActivityBloc(saveActivityUseCase: sl(), updateActivityUseCase: sl()));
+  sl.registerFactory<ActivityBloc>(() => ActivityBloc(
+        saveActivityUseCase: sl(),
+        updateActivityUseCase: sl(),
+        incrementScoreUseCase: sl(),
+      ));
   sl.registerFactory<ImagePickerBloc>(
     () => ImagePickerBloc(),
   );
