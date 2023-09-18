@@ -39,6 +39,7 @@ class AuthApiService {
       'birthDate': birthDate,
       'email': email,
       'disability': disability,
+      'score': 0,
     });
 
     return UserModel(

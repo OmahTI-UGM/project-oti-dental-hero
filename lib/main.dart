@@ -9,6 +9,7 @@ import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
 import 'features/auth/domain/entities/user.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
 import 'injection_container.dart'; //Dependency injector
 
 void main() async {
@@ -45,7 +46,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ActivityBloc>(
             create: (context) => sl(),
-          )
+          ),
+          BlocProvider<LeaderboardBloc>(
+            create: (context) => sl(),
+          ),
         ],
         child: MaterialApp(
           title: 'Dental Hero',

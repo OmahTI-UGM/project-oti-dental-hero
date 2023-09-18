@@ -1,5 +1,9 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/features/auth/domain/entities/user.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_event.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_state.dart';
 import 'package:dental_hero/features/statistic/presentation/cubit/statistic_switch_cubit.dart';
 import 'package:dental_hero/features/statistic/presentation/widget/leaderboard_tile.dart';
 import 'package:dental_hero/features/statistic/presentation/widget/statistic_switch.dart';
@@ -13,6 +17,9 @@ class StatisticScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<LeaderboardBloc>(context)
+        .add(const FetchLeaderboardEvent());
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return BlocProvider(
@@ -81,61 +88,61 @@ class StatisticScreen extends StatelessWidget {
   }
 
   _buildBody(double height, width, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 24,
-            ),
-            StatisticSwitch(),
-            const SizedBox(
-              height: 18,
-            ),
-            BlocBuilder<StatisticSwitchCubit, StatisticSwitchState>(
-              builder: (context, state) {
-                if (state == StatisticSwitchState.rank) {
-                  return _buildRankColumn(leaderboardData, context);
-                } else if (state == StatisticSwitchState.statistik) {
-                  return _buildStatistikColumn();
-                }
-                return Container();
-              },
-            ),
-            const SizedBox(height: 24)
-          ],
-        ),
-      ),
-    );
-  }
+    return BlocBuilder<LeaderboardBloc, LeaderboardState>(
+        builder: (context, state) {
+      if (state is LeaderboardLoading || state is LeaderboardInitial) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
 
-  final List<Map<String, dynamic>> leaderboardData = [
-    {'rank': 1, 'name': 'John Doe', 'score': 1500},
-    {'rank': 2, 'name': 'Jane Smith', 'score': 1300},
-    {'rank': 3, 'name': 'Bob Johnson', 'score': 1200},
-    {'rank': 4, 'name': 'Anya WakUWaaku', 'score': 1000},
-    {'rank': 1, 'name': 'John Doe', 'score': 1500},
-    {'rank': 2, 'name': 'Jane Smith', 'score': 1300},
-    {'rank': 3, 'name': 'Bob Johnson', 'score': 1200},
-    {'rank': 4, 'name': 'Anya WakUWaaku', 'score': 1000},
-    {'rank': 1, 'name': 'John Doe', 'score': 1500},
-    {'rank': 2, 'name': 'Jane Smith', 'score': 1300},
-    {'rank': 3, 'name': 'Bob Johnson', 'score': 1200},
-    {'rank': 4, 'name': 'Anya WakUWaaku', 'score': 1000},
-    {'rank': 1, 'name': 'John Doe', 'score': 1500},
-    {'rank': 2, 'name': 'Jane Smith', 'score': 1300},
-    {'rank': 3, 'name': 'Bob Johnson', 'score': 1200},
-    {'rank': 4, 'name': 'Anya WakUWaaku', 'score': 1000},
-    {'rank': 1, 'name': 'John Doe', 'score': 1500},
-    {'rank': 2, 'name': 'Jane Smith', 'score': 1300},
-    {'rank': 3, 'name': 'Bob Johnson', 'score': 1200},
-    {'rank': 4, 'name': 'Anya WakUWaaku', 'score': 1000},
-  ];
+      if (state is LeaderboardFailed) {
+        return Center(
+          child: Text(state.error.toString()),
+        );
+      }
+
+      final leaderboardData = (state as LeaderboardSuccess).leaderboard;
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 24,
+              ),
+              StatisticSwitch(),
+              const SizedBox(
+                height: 18,
+              ),
+              BlocBuilder<StatisticSwitchCubit, StatisticSwitchState>(
+                builder: (context, state) {
+                  if (state == StatisticSwitchState.rank) {
+                    return _buildRankColumn(leaderboardData, context);
+                  } else if (state == StatisticSwitchState.statistik) {
+                    return _buildStatistikColumn();
+                  }
+                  return Container();
+                },
+              ),
+              const SizedBox(height: 24)
+            ],
+          ),
+        ),
+      );
+    });
+  }
 }
 
 Widget _buildRankColumn(
-    List<Map<String, dynamic>> leaderboardData, BuildContext context) {
+    List<UserEntity>? leaderboardData, BuildContext context) {
+  if (leaderboardData == null || leaderboardData.isEmpty) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
   return Column(children: [
     Image.asset('assets/images/trophy.png'),
     const SizedBox(height: 8),
@@ -258,9 +265,9 @@ Widget _buildRankColumn(
             itemBuilder: (context, index) {
               final entry = leaderboardData[index];
               return LeaderboardTile(
-                rank: entry['rank'],
-                name: entry['name'],
-                score: entry['score'],
+                rank: index + 1,
+                name: entry.fullName!,
+                score: entry.score ?? 999,
               );
             },
           )

@@ -8,6 +8,8 @@ import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart
 import 'package:dental_hero/features/activity/domain/usecases/update_activity.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
+import 'package:dental_hero/features/auth/data/data_sources/remote/user_api_service.dart';
+import 'package:dental_hero/features/auth/data/repositories/user_repository_impl.dart';
 import 'package:dental_hero/features/auth/domain/repository/auth_repository.dart';
 import 'package:dental_hero/features/auth/domain/usecases/check_auth.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
@@ -16,6 +18,7 @@ import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +27,8 @@ import 'core/constants/ticker.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
 import 'features/auth/data/data_sources/remote/auth_api_service.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/domain/repository/user_repository.dart';
+import 'features/auth/domain/usecases/get_leaderboard.dart';
 import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 
 import 'features/activity/data/repositories/activity_repository_impl.dart';
@@ -48,11 +53,16 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AuthApiService>(AuthApiService(firestore: sl()));
   sl.registerSingleton<AuthSharedPrefsService>(
       AuthSharedPrefsService(sharedPrefs: sl()));
+  sl.registerSingleton<UserApiService>(UserApiService(firestore: sl()));
   sl.registerSingleton<ActivityApiService>(ActivityApiService(firestore: sl()));
 
 // Repositories
-  sl.registerSingleton<AuthRepository>(
-      AuthRepositoryImpl(authApiService: sl(), authSharedPrefsService: sl()));
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(
+    authApiService: sl(),
+    authSharedPrefsService: sl(),
+  ));
+  sl.registerSingleton<UserRepository>(
+      UserRepositoryImpl(userApiService: sl()));
   sl.registerSingleton<ActivityRepository>(
       ActivityRepositoryImpl(activityApiService: sl()));
 
@@ -61,6 +71,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<RegisterUseCase>(RegisterUseCase(repository: sl()));
   sl.registerSingleton<CheckAuthUseCase>(CheckAuthUseCase(repository: sl()));
   sl.registerSingleton<LogoutUseCase>(LogoutUseCase(repository: sl()));
+
+  sl.registerSingleton<GetLeaderboardUseCase>(
+      GetLeaderboardUseCase(repository: sl()));
 
   sl.registerSingleton<GetActivityUseCase>(
       GetActivityUseCase(repository: sl()));
@@ -77,9 +90,9 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
+  sl.registerFactory<LeaderboardBloc>(() => LeaderboardBloc(sl()));
   sl.registerFactory<ActivityBloc>(() =>
       ActivityBloc(saveActivityUseCase: sl(), updateActivityUseCase: sl()));
-//   sl.registerFactory<TimerBloc>(() => TimerBloc());
   sl.registerFactory<ImagePickerBloc>(
     () => ImagePickerBloc(),
   );
