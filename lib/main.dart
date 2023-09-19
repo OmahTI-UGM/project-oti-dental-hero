@@ -1,6 +1,8 @@
 import 'package:dental_hero/config/routes/routes.dart';
 import 'package:dental_hero/core/common/splash_screen/splash_screen.dart';
+import 'package:dental_hero/features/activity/presentation/blocs/confetti/confetti_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
+import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,9 @@ class MyApp extends StatelessWidget {
             create: (context) => sl(),
           ),
           BlocProvider<LeaderboardBloc>(
+            create: (context) => sl(),
+          ),
+          BlocProvider<ConfettiBloc>(
             create: (context) => sl(),
           ),
         ],

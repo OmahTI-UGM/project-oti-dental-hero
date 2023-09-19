@@ -38,6 +38,7 @@ class DayCard extends StatelessWidget {
           child: isCompleted
               ? StarWidget(
                   star: stars,
+                  size: 0.08,
                 )
               : GestureDetector(
                   child: Container(

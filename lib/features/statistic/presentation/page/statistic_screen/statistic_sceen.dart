@@ -26,16 +26,17 @@ class StatisticScreen extends StatelessWidget {
       create: (context) => StatisticSwitchCubit(),
       child: Scaffold(
         backgroundColor: lightBlueColor,
-        appBar: _buildAppbar(height, width),
+        appBar: _buildAppbar(height, width, context),
         body: _buildBody(height, width, context),
       ),
     );
   }
 
-  _buildAppbar(double height, double width) {
+  _buildAppbar(double height, double width, BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
@@ -69,7 +70,9 @@ class StatisticScreen extends StatelessWidget {
                       iconSize: 36,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     const SizedBox(width: 12),
                     Text(

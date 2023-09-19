@@ -6,6 +6,7 @@ import 'package:dental_hero/features/activity/domain/usecases/create_initial_act
 import 'package:dental_hero/features/activity/domain/usecases/get_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/save_activity.dart';
 import 'package:dental_hero/features/activity/domain/usecases/update_activity.dart';
+import 'package:dental_hero/features/activity/presentation/blocs/confetti/confetti_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/auth/data/data_sources/local/auth_sharedprefs_service.dart';
 import 'package:dental_hero/features/auth/data/data_sources/remote/user_api_service.dart';
@@ -104,4 +105,5 @@ Future<void> initializeDependencies() async {
   );
 
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
+  sl.registerFactory<ConfettiBloc>(() => ConfettiBloc());
 }

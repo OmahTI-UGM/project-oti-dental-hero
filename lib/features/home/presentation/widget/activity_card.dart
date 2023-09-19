@@ -157,6 +157,7 @@ class ActivityCard extends StatelessWidget {
                       ),
                       child: StarWidget(
                         star: calculateStar(activity.score!),
+                        size: 0.2,
                       ),
                     )
                   : Center(
