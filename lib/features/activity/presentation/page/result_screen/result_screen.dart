@@ -1,5 +1,13 @@
+import 'package:confetti/confetti.dart';
+import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/core/widgets/button.dart';
 import 'package:dental_hero/core/widgets/star.dart';
-import 'package:flutter/material.dart';
+import 'package:dental_hero/features/activity/presentation/blocs/confetti/confetti_bloc.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ResultScreen extends StatelessWidget {
   final int? duration;
@@ -7,28 +15,113 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: _buildBody(context),
+      backgroundColor: const Color(0xffE9F3FF),
+      body: _buildBody(height, width, context),
     );
   }
 
-  _buildBody(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Skor${_countScore(duration!)[0]}'),
-          Text('Waktu${_countTime(duration!)[0]}:${_countTime(duration!)[1]}'),
-          StarWidget(star: _countScore(duration!)[1]),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/home', (route) => false);
-            },
-            child: const Text('Kembali ke menu'),
-          ),
-        ],
-      ),
+  _buildBody(double height, double width, BuildContext context) {
+    // Use a separate context here to access the ConfettiBloc
+    final confettiBloc = BlocProvider.of<ConfettiBloc>(context);
+
+    // Start the confetti animation when the page opens
+    Future.delayed(Duration.zero, () {
+      confettiBloc.add(ShowConfetti());
+    });
+    return BlocBuilder<ConfettiBloc, ConfettiState>(
+      builder: (context, state) {
+        return Stack(
+          children: [
+            BlocBuilder<ConfettiBloc, ConfettiState>(
+              builder: (context, state) {
+                if (state is ConfettiPlaying) {
+                  return Center(
+                    child: ConfettiWidget(
+                      confettiController: ConfettiController(
+                        duration: const Duration(seconds: 3),
+                      ),
+                      blastDirectionality: BlastDirectionality.explosive,
+                      shouldLoop: false,
+                      colors: const [
+                        Colors.green,
+                        Colors.blue,
+                        Colors.pink,
+                        Colors.orange,
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            Center(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Container(
+                height: height * 0.55,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: purpleColor, width: 1.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Keren! Kamu Sudah Selesai Menyikat Gigi',
+                      style: GoogleFonts.fredoka(
+                        color: purpleColor,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: height * 0.27,
+                      width: width * 0.54,
+                      child: Stack(children: [
+                        Image.asset('assets/images/score_happy.png'),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: StarWidget(
+                            star: _countScore(duration!)[1],
+                            size: 0.13,
+                          ),
+                        ),
+                      ]),
+                    ),
+                    const SizedBox(height: 12),
+                    OutlineText(
+                      text: 'Skormu: ${_countScore(duration!)[0]}',
+                      color: Colors.white,
+                      size: 24,
+                      fontWeight: FontWeight.w600,
+                      outlineColor: purpleColor,
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Button(
+                          width: width,
+                          text: 'Kembali',
+                          onTap: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/home', (route) => false);
+                          }),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+          ],
+        );
+      },
     );
   }
 
