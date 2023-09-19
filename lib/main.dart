@@ -5,6 +5,7 @@ import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_blo
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/statistic/statistic_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/activity/presentation/blocs/activity/activity_bloc.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<ConfettiBloc>(
             create: (context) => sl(),
           ),
+          BlocProvider<StatisticBloc>(
+            create: (context) => sl(),
+          )
         ],
         child: MaterialApp(
           title: 'Dental Hero',

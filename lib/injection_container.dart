@@ -20,6 +20,7 @@ import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.da
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
+import 'package:dental_hero/features/statistic/presentation/blocs/statistic/statistic_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,6 +96,7 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<LeaderboardBloc>(() => LeaderboardBloc(sl()));
+  sl.registerFactory<StatisticBloc>(() => StatisticBloc(sl()));
   sl.registerFactory<ActivityBloc>(() => ActivityBloc(
         saveActivityUseCase: sl(),
         updateActivityUseCase: sl(),
