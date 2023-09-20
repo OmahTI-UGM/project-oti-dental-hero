@@ -1,5 +1,4 @@
 import 'package:dental_hero/core/common/color.dart';
-import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
@@ -185,7 +184,7 @@ class HomeScreen extends StatelessWidget {
         date.month == now.month &&
         date.day == now.day;
   }
-  
+
   _buildBottomNavbar(BuildContext context, double height, double width) {
     return Container(
         decoration: BoxDecoration(

@@ -1,9 +1,8 @@
 import 'package:dental_hero/core/constants/time_state_enum.dart';
 import 'package:dental_hero/features/activity/presentation/page/activity_screen/activity_screen.dart';
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
-import 'package:dental_hero/features/augmented_reality/presentation/pages/ar_main_screen.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/pages/ar_screen/ar_screen.dart';
-import 'package:dental_hero/features/augmented_reality/presentation/pages/qr_screen.dart/qr_screen.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/pages/qr_screen/qr_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_album/photo_album.dart';

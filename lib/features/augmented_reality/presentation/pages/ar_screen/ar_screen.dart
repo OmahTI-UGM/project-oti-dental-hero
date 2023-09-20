@@ -5,15 +5,18 @@ import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin/models/ar_anchor.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
+import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/blocs/ar/ar_bloc.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/blocs/qr/qr_bloc.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/blocs/qr/qr_event.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin/datatypes/config_planedetection.dart';
 import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class ArScreen extends StatefulWidget {
@@ -38,42 +41,10 @@ class _ArScreenState extends State<ArScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kartu Digital'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            BlocProvider.of<QrBloc>(context).add(const QrResetEvent());
-
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/home', (route) => false);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text("Petunjuk Penggunaan"),
-                      content: const Text(
-                          "1. Arahkan kamera ke permukaan datar\n2. Ketuk permukaan datar untuk menampilkan model 3D"),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("OK"))
-                      ],
-                    );
-                  });
-            },
-          )
-        ],
-      ),
+      appBar: _buildAppbar(height, width, context),
       body: BlocListener<ArBloc, ArState>(
           listener: (context, state) {
             if (state is ArSuccess) {
@@ -92,18 +63,64 @@ class _ArScreenState extends State<ArScreen> {
               planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
             ),
             Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Text(
-                  BlocProvider.of<QrBloc>(context)
-                          .state
-                          .arDocumentEntity
-                          ?.description ??
-                      "-",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ))
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 12.0),
+                child: SizedBox.expand(
+                  child: DraggableScrollableSheet(
+                      initialChildSize: 0.3,
+                      minChildSize: 0.3,
+                      maxChildSize: 0.5,
+                      controller: DraggableScrollableController(),
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(14.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: purpleColor, width: 1.0),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Foto Gigi',
+                                style: GoogleFonts.fredoka(
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.w500,
+                                    color: purpleColor),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                BlocProvider.of<QrBloc>(context)
+                                        .state
+                                        .arDocumentEntity
+                                        ?.description ??
+                                    "-",
+                                style: GoogleFonts.fredoka(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: purpleColor),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                "ajshfkashfliasdhfoaushfaiusfhask;jfhaskfhasukhfaiwpuhfiuawhfiuahweufhaskjdhfaisuhfiuasesuanfjkashfkashfusk",
+                                style: GoogleFonts.fredoka(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: purpleColor),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
+                        );
+                      }),
+                ),
+              ),
+            ),
           ])),
     );
   }
@@ -176,5 +193,94 @@ class _ArScreenState extends State<ArScreen> {
     } else {
       arSessionManager!.onError("Adding Anchor failed");
     }
+  }
+
+  _buildAppbar(double height, double width, BuildContext context) {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height * 0.1),
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xffE9F3FF),
+        elevation: 0,
+        flexibleSpace: SafeArea(
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(8.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.40),
+                    offset: const Offset(4, -4),
+                    blurRadius: 0,
+                    spreadRadius: 0,
+                    inset: true,
+                  ),
+                ],
+              ),
+              width: double.infinity,
+              height: height * 0.1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/images/icon_back.png',
+                          ),
+                          iconSize: 36,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            BlocProvider.of<QrBloc>(context)
+                                .add(const QrResetEvent());
+
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/home', (route) => false);
+                          },
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          "Kartu Digital",
+                          style: GoogleFonts.fredoka(
+                              color: purpleColor,
+                              fontSize: 21,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.info),
+                      color: shadeBlueColor,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Petunjuk Penggunaan"),
+                                content: const Text(
+                                    "1. Arahkan kamera ke permukaan datar\n2. Ketuk permukaan datar untuk menampilkan model 3D"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text("OK"))
+                                ],
+                              );
+                            });
+                      },
+                    )
+                  ],
+                ),
+              )),
+        ),
+      ),
+    );
   }
 }
