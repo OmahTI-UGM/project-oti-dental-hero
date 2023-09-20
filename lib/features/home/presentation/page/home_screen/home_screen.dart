@@ -4,6 +4,7 @@ import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_state.dart';
+import 'package:dental_hero/features/home/presentation/page/test_page.dart';
 import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
 import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
 import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
@@ -31,7 +32,11 @@ class HomeScreen extends StatelessWidget {
         icon: Image.asset('assets/images/icon_calendar.png'),
         iconSize: 70,
         padding: const EdgeInsets.only(left: 8),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ConfettiScreen();
+          }));
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );

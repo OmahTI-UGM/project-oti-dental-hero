@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
 import 'package:dental_hero/core/constants/time_state_enum.dart';
@@ -32,6 +34,8 @@ class ActivityScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    BlocProvider.of<TimerBloc>(context).add(StartTimer(seconds));
+
     return Scaffold(
         appBar: _buildAppbar(height, width, context),
         bottomNavigationBar: _buildBottomNavbar(height, width, context),
@@ -40,6 +44,14 @@ class ActivityScreen extends StatelessWidget {
             BlocListener<TimerBloc, TimerState>(
               listener: (context, state) {
                 if (state is TimerStop) {
+                  BlocProvider.of<ActivityBloc>(context).add(SaveActivityEvent(
+                      activity: ActivityEntity(
+                    date: DateTime.now(),
+                    duration: state.currentDuration,
+                    score: _countScore(state.currentDuration),
+                    userId: BlocProvider.of<AuthBloc>(context).state.user!.id,
+                    timeState: timeState,
+                  )));
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/result', (route) => false,
                       arguments: state.currentDuration);
@@ -49,12 +61,10 @@ class ActivityScreen extends StatelessWidget {
               },
             )
           ],
-          // child: _buildBody(timerBloc, height, width),
           child: _buildBody(height, width),
         ));
   }
 
-  // automaticallyImplyLeading: false,
   _buildAppbar(double height, double width, BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -129,8 +139,13 @@ class ActivityScreen extends StatelessWidget {
               if (state is TimerInitial) {
                 return Container();
               }
+              final duration = intToDuration(state.currentDuration);
+
+              final formattedDuration =
+                  '${duration.inMinutes} : ${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
               return OutlineText(
-                text: '${state.currentDuration}',
+                // text: '${state.currentDuration}',
+                text: formattedDuration,
                 color: Colors.white,
                 size: 36,
                 fontWeight: FontWeight.w500,
@@ -161,14 +176,10 @@ class ActivityScreen extends StatelessWidget {
         ],
       ),
       child: BlocBuilder<TimerBloc, TimerState>(builder: (context, state) {
-        if (state is TimerInitial) {
-          return ElevatedButton(
-            onPressed: () {
-              // _startTimer(BlocProvider.of<TimerBloc>(context), seconds)
-              BlocProvider.of<TimerBloc>(context).add(StartTimer(seconds));
-            },
-            child: const Text('Mulai'),
-          );
+        if (state is TimerStart) {
+          Future.delayed(Duration.zero, () {
+            BlocProvider.of<TimerBloc>(context).add(StartTimer(seconds));
+          });
         }
 
         return Padding(
@@ -177,17 +188,7 @@ class ActivityScreen extends StatelessWidget {
             text: 'Selesai',
             width: double.infinity,
             onTap: () {
-              final remainingTime = state.currentDuration;
-              BlocProvider.of<TimerBloc>(context).add(StopTimer(remainingTime));
-
-              BlocProvider.of<ActivityBloc>(context).add(SaveActivityEvent(
-                  activity: ActivityEntity(
-                date: DateTime.now(),
-                duration: remainingTime,
-                score: _countScore(remainingTime),
-                userId: BlocProvider.of<AuthBloc>(context).state.user!.id,
-                timeState: timeState,
-              )));
+              _saveScore(state, context);
             },
           ),
         );
@@ -220,5 +221,9 @@ class ActivityScreen extends StatelessWidget {
       userId: BlocProvider.of<AuthBloc>(context).state.user!.id,
       timeState: timeState,
     )));
+  }
+
+  Duration intToDuration(int seconds) {
+    return Duration(seconds: seconds);
   }
 }

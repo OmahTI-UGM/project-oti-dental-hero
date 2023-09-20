@@ -18,6 +18,11 @@ class TimerInitial extends TimerState {
   List<Object> get props => [];
 }
 
+class TimerStart extends TimerState {
+  @override
+  List<Object> get props => [];
+}
+
 class TimerInProgress extends TimerState {
   const TimerInProgress(int currentDuration)
       : super(currentDuration: currentDuration);

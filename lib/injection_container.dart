@@ -107,5 +107,6 @@ Future<void> initializeDependencies() async {
   );
 
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
-  sl.registerFactory<ConfettiBloc>(() => ConfettiBloc());
+  // sl.registerFactory<ConfettiBloc>(() => ConfettiBloc());
+  sl.registerFactory<ConfettiCubit>(() => ConfettiCubit());
 }

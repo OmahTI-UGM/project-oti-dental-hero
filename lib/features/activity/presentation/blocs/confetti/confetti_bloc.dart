@@ -1,26 +1,11 @@
-// --- BLoC ---
-
-// Events
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class ConfettiEvent {}
+enum ConfettiState { initial, active }
 
-class ShowConfetti extends ConfettiEvent {}
+class ConfettiCubit extends Cubit<ConfettiState> {
+  ConfettiCubit() : super(ConfettiState.active);
 
-// States
-abstract class ConfettiState {}
-
-class ConfettiInitial extends ConfettiState {}
-
-class ConfettiPlaying extends ConfettiState {}
-
-class ConfettiBloc extends Bloc<ConfettiEvent, ConfettiState> {
-  ConfettiBloc() : super(ConfettiInitial());
-
-  @override
-  Stream<ConfettiState> mapEventToState(ConfettiEvent event) async* {
-    if (event is ShowConfetti) {
-      yield ConfettiPlaying();
-    }
+  void activateConfetti() {
+    emit(ConfettiState.active);
   }
 }
