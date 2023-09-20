@@ -1,14 +1,18 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/core/constants/snapshot_state_enum.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FotoGigi extends StatelessWidget {
   final bool isCompleted;
-  FotoGigi({
+  final SnapshotState snapshotState;
+
+  const FotoGigi({
     super.key,
     required this.isCompleted,
+    required this.snapshotState,
   });
 
   @override
@@ -64,6 +68,7 @@ class FotoGigi extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         '/photo-steps',
+                        arguments: snapshotState,
                       );
                     },
                   ),
@@ -71,8 +76,8 @@ class FotoGigi extends StatelessWidget {
           )
         : Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

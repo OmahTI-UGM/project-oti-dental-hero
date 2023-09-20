@@ -23,11 +23,14 @@ import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
+import 'package:dental_hero/features/gallery/data/data_sources/remote/gallery_api_service.dart';
+import 'package:dental_hero/features/gallery/domain/usecases/update_comparison_snapshot_images.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/statistic/statistic_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,6 +46,9 @@ import 'features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'features/activity/data/repositories/activity_repository_impl.dart';
 import 'features/activity/domain/repository/activity_repository.dart';
 import 'features/activity/domain/usecases/get_user_activities.dart';
+import 'features/gallery/data/repositories/gallery_repository_impl.dart';
+import 'features/gallery/domain/repository/gallery_repository.dart';
+import 'features/gallery/domain/usecases/get_comparison_snapshot.dart';
 
 final sl = GetIt.instance; //sl is referred to as Service Locator
 
@@ -58,6 +64,9 @@ Future<void> initializeDependencies() async {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   sl.registerSingleton<FirebaseFirestore>(firestore);
 
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  sl.registerSingleton<FirebaseStorage>(storage);
+
   // Data Sources
   sl.registerSingleton<AuthApiService>(AuthApiService(firestore: sl()));
   sl.registerSingleton<AuthSharedPrefsService>(
@@ -65,6 +74,10 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<UserApiService>(UserApiService(firestore: sl()));
   sl.registerSingleton<ActivityApiService>(ActivityApiService(firestore: sl()));
   sl.registerSingleton<ArApiService>(ArApiService(firestore: sl()));
+  sl.registerSingleton<GalleryApiService>(GalleryApiService(
+    firestore: sl(),
+    firebaseStorage: sl(),
+  ));
 
 // Repositories
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(
@@ -79,6 +92,8 @@ Future<void> initializeDependencies() async {
   ));
   sl.registerSingleton<UserRepository>(
       UserRepositoryImpl(userApiService: sl()));
+  sl.registerSingleton<GalleryRepository>(
+      GalleryRepositoryImpl(galleryApiService: sl()));
 
   // Use Cases
   sl.registerSingleton<LoginUseCase>(LoginUseCase(repository: sl()));
@@ -105,6 +120,11 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetArDocumentUseCase>(
       GetArDocumentUseCase(repository: sl()));
 
+  sl.registerSingleton<GetComparisonSnapshotUseCase>(
+      GetComparisonSnapshotUseCase(repository: sl()));
+  sl.registerSingleton<UpdateComparisonSnapshotUseCase>(
+      UpdateComparisonSnapshotUseCase(repository: sl()));
+
   // Blocs
   sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
@@ -118,7 +138,7 @@ Future<void> initializeDependencies() async {
         incrementScoreUseCase: sl(),
       ));
   sl.registerFactory<ImagePickerBloc>(
-    () => ImagePickerBloc(),
+    () => ImagePickerBloc(sl()),
   );
 
   sl.registerFactory<QrBloc>(() => QrBloc(getArDocumentUseCase: sl()));

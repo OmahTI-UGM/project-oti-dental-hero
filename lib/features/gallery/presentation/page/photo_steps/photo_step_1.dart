@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/core/constants/snapshot_state_enum.dart';
 import 'package:dental_hero/core/widgets/button.dart';
+import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/bullet_list.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_box.dart';
@@ -14,13 +16,23 @@ import '../../blocs/image_picker/image_picker_event.dart';
 import '../../blocs/image_picker/image_picker_state.dart';
 
 class PhotoStep1Screen extends StatelessWidget {
-  const PhotoStep1Screen({super.key});
+  final SnapshotState snapshotState;
+
+  const PhotoStep1Screen({
+    super.key,
+    required this.snapshotState,
+  });
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ImagePickerBloc>(context);
+    BlocProvider.of<ImagePickerBloc>(context).add(InitializeImagePickerEvent(
+      userId: BlocProvider.of<AuthBloc>(context).state.user!.id!,
+      snapshotState: snapshotState,
+    ));
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: lightBlueColor,
       appBar: _buildAppbar(height, width, context),
@@ -153,7 +165,7 @@ class PhotoStep1Screen extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.file(
-                              File(image[0].path),
+                              File(image![0].path),
                               height: MediaQuery.of(context).size.height * 0.27,
                               width: MediaQuery.of(context).size.width * 0.8,
                               fit: BoxFit.cover,

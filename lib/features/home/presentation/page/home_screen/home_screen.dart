@@ -1,4 +1,5 @@
 import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/core/constants/snapshot_state_enum.dart';
 import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
@@ -146,20 +147,26 @@ class HomeScreen extends StatelessWidget {
           itemCount: 32,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return CustomTimelineTile(
+              return const CustomTimelineTile(
                 isFirst: true,
                 isActive: true,
                 number: 1,
-                child: FotoGigi(isCompleted: true),
+                child: FotoGigi(
+                  isCompleted: true,
+                  snapshotState: SnapshotState.before,
+                ),
               );
             }
 
             if (index == 31) {
-              return CustomTimelineTile(
+              return const CustomTimelineTile(
                 isLast: true,
                 isActive: false,
                 number: 32,
-                child: FotoGigi(isCompleted: false),
+                child: FotoGigi(
+                  isCompleted: false,
+                  snapshotState: SnapshotState.after,
+                ),
               );
             }
 
@@ -185,7 +192,7 @@ class HomeScreen extends StatelessWidget {
         date.month == now.month &&
         date.day == now.day;
   }
-  
+
   _buildBottomNavbar(BuildContext context, double height, double width) {
     return Container(
         decoration: BoxDecoration(

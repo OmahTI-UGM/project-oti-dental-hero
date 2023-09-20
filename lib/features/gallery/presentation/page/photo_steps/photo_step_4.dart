@@ -22,10 +22,32 @@ class PhotoStep4Screen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: lightBlueColor,
-      appBar: _buildAppbar(height, width),
-      body: _buildBody(height, width, context),
-    );
+        backgroundColor: lightBlueColor,
+        appBar: _buildAppbar(height, width),
+        body: BlocListener<ImagePickerBloc, ImagePickerState>(
+          listener: (context, state) {
+            if (state is SuccessImagePickerState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('Foto berhasil diunggah!'),
+                ),
+              );
+
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/home', (route) => false);
+            }
+
+            if (state is FailedImagePickerState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Foto gagal diunggah!'),
+                ),
+              );
+            }
+          },
+          child: _buildBody(height, width, context),
+        ));
   }
 
   _buildAppbar(double height, double width) {
@@ -125,6 +147,12 @@ class PhotoStep4Screen extends StatelessWidget {
                 const SizedBox(height: 12),
                 BlocBuilder<ImagePickerBloc, ImagePickerState>(
                   builder: (context, state) {
+                    if (state is LoadingImagePickerState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
                     if (state is ImagePickedState) {
                       final image = state.image;
 
@@ -176,7 +204,10 @@ class PhotoStep4Screen extends StatelessWidget {
                                 child: Button(
                                   text: 'Selesai',
                                   width: double.infinity,
-                                  onTap: () {},
+                                  onTap: () {
+                                    BlocProvider.of<ImagePickerBloc>(context)
+                                        .add(SubmitImageEvent());
+                                  },
                                 ),
                               ),
                             ],
