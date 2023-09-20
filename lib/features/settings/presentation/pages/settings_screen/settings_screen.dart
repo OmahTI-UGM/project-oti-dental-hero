@@ -22,56 +22,59 @@ class SettingsScreen extends StatelessWidget {
   }
 
   _buildAppbar(double height, double width, BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: lightBlueColor,
-      elevation: 0,
-      flexibleSpace: SafeArea(
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Color(0xff6A658A), width: 1.0),
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(8.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.40),
-                  offset: const Offset(4, -4),
-                  blurRadius: 0,
-                  spreadRadius: 0,
-                  inset: true,
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height * 0.1),
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: lightBlueColor,
+        elevation: 0,
+        flexibleSpace: SafeArea(
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(8.0),
                 ),
-              ],
-            ),
-            width: double.infinity,
-            height: height * 0.1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/images/icon_back.png',
-                    ),
-                    iconSize: 36,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    "Pengaturan",
-                    style: GoogleFonts.fredoka(
-                        color: purpleColor,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w500),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.40),
+                    offset: const Offset(4, -4),
+                    blurRadius: 0,
+                    spreadRadius: 0,
+                    inset: true,
                   ),
                 ],
               ),
-            )),
+              width: double.infinity,
+              height: height * 0.1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/images/icon_back.png',
+                      ),
+                      iconSize: 36,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Pengaturan",
+                      style: GoogleFonts.fredoka(
+                          color: purpleColor,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
