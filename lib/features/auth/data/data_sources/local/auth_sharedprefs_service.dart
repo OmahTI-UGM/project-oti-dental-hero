@@ -21,12 +21,11 @@ class AuthSharedPrefsService {
   }
 
   void saveUserModel(UserModel user) async {
-    await _prefs.setString("user", jsonEncode(user.toJson()));
+    await _prefs.setString("user", user.toJson());
   }
 
   void saveUserEntity(UserEntity user) async {
-    await _prefs.setString(
-        "user", jsonEncode(UserModel.fromEntity(user).toJson()));
+    await _prefs.setString("user", UserModel.fromEntity(user).toJson());
   }
 
   Future<bool> removeUser() async {

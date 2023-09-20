@@ -1,5 +1,6 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/auth/domain/entities/user.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
@@ -15,6 +16,8 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatisticScreen extends StatelessWidget {
   const StatisticScreen({super.key});
@@ -165,7 +168,9 @@ Widget _buildRankColumn(BuildContext context) {
               child: Column(
                 children: [
                   OutlineText(
-                    text: 1100.toString(),
+                    text: leaderboardData[1].score == null
+                        ? 'Belum ada ranking'
+                        : leaderboardData[1].score.toString(),
                     size: 18,
                     color: Colors.white,
                     outlineColor: purpleColor,
@@ -173,7 +178,9 @@ Widget _buildRankColumn(BuildContext context) {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Sentosa Santoso Santosa',
+                    leaderboardData[1].fullName!.isEmpty
+                        ? 'Belum ada skor'
+                        : leaderboardData[1].fullName!,
                     style:
                         GoogleFonts.fredoka(fontSize: 12, color: purpleColor),
                     textAlign: TextAlign.center,
@@ -187,7 +194,7 @@ Widget _buildRankColumn(BuildContext context) {
               child: Column(
                 children: [
                   OutlineText(
-                    text: 1200.toString(),
+                    text: leaderboardData[0].score.toString(),
                     size: 18,
                     color: Colors.white,
                     outlineColor: purpleColor,
@@ -195,7 +202,8 @@ Widget _buildRankColumn(BuildContext context) {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Anya WakUWaaku',
+                    // 'Anya WakUWaaku',
+                    leaderboardData[0].fullName!,
                     style:
                         GoogleFonts.fredoka(fontSize: 12, color: purpleColor),
                     textAlign: TextAlign.center,
@@ -209,7 +217,7 @@ Widget _buildRankColumn(BuildContext context) {
               child: Column(
                 children: [
                   OutlineText(
-                    text: 1000.toString(),
+                    text: leaderboardData[2].score.toString(),
                     size: 18,
                     color: Colors.white,
                     outlineColor: purpleColor,
@@ -217,7 +225,7 @@ Widget _buildRankColumn(BuildContext context) {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Angkasa Nutella Carrado',
+                    leaderboardData[2].fullName!,
                     style:
                         GoogleFonts.fredoka(fontSize: 12, color: purpleColor),
                     textAlign: TextAlign.center,
@@ -271,19 +279,23 @@ Widget _buildRankColumn(BuildContext context) {
                 ],
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: leaderboardData.length,
-              itemBuilder: (context, index) {
-                final entry = leaderboardData[index];
-                return LeaderboardTile(
-                  rank: index + 1,
-                  name: entry.fullName!,
-                  score: entry.score ?? 999,
-                );
-              },
-            )
+            leaderboardData.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: leaderboardData.length,
+                    itemBuilder: (context, index) {
+                      final entry = leaderboardData[index];
+                      return LeaderboardTile(
+                        rank: index + 1,
+                        name: entry.fullName!,
+                        score: entry.score ?? 999,
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Text('Belum ada ranking'),
+                  ),
           ],
         ),
       ),
@@ -291,7 +303,7 @@ Widget _buildRankColumn(BuildContext context) {
   });
 }
 
-Widget _buildStatistikColumn(BuildContext context) {
+_buildStatistikColumn(BuildContext context) {
   return BlocBuilder<StatisticBloc, StatisticState>(builder: (context, state) {
     if (state is StatisticLoading || state is StatisticInitial) {
       return const Center(
@@ -305,7 +317,98 @@ Widget _buildStatistikColumn(BuildContext context) {
       );
     }
 
-    print(state.activityGroups);
-    return const Text('Statistik');
+    final chartData = prepareChartData(state.activityGroups!);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: purpleColor, width: 1.0),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: chartData[0].date != dateWithoutTime
+          ? SfCartesianChart(
+              primaryXAxis: DateTimeAxis(
+                dateFormat: DateFormat.MMMd(),
+                labelStyle: GoogleFonts.fredoka(
+                    fontSize: 12,
+                    color: purpleColor,
+                    fontWeight: FontWeight.w400),
+                maximum: currentDate,
+              ),
+              primaryYAxis: NumericAxis(
+                  title: AxisTitle(
+                    text: 'Waktu (Detik)',
+                    textStyle: GoogleFonts.fredoka(
+                        fontSize: 12,
+                        color: purpleColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  maximum: 400),
+              series: <LineSeries<ActivityData, DateTime>>[
+                LineSeries<ActivityData, DateTime>(
+                  dataSource: chartData,
+                  xValueMapper: (ActivityData activity, _) => activity.date,
+                  yValueMapper: (ActivityData activity, _) =>
+                      activity.duration.toInt(),
+                  name: 'Duration',
+                ),
+              ],
+              title: ChartTitle(
+                text: 'Jumlah Waktu Menggosok Gigi Per Hari',
+                textStyle: GoogleFonts.fredoka(
+                    fontSize: 18,
+                    color: purpleColor,
+                    fontWeight: FontWeight.w500),
+              ),
+            )
+          : Center(
+              child: Text('Belum ada data statistik'),
+            ),
+    );
   });
 }
+
+class ActivityData {
+  ActivityData(this.duration, this.date);
+
+  final int duration;
+  final DateTime date;
+}
+
+List<ActivityData> prepareChartData(Map<DateTime, List<ActivityEntity>> data) {
+  final List<ActivityData> chartData = [];
+
+  // Collect all ActivityData objects
+  data.forEach((date, activities) {
+    // Calculate total duration for each date
+    int totalDuration = 0;
+    for (var activity in activities) {
+      totalDuration += activity.duration ?? 0;
+    }
+
+    // Create an ActivityData object for each date
+    final dateWithoutTime = DateTime(date.year, date.month, date.day);
+    final activityData = ActivityData(totalDuration, dateWithoutTime);
+    chartData.add(activityData);
+  });
+
+  // Sort the chartData list by date in ascending order
+  chartData.sort((a, b) => a.date.compareTo(b.date));
+  for (var i = 0; i < chartData.length; i++) {
+    print('chart ke $i ' + chartData[i].date.toString());
+  }
+  print('Current date:' + currentDate.toString());
+  print('dateWithoutTime:' + dateWithoutTime.toString());
+
+  return chartData;
+}
+
+var currentDate = DateTime.now();
+
+final dateWithoutTime = DateTime(
+  currentDate.year,
+  currentDate.month,
+  currentDate.day,
+);
