@@ -9,7 +9,6 @@ environment:
 dependencies:
   ar_flutter_plugin: ^0.7.3
   arcore_flutter_plugin: ^0.1.0
-  bloc: ^8.1.2
   bulleted_list: ^0.0.1+0.1a
   cloud_firestore: ^4.8.5
   confetti: ^0.7.0
@@ -26,6 +25,7 @@ dependencies:
   image_picker: ^1.0.4
   intl: ^0.18.1
   path_provider: ^2.1.1
+  qr_code_scanner: ^1.0.1
   shared_preferences: ^2.2.1
   timeline_tile: ^2.0.0
   vector_math: ^2.1.4

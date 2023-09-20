@@ -185,7 +185,7 @@ class HomeScreen extends StatelessWidget {
         date.month == now.month &&
         date.day == now.day;
   }
-
+  
   _buildBottomNavbar(BuildContext context, double height, double width) {
     return Container(
         decoration: BoxDecoration(
@@ -214,7 +214,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               GestureDetector(
                   child: Image.asset('assets/images/scan.png',
-                      width: width * 0.42)),
+                      width: width * 0.42),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/qr');
+                  }),
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, '/statistic');

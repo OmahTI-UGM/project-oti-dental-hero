@@ -2,6 +2,8 @@ import 'package:dental_hero/config/routes/routes.dart';
 import 'package:dental_hero/core/common/splash_screen/splash_screen.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/confetti/confetti_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/blocs/ar/ar_bloc.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/blocs/qr/qr_bloc.dart';
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
@@ -50,18 +52,21 @@ class MyApp extends StatelessWidget {
           BlocProvider<ActivityBloc>(
             create: (context) => sl(),
           ),
+          BlocProvider<QrBloc>(
+            create: (context) => sl(),
+          ),
+          BlocProvider<ArBloc>(
+            create: (context) => sl(),
+          ),          
           BlocProvider<LeaderboardBloc>(
             create: (context) => sl(),
           ),
-          // BlocProvider<ConfettiBloc>(
-          //   create: (context) => sl(),
-          // ),
           BlocProvider<ConfettiCubit>(
             create: (context) => sl(),
           ),
           BlocProvider<StatisticBloc>(
             create: (context) => sl(),
-          )
+          ),
         ],
         child: MaterialApp(
           title: 'Dental Hero',
