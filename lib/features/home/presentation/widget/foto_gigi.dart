@@ -6,7 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FotoGigi extends StatelessWidget {
   final bool isCompleted;
-  FotoGigi({super.key, required this.isCompleted});
+  FotoGigi({
+    super.key,
+    required this.isCompleted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +60,12 @@ class FotoGigi extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       )),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/photo-steps',
+                      );
+                    },
                   ),
                 ]),
           )
@@ -94,7 +102,7 @@ class FotoGigi extends StatelessWidget {
                       child: Center(
                           child: OutlineText(
                         color: Colors.white,
-                        text: 'Sudah',
+                        text: isCompleted ? 'Sudah' : 'Belum',
                         size: 18,
                         outlineColor: Colors.grey.shade700,
                         fontWeight: FontWeight.w600,

@@ -4,6 +4,7 @@ import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_state.dart';
+
 import 'package:dental_hero/features/home/presentation/widget/activity_card.dart';
 import 'package:dental_hero/features/home/presentation/widget/foto_gigi.dart';
 import 'package:dental_hero/features/home/presentation/widget/timeline_tile.dart';
@@ -31,7 +32,15 @@ class HomeScreen extends StatelessWidget {
         icon: Image.asset('assets/images/icon_calendar.png'),
         iconSize: 70,
         padding: const EdgeInsets.only(left: 8),
-        onPressed: () {},
+        onPressed: () {
+          showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime.now(),
+            initialEntryMode: DatePickerEntryMode.calendarOnly,
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
@@ -176,8 +185,8 @@ class HomeScreen extends StatelessWidget {
         date.month == now.month &&
         date.day == now.day;
   }
-
-  _buildBottomNavbar(BuildContext context, height, double width) {
+  
+  _buildBottomNavbar(BuildContext context, double height, double width) {
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -210,6 +219,9 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/qr');
                   }),
               GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/statistic');
+                },
                 child:
                     Image.asset('assets/images/rank.png', width: width * 0.42),
               ),

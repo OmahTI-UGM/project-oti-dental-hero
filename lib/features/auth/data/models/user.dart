@@ -8,12 +8,14 @@ class UserModel extends UserEntity {
     DateTime? birthDate,
     String? email,
     String? disability,
+    int? score,
   }) : super(
           id: id,
           fullName: fullName,
           birthDate: birthDate,
           email: email,
           disability: disability,
+          score: score,
         );
 
   factory UserModel.fromJson(Map<String, dynamic> map) {
@@ -31,6 +33,7 @@ class UserModel extends UserEntity {
       birthDate: map['birthDate'],
       email: map['email'],
       disability: map['disability'],
+      score: map['score'] ?? 0,
     );
   }
 
@@ -52,6 +55,7 @@ class UserModel extends UserEntity {
       "birthDate": "$birthDate",
       "email": "$email",
       "disability": "$disability"
+      "score": "$score"
     }
     ''';
   }

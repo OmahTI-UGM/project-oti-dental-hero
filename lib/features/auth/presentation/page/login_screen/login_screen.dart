@@ -89,7 +89,9 @@ class LoginScreen extends StatelessWidget {
                             'Nama Lengkap',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -97,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -123,7 +125,9 @@ class LoginScreen extends StatelessWidget {
                             'Tanggal Lahir',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -131,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -156,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                                 color: shadeBlueColor,
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.black,
+                                  color: purpleColor,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
@@ -181,7 +185,7 @@ class LoginScreen extends StatelessWidget {
                                         foreground: Paint()
                                           ..style = PaintingStyle.stroke
                                           ..strokeWidth = 3
-                                          ..color = Colors.black,
+                                          ..color = purpleColor,
                                       ),
                                     ),
                                     Text(

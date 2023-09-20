@@ -6,6 +6,7 @@ class UserEntity extends Equatable {
   final DateTime? birthDate;
   final String? email;
   final String? disability;
+  final int? score;
 
   const UserEntity({
     this.id,
@@ -13,6 +14,7 @@ class UserEntity extends Equatable {
     this.birthDate,
     this.email,
     this.disability,
+    this.score,
   });
 
   @override
@@ -22,5 +24,6 @@ class UserEntity extends Equatable {
         birthDate,
         email,
         disability,
+        score,
       ];
 }
