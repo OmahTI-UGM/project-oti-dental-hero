@@ -24,7 +24,7 @@ import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
-import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/leaderboard/leaderboard_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/statistic/statistic_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';

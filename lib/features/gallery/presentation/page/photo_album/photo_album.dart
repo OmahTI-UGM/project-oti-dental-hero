@@ -1,5 +1,5 @@
 import 'package:dental_hero/core/common/color.dart';
-import 'package:dental_hero/features/gallery/presentation/blocs/album_switch_cubit.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/ui/album_switch_cubit.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/album_switch.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_card.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
@@ -12,7 +12,7 @@ class AlbumScreen extends StatelessWidget {
   final String month = 'Agustus';
   final int year = 2023;
 
-  AlbumScreen({super.key});
+  const AlbumScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,13 +2,16 @@ import 'dart:io';
 
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/widgets/button.dart';
-import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/bullet_list.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_box.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../blocs/image_picker/image_picker_event.dart';
+import '../../blocs/image_picker/image_picker_state.dart';
 
 class PhotoStep1Screen extends StatelessWidget {
   const PhotoStep1Screen({super.key});

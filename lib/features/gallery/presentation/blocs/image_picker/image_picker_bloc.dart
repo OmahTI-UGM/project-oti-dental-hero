@@ -1,36 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-// Events
-abstract class ImagePickerEvent {}
-
-class PickImageEvent extends ImagePickerEvent {}
-
-class DeleteImageEvent extends ImagePickerEvent {}
-
-class StepChangeEvent extends ImagePickerEvent {}
-
-// States
-abstract class ImagePickerState {
-  final List<XFile> images;
-
-  ImagePickerState(this.images);
-}
-
-class InitialImagePickerState extends ImagePickerState {
-  InitialImagePickerState(List<XFile> images) : super(images);
-}
-
-class ImagePickedState extends ImagePickerState {
-  final XFile image;
-
-  ImagePickedState(List<XFile> currentImages, this.image)
-      : super(List.from(currentImages)..add(image));
-}
-
-class ImageNewState extends ImagePickerState {
-  ImageNewState(List<XFile> images) : super(images);
-}
+import 'image_picker_event.dart';
+import 'image_picker_state.dart';
 
 class ImagePickerBloc extends Bloc<ImagePickerEvent, ImagePickerState> {
   final ImagePicker _imagePicker = ImagePicker();
