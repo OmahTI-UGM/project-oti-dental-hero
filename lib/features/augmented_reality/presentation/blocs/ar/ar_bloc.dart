@@ -10,9 +10,17 @@ abstract class ArState extends Equatable {
 
 class ArInitial extends ArState {}
 
-class ArSuccess extends ArState {}
+class ArSuccess extends ArState {
+  final String? message;
 
-class ArFailure extends ArState {}
+  const ArSuccess({this.message});
+}
+
+class ArFailure extends ArState {
+  final String? message;
+
+  const ArFailure({this.message});
+}
 
 class ArLoading extends ArState {}
 
@@ -23,16 +31,32 @@ abstract class ArEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ArStarted extends ArEvent {}
+class ArStartedEvent extends ArEvent {}
 
-class ArStopped extends ArEvent {}
+class ArStoppedEvent extends ArEvent {}
 
-class ArReset extends ArEvent {}
+class ArResetEvent extends ArEvent {}
+
+class ArSuccessEvent extends ArEvent {
+  final String? message;
+
+  const ArSuccessEvent({this.message});
+}
+
+class ArFailedEvent extends ArEvent {
+  final String? message;
+
+  const ArFailedEvent({this.message});
+}
 
 class ArBloc extends Bloc<ArEvent, ArState> {
   ArBloc() : super(ArInitial()) {
-    on<ArReset>((event, emit) {
+    on<ArResetEvent>((event, emit) {
       emit(ArInitial());
+    });
+
+    on<ArFailedEvent>((event, emit) {
+      emit(ArFailure(message: event.message));
     });
   }
 }

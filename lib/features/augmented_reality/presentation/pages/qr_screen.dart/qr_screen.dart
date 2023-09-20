@@ -33,7 +33,7 @@ class _QrScreenState extends State<QrScreen> {
 
   _buildAppBar() {
     return AppBar(
-      title: const Text('QR Screen'),
+      title: const Text('Scan QR'),
     );
   }
 
