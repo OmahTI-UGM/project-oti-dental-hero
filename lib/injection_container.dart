@@ -124,7 +124,5 @@ Future<void> initializeDependencies() async {
   sl.registerFactory<QrBloc>(() => QrBloc(getArDocumentUseCase: sl()));
   sl.registerFactory<ArBloc>(() => ArBloc());
 
-  sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
   sl.registerFactory<ConfettiCubit>(() => ConfettiCubit());
-
 }

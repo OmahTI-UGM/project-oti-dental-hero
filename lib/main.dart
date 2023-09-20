@@ -4,7 +4,6 @@ import 'package:dental_hero/features/activity/presentation/blocs/confetti/confet
 import 'package:dental_hero/features/activity/presentation/blocs/timer/timer_bloc.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/blocs/ar/ar_bloc.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/blocs/qr/qr_bloc.dart';
-import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/statistic/presentation/blocs/statistic/statistic_bloc.dart';
@@ -57,7 +56,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ArBloc>(
             create: (context) => sl(),
-          ),          
+          ),
           BlocProvider<LeaderboardBloc>(
             create: (context) => sl(),
           ),
