@@ -64,8 +64,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
 
       case '/ar':
-        // return MaterialPageRoute(builder: (_) => ArScreen());
-        return MaterialPageRoute(builder: (_) => const ArMainScreen());
+        return MaterialPageRoute(builder: (_) => const ArScreen());
+
+      case '/qr':
+        return MaterialPageRoute(builder: (_) => const QrScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

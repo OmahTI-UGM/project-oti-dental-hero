@@ -75,8 +75,6 @@ class QrBloc extends Bloc<QrEvent, QrState> {
         return;
       }
 
-      print(dataState?.data);
-
       emit(QrVerified(arDocumentEntity: dataState!.data));
     } catch (e) {
       emit(QrFailed(error: Exception("Failed to get QR code.")));

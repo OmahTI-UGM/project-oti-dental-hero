@@ -207,7 +207,7 @@ class HomeScreen extends StatelessWidget {
                   child: Image.asset('assets/images/scan.png',
                       width: width * 0.42),
                   onTap: () {
-                    Navigator.pushNamed(context, '/ar');
+                    Navigator.pushNamed(context, '/qr');
                   }),
               GestureDetector(
                 child:

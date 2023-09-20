@@ -18,36 +18,51 @@ class _QrScreenState extends State<QrScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: _buildAppBar(),
+        body: BlocListener<QrBloc, QrState>(
+          listener: (context, state) {
+            if (state is QrVerified) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/ar', (_) => false);
+            }
+          },
+          child: _buildBody(context),
+        ));
+  }
+
+  _buildAppBar() {
+    return AppBar(
+      title: const Text('QR Screen'),
+    );
+  }
+
+  _buildBody(BuildContext context) {
     QrBloc qrBloc = BlocProvider.of<QrBloc>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Screen'),
-      ),
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            QRView(
-                key: _gLobalkey,
-                onQRViewCreated: (QRViewController controller) {
-                  qrBloc.add(QrListenEvent(controller));
-                }),
-            Center(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: BlocBuilder<QrBloc, QrState>(builder: (context, state) {
-                  if (qrBloc.state is QrSuccess) {
-                    return Text('${qrBloc.state.barcode?.code}');
-                  } else {
-                    return const Text('Scan a code');
-                  }
-                }),
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          QRView(
+              key: _gLobalkey,
+              onQRViewCreated: (QRViewController controller) {
+                qrBloc.add(QrListenEvent(controller));
+              }),
+          Center(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
               ),
-            )
-          ],
-        ),
+              child: BlocBuilder<QrBloc, QrState>(builder: (context, state) {
+                if (qrBloc.state is QrVerified) {
+                  return Text('${qrBloc.state.arDocumentEntity}');
+                } else {
+                  return const Text('Scan a code');
+                }
+              }),
+            ),
+          )
+        ],
       ),
     );
   }
