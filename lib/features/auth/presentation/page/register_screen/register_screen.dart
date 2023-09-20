@@ -79,7 +79,7 @@ class RegisterScreen extends StatelessWidget {
                               foreground: Paint()
                                 ..style = PaintingStyle.stroke
                                 ..strokeWidth = 3
-                                ..color = Colors.black,
+                                ..color = purpleColor,
                             ),
                           ),
                           Text(
@@ -100,7 +100,9 @@ class RegisterScreen extends StatelessWidget {
                             'Nama Lengkap',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -108,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -132,7 +134,9 @@ class RegisterScreen extends StatelessWidget {
                             'Nama Panggilan',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -140,7 +144,7 @@ class RegisterScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -163,7 +167,9 @@ class RegisterScreen extends StatelessWidget {
                             'Tanggal Lahir',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -171,7 +177,7 @@ class RegisterScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -195,7 +201,9 @@ class RegisterScreen extends StatelessWidget {
                             'Email',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -203,7 +211,7 @@ class RegisterScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: Colors.black,
+                                color: purpleColor,
                               ),
                             ),
                             child: TextFormField(
@@ -228,7 +236,9 @@ class RegisterScreen extends StatelessWidget {
                             'Jenis Disabilitas',
                             textAlign: TextAlign.start,
                             style: GoogleFonts.fredoka(
-                                fontSize: 15, fontWeight: FontWeight.w400),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: purpleColor),
                           ),
                           const SizedBox(height: 4),
                           BlocBuilder<DropdownBloc, DropdownState>(
@@ -240,16 +250,13 @@ class RegisterScreen extends StatelessWidget {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(8),
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: purpleColor,
                                   ),
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12, vertical: 4),
                                   child: DropdownButton<String>(
-                                    // style: GoogleFonts.fredoka(
-                                    //   fontSize: 15,
-                                    // ),
                                     isExpanded: true,
                                     value: state.selectedValue,
                                     items: dropDownItems,
@@ -271,7 +278,7 @@ class RegisterScreen extends StatelessWidget {
                             color: shadeBlueColor,
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: Colors.black,
+                              color: purpleColor,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -296,7 +303,7 @@ class RegisterScreen extends StatelessWidget {
                                     foreground: Paint()
                                       ..style = PaintingStyle.stroke
                                       ..strokeWidth = 3
-                                      ..color = Colors.black,
+                                      ..color = purpleColor,
                                   ),
                                 ),
                                 Text(
