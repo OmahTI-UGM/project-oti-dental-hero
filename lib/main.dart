@@ -53,7 +53,10 @@ class MyApp extends StatelessWidget {
           BlocProvider<LeaderboardBloc>(
             create: (context) => sl(),
           ),
-          BlocProvider<ConfettiBloc>(
+          // BlocProvider<ConfettiBloc>(
+          //   create: (context) => sl(),
+          // ),
+          BlocProvider<ConfettiCubit>(
             create: (context) => sl(),
           ),
           BlocProvider<StatisticBloc>(
