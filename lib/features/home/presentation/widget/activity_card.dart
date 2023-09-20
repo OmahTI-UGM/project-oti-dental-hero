@@ -150,15 +150,9 @@ class ActivityCard extends StatelessWidget {
               ),
               height: 40,
               child: isCompleted
-                  ? Container(
-                      foregroundDecoration: const BoxDecoration(
-                        color: Colors.grey,
-                        backgroundBlendMode: BlendMode.saturation,
-                      ),
-                      child: StarWidget(
-                        star: calculateStar(activity.score!),
-                        size: 0.08,
-                      ),
+                  ? StarWidget(
+                      star: calculateStar(activity.score!),
+                      size: 0.08,
                     )
                   : Center(
                       child: OutlineText(

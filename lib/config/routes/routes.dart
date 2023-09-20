@@ -9,7 +9,7 @@ import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_3.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_4.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
-import 'package:dental_hero/features/settings/presentation/pages/settings_screen.dart';
+import 'package:dental_hero/features/settings/presentation/pages/settings_screen/settings_screen.dart';
 import 'package:dental_hero/features/statistic/presentation/page/statistic_screen/statistic_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
