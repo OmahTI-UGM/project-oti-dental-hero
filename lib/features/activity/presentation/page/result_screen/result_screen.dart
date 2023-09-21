@@ -129,7 +129,7 @@ class ResultScreen extends StatelessWidget {
   }
 
   _countScore(int duration) {
-    int maxDuration = 180;
+    int maxDuration = 120;
     int star = 0;
     int score = 100 - (duration / maxDuration * 100).round();
     if (score <= 100 && score > 66) {

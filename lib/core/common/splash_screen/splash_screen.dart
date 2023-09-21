@@ -11,14 +11,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: on prod, add delay
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     Future<void>.delayed(const Duration(seconds: 2), () {
       BlocProvider.of<AuthBloc>(context).add(const CheckAuthEvent());
     });
 
     return BlocListener<AuthBloc, AuthState>(
       listener: _listener,
-      child: _buildBody(),
+      child: _buildBody(height, width),
     );
   }
 
@@ -38,17 +40,20 @@ class SplashScreen extends StatelessWidget {
     }
   }
 
-  _buildBody() {
+  _buildBody(double height, width) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Center(
-            child: Image.asset('assets/images/splash.png'),
+      body: Container(
+        height: height,
+        width: width,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/splash.png'),
+            fit: BoxFit.cover,
           ),
-          Center(
-            child: Image.asset('assets/images/logo_full.png'),
-          ),
-        ],
+        ),
+        child: Center(
+          child: Image.asset('assets/images/logo_full.png'),
+        ),
       ),
     );
   }

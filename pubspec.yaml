@@ -28,6 +28,7 @@ dependencies:
   path_provider: ^2.1.1
   qr_code_scanner: ^1.0.1
   shared_preferences: ^2.2.1
+  syncfusion_flutter_charts: ^23.1.36
   timeline_tile: ^2.0.0
   vector_math: ^2.1.4
   video_player: ^2.7.0
