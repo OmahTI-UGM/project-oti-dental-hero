@@ -136,10 +136,9 @@ class HomeScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        print(state.comparisonSnapshot?.before!);
 
         return ListView.builder(
-          itemCount: 32,
+          itemCount: keys.length + 2,
           itemBuilder: (context, index) {
             if (index == 0) {
               return CustomTimelineTile(
@@ -159,16 +158,16 @@ class HomeScreen extends StatelessWidget {
               );
             }
 
-            if (index == 31) {
+            if (index == keys.length + 1) {
               return CustomTimelineTile(
                 isLast: true,
                 isActive: false,
                 number: 32,
                 child: FotoGigi(
-                  isCompleted:
-                      state.comparisonSnapshot!.beforeImageUrls?.isNotEmpty ??
-                          false,
                   isActive: _isNow(state.comparisonSnapshot!.after!),
+                  isCompleted:
+                      state.comparisonSnapshot!.afterImageUrls?.isNotEmpty ??
+                          false,
                   snapshotState: SnapshotState.after,
                 ),
               );
