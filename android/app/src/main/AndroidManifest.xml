@@ -6,9 +6,9 @@
     <uses-feature android:glEsVersion="0x00030000" android:required="true" />
 
    <application
-        android:label="dental_hero"
+        android:label="Dental Hero"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
