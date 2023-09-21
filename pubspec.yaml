@@ -40,9 +40,9 @@ dev_dependencies:
     sdk: flutter
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: 'launcher_icon'
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: 'assets/icon/icon.png'
   min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter:
@@ -51,5 +51,4 @@ flutter:
     - assets/
     - assets/images/
     - assets/videos/
-    - assets/models/
     - assets/icon/
