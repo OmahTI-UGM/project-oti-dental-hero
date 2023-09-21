@@ -200,6 +200,28 @@ Widget _buildBeforeColumn(
 
 Widget _buildAfterColumn(
     BuildContext context, DateTime afterDate, List<String>? afterImageUrls) {
+  if (afterImageUrls == null) {
+    return const Text('Tidak ada foto gigi sebelum');
+  }
+
+  final List<PhotoCard> photoCards = [
+    PhotoCard(
+      image: afterImageUrls[0],
+      title: 'Foto Bibir',
+    ),
+    PhotoCard(
+      image: afterImageUrls[1],
+      title: 'Foto Permukaan Depan Gigi',
+    ),
+    PhotoCard(
+      image: afterImageUrls[2],
+      title: 'Foto Permukaan Kunyah Gigi Bawah',
+    ),
+    PhotoCard(
+      image: afterImageUrls[3],
+      title: 'Foto Permukaan Kunyah Gigi Atas',
+    ),
+  ];
   return Column(children: [
     Container(
       width: MediaQuery.of(context).size.width,
@@ -229,39 +251,17 @@ Widget _buildAfterColumn(
       ),
     ),
     const SizedBox(height: 16),
-    afterImageUrls == null
-        ? const Text('Tidak ada foto gigi sesudah')
-        : ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4, // Number of items in your list
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              // Create a list of PhotoCard widgets
-              final List<PhotoCard> photoCards = [
-                PhotoCard(
-                  image: 'assets/images/photo_step_1.png',
-                  title: 'Foto Bibir',
-                ),
-                PhotoCard(
-                  image: 'assets/images/photo_step_2.png',
-                  title: 'Foto Permukaan Depan Gigi',
-                ),
-                PhotoCard(
-                  image: 'assets/images/photo_step_3.png',
-                  title: 'Foto Permukaan Kunyah Gigi Bawah',
-                ),
-                PhotoCard(
-                  image: 'assets/images/photo_step_4.png',
-                  title: 'Foto Permukaan Kunyah Gigi Atas',
-                ),
-              ];
-
-              // Return the PhotoCard at the current index
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: photoCards[index],
-              );
-            },
-          )
+    ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 4, // Number of items in your list
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        // Return the PhotoCard at the current index
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: photoCards[index],
+        );
+      },
+    )
   ]);
 }

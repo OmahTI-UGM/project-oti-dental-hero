@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/widgets/button.dart';
+import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/bullet_list.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_box.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -33,6 +36,10 @@ class PhotoStep4Screen extends StatelessWidget {
                   content: Text('Foto berhasil diunggah!'),
                 ),
               );
+
+              // reload home data
+              BlocProvider.of<HomeBloc>(context).add(LoadDataEvent(
+                  userId: BlocProvider.of<AuthBloc>(context).state.user!.id!));
 
               Navigator.of(context)
                   .pushNamedAndRemoveUntil('/home', (route) => false);

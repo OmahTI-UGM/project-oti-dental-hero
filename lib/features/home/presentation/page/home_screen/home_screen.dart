@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    _fetchActivities(context);
+    _fetchData(context);
 
     return Scaffold(
       backgroundColor: lightBlueColor,
@@ -120,11 +120,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  _fetchActivities(BuildContext context) {
-    final userId = BlocProvider.of<AuthBloc>(context).state.user?.id ?? "";
-    BlocProvider.of<HomeBloc>(context).add(LoadDataEvent(userId: userId));
-  }
-
   _buildBody(BuildContext context, double height, double width) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -141,29 +136,39 @@ class HomeScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
+        print(state.comparisonSnapshot?.before!);
 
         return ListView.builder(
           itemCount: 32,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return const CustomTimelineTile(
+              return CustomTimelineTile(
                 isFirst: true,
-                isActive: true,
+                isActive: state.comparisonSnapshot != null
+                    ? _isNow(state.comparisonSnapshot!.before!)
+                    : false,
                 number: 1,
                 child: FotoGigi(
-                  isCompleted: true,
+                  isActive: _isNow(state.comparisonSnapshot!.before!),
+                  isCompleted:
+                      state.comparisonSnapshot!.beforeImageUrls?.isNotEmpty ??
+                          false,
+                  // false,
                   snapshotState: SnapshotState.before,
                 ),
               );
             }
 
             if (index == 31) {
-              return const CustomTimelineTile(
+              return CustomTimelineTile(
                 isLast: true,
                 isActive: false,
                 number: 32,
                 child: FotoGigi(
-                  isCompleted: false,
+                  isCompleted:
+                      state.comparisonSnapshot!.beforeImageUrls?.isNotEmpty ??
+                          false,
+                  isActive: _isNow(state.comparisonSnapshot!.after!),
                   snapshotState: SnapshotState.after,
                 ),
               );
@@ -183,13 +188,6 @@ class HomeScreen extends StatelessWidget {
         );
       }),
     );
-  }
-
-  bool _isNow(DateTime date) {
-    final now = DateTime.now();
-    return date.year == now.year &&
-        date.month == now.month &&
-        date.day == now.day;
   }
 
   _buildBottomNavbar(BuildContext context, double height, double width) {
@@ -234,5 +232,17 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  _fetchData(BuildContext context) {
+    final userId = BlocProvider.of<AuthBloc>(context).state.user?.id ?? "";
+    BlocProvider.of<HomeBloc>(context).add(LoadDataEvent(userId: userId));
+  }
+
+  bool _isNow(DateTime date) {
+    final now = DateTime.now();
+    return date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day;
   }
 }
