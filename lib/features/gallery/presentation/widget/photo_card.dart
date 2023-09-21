@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 class PhotoCard extends StatelessWidget {
   final String image;
   final String title;
-  PhotoCard({super.key, required this.image, required this.title});
+
+  const PhotoCard({super.key, required this.image, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,24 @@ class PhotoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              image,
-              height: MediaQuery.of(context).size.height * 0.27,
-              width: MediaQuery.of(context).size.width * 0.8,
-              fit: BoxFit.cover,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                image,
+                height: MediaQuery.of(context).size.height * 0.27,
+                width: MediaQuery.of(context).size.width * 0.8,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Text('Gagal memuat gambar'),
+                  );
+                },
+              )),
           const SizedBox(height: 6),
           Text(
             title,

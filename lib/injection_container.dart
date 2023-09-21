@@ -131,7 +131,7 @@ Future<void> initializeDependencies() async {
   // Blocs
   sl.registerFactory<AuthBloc>(
       () => AuthBloc(sl(), sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
+  sl.registerFactory<HomeBloc>(() => HomeBloc(sl(), sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
   sl.registerFactory<LeaderboardBloc>(() => LeaderboardBloc(sl()));

@@ -32,9 +32,28 @@ class GalleryApiService {
 
     final model = data.docs.first.data();
 
+    // convert model image urls to list of strings
+    List<String>? beforeImageurls;
+    List<String>? afterImageUrls;
+
+    if (model['beforeImageUrls'] != null) {
+      beforeImageurls = List<String>.from(model['beforeImageUrls']);
+    }
+
+    if (model['afterImageUrls'] != null) {
+      afterImageUrls = List<String>.from(model['afterImageUrls']);
+    }
+
     return ComparisonSnapshotModel(
-      afterImageUrls: model['afterImageUrls'],
-      beforeImageUrls: model['beforeImageUrls'],
+      id: data.docs.first.id,
+      before: model['before'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(model['before'].seconds * 1000)
+          : null,
+      after: model['after'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(model['after'].seconds * 1000)
+          : null,
+      afterImageUrls: afterImageUrls,
+      beforeImageUrls: beforeImageurls,
     );
   }
 

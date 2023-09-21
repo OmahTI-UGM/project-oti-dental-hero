@@ -1,6 +1,5 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/constants/snapshot_state_enum.dart';
-import 'package:dental_hero/features/activity/domain/entities/activity.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
@@ -123,7 +122,7 @@ class HomeScreen extends StatelessWidget {
 
   _fetchActivities(BuildContext context) {
     final userId = BlocProvider.of<AuthBloc>(context).state.user?.id ?? "";
-    BlocProvider.of<HomeBloc>(context).add(LoadActivitiesEvent(userId: userId));
+    BlocProvider.of<HomeBloc>(context).add(LoadDataEvent(userId: userId));
   }
 
   _buildBody(BuildContext context, double height, double width) {

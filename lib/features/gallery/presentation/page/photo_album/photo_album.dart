@@ -1,7 +1,9 @@
 import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/core/common/date_formatter.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/ui/album_switch_cubit.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/album_switch.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_card.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -33,13 +35,13 @@ class AlbumScreen extends StatelessWidget {
       preferredSize: Size.fromHeight(height * 0.1),
       child: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xffE9F3FF),
+        backgroundColor: const Color(0xffE9F3FF),
         elevation: 0,
         flexibleSpace: SafeArea(
           child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                border: Border.all(color: const Color(0xff6A658A), width: 1.0),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(8.0),
                 ),
@@ -87,6 +89,15 @@ class AlbumScreen extends StatelessWidget {
   }
 
   _buildBody(double height, width, BuildContext context) {
+    final comparisonSnapshot =
+        BlocProvider.of<HomeBloc>(context).state.comparisonSnapshot;
+
+    final before = comparisonSnapshot?.before;
+    final beforeData = comparisonSnapshot?.beforeImageUrls;
+
+    final after = comparisonSnapshot?.after;
+    final afterData = comparisonSnapshot?.afterImageUrls;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: SingleChildScrollView(
@@ -102,9 +113,9 @@ class AlbumScreen extends StatelessWidget {
             BlocBuilder<AlbumSwitchCubit, AlbumSwitchState>(
               builder: (context, state) {
                 if (state == AlbumSwitchState.before) {
-                  return _buildBeforeColumn(context, day, month, year);
+                  return _buildBeforeColumn(context, before!, beforeData);
                 } else if (state == AlbumSwitchState.after) {
-                  return _buildAfterColumn(context, day, month, year);
+                  return _buildAfterColumn(context, after!, afterData);
                 }
                 return Container();
               },
@@ -117,7 +128,30 @@ class AlbumScreen extends StatelessWidget {
 }
 
 Widget _buildBeforeColumn(
-    BuildContext context, int day, String month, int year) {
+    BuildContext context, DateTime beforeDate, List<String>? beforeImageUrls) {
+  if (beforeImageUrls == null) {
+    return const Text('Tidak ada foto gigi sebelum');
+  }
+
+  final List<PhotoCard> photoCards = [
+    PhotoCard(
+      image: beforeImageUrls[0],
+      title: 'Foto Bibir',
+    ),
+    PhotoCard(
+      image: beforeImageUrls[1],
+      title: 'Foto Permukaan Depan Gigi',
+    ),
+    PhotoCard(
+      image: beforeImageUrls[2],
+      title: 'Foto Permukaan Kunyah Gigi Bawah',
+    ),
+    PhotoCard(
+      image: beforeImageUrls[3],
+      title: 'Foto Permukaan Kunyah Gigi Atas',
+    ),
+  ];
+
   return Column(children: [
     Container(
       width: MediaQuery.of(context).size.width,
@@ -137,7 +171,7 @@ Widget _buildBeforeColumn(
           ),
           const SizedBox(height: 6),
           Text(
-            'Diambil pada tanggal ${date(day, month, year)}',
+            'Diambil pada tanggal ${DateFormatter.galleryScreenDate(beforeDate)}',
             style: GoogleFonts.fredoka(
                 fontSize: 15,
                 color: darkGrayColor,
@@ -149,28 +183,10 @@ Widget _buildBeforeColumn(
     const SizedBox(height: 16),
     ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 4, // Number of items in your list
+      itemCount: beforeImageUrls.length, // Number of items in your list
       shrinkWrap: true,
       itemBuilder: (context, index) {
         // Create a list of PhotoCard widgets
-        final List<PhotoCard> photoCards = [
-          PhotoCard(
-            image: 'assets/images/photo_step_1.png',
-            title: 'Foto Bibir',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_2.png',
-            title: 'Foto Permukaan Depan Gigi',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_3.png',
-            title: 'Foto Permukaan Kunyah Gigi Bawah',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_4.png',
-            title: 'Foto Permukaan Kunyah Gigi Atas',
-          ),
-        ];
 
         // Return the PhotoCard at the current index
         return Padding(
@@ -183,7 +199,7 @@ Widget _buildBeforeColumn(
 }
 
 Widget _buildAfterColumn(
-    BuildContext context, int day, String month, int year) {
+    BuildContext context, DateTime afterDate, List<String>? afterImageUrls) {
   return Column(children: [
     Container(
       width: MediaQuery.of(context).size.width,
@@ -203,7 +219,7 @@ Widget _buildAfterColumn(
           ),
           const SizedBox(height: 6),
           Text(
-            'Diambil pada tanggal ${date(31, month, year)}',
+            'Diambil pada tanggal ${DateFormatter.galleryScreenDate(afterDate)}',
             style: GoogleFonts.fredoka(
                 fontSize: 15,
                 color: darkGrayColor,
@@ -213,41 +229,39 @@ Widget _buildAfterColumn(
       ),
     ),
     const SizedBox(height: 16),
-    ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 4, // Number of items in your list
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        // Create a list of PhotoCard widgets
-        final List<PhotoCard> photoCards = [
-          PhotoCard(
-            image: 'assets/images/photo_step_1.png',
-            title: 'Foto Bibir',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_2.png',
-            title: 'Foto Permukaan Depan Gigi',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_3.png',
-            title: 'Foto Permukaan Kunyah Gigi Bawah',
-          ),
-          PhotoCard(
-            image: 'assets/images/photo_step_4.png',
-            title: 'Foto Permukaan Kunyah Gigi Atas',
-          ),
-        ];
+    afterImageUrls == null
+        ? const Text('Tidak ada foto gigi sesudah')
+        : ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 4, // Number of items in your list
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              // Create a list of PhotoCard widgets
+              final List<PhotoCard> photoCards = [
+                PhotoCard(
+                  image: 'assets/images/photo_step_1.png',
+                  title: 'Foto Bibir',
+                ),
+                PhotoCard(
+                  image: 'assets/images/photo_step_2.png',
+                  title: 'Foto Permukaan Depan Gigi',
+                ),
+                PhotoCard(
+                  image: 'assets/images/photo_step_3.png',
+                  title: 'Foto Permukaan Kunyah Gigi Bawah',
+                ),
+                PhotoCard(
+                  image: 'assets/images/photo_step_4.png',
+                  title: 'Foto Permukaan Kunyah Gigi Atas',
+                ),
+              ];
 
-        // Return the PhotoCard at the current index
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: photoCards[index],
-        );
-      },
-    )
+              // Return the PhotoCard at the current index
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: photoCards[index],
+              );
+            },
+          )
   ]);
-}
-
-date(int day, String month, int year) {
-  return '$day $month $year';
 }

@@ -28,6 +28,8 @@ class ComparisonSnapshotModel extends ComparisonSnapshotEntity {
   factory ComparisonSnapshotModel.fromEntity(ComparisonSnapshotEntity entity) {
     return ComparisonSnapshotModel(
       id: entity.id,
+      before: entity.before,
+      after: entity.after,
       beforeImageUrls: entity.beforeImageUrls,
       afterImageUrls: entity.afterImageUrls,
     );

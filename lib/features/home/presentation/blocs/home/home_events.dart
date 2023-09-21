@@ -2,7 +2,7 @@ abstract class HomeEvent {
   const HomeEvent();
 }
 
-class LoadActivitiesEvent extends HomeEvent {
+class LoadDataEvent extends HomeEvent {
   final String userId;
-  const LoadActivitiesEvent({required this.userId});
+  const LoadDataEvent({required this.userId});
 }
