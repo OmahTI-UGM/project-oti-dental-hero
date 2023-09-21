@@ -66,56 +66,59 @@ class ActivityScreen extends StatelessWidget {
   }
 
   _buildAppbar(double height, double width, BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: const Color(0xffE9F3FF),
-      elevation: 0,
-      flexibleSpace: SafeArea(
-        child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Color(0xff6A658A), width: 1.0),
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(8.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.40),
-                  offset: const Offset(4, -4),
-                  blurRadius: 0,
-                  spreadRadius: 0,
-                  inset: true,
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height * 0.1),
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xffE9F3FF),
+        elevation: 0,
+        flexibleSpace: SafeArea(
+          child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Color(0xff6A658A), width: 1.0),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(8.0),
                 ),
-              ],
-            ),
-            width: double.infinity,
-            height: height * 0.1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/images/icon_back.png',
-                    ),
-                    iconSize: 36,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    "Sikat Gigi",
-                    style: GoogleFonts.fredoka(
-                        color: purpleColor,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w500),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.40),
+                    offset: const Offset(4, -4),
+                    blurRadius: 0,
+                    spreadRadius: 0,
+                    inset: true,
                   ),
                 ],
               ),
-            )),
+              width: double.infinity,
+              height: height * 0.1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/images/icon_back.png',
+                      ),
+                      iconSize: 36,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      "Sikat Gigi",
+                      style: GoogleFonts.fredoka(
+                          color: purpleColor,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
@@ -143,13 +146,16 @@ class ActivityScreen extends StatelessWidget {
 
               final formattedDuration =
                   '${duration.inMinutes} : ${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-              return OutlineText(
-                // text: '${state.currentDuration}',
-                text: formattedDuration,
-                color: Colors.white,
-                size: 36,
-                fontWeight: FontWeight.w500,
-                outlineColor: purpleColor,
+              return Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: OutlineText(
+                  // text: '${state.currentDuration}',
+                  text: formattedDuration,
+                  color: Colors.white,
+                  size: 36,
+                  fontWeight: FontWeight.w500,
+                  outlineColor: purpleColor,
+                ),
               );
             }),
           ],

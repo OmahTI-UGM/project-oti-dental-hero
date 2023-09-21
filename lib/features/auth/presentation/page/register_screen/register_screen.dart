@@ -47,8 +47,13 @@ class RegisterScreen extends StatelessWidget {
   }
 
   _buildBody(BuildContext context) {
-    final dropDownItems =
-        ['blind', 'deaf', 'autism', 'down syndrome'].map((String value) {
+    final dropDownItems = [
+      'Tidak ada',
+      'Tuna Netra',
+      'Tuna Rungu',
+      'Tuna Daksa',
+      'Tuna Grahita'
+    ].map((String value) {
       return DropdownMenuItem<String>(
         value: value,
         child: Text(value),

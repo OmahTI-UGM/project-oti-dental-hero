@@ -14,7 +14,7 @@ class DropdownState {
 
 // BLoC for dropdown management
 class DropdownBloc extends Bloc<DropdownEvent, DropdownState> {
-  DropdownBloc() : super(DropdownState('blind')) {
+  DropdownBloc() : super(DropdownState('Tidak ada')) {
     on<DropdownEvent>((event, emit) {
       emit(DropdownState(event.selectedValue));
     });
