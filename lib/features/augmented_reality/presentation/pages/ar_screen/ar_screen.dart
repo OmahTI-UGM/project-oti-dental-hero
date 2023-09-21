@@ -86,7 +86,7 @@ class _ArScreenState extends State<ArScreen> {
                           child: Column(
                             children: [
                               Text(
-                                'Foto Gigi',
+                                'Langkah Menyikat Gigi',
                                 style: GoogleFonts.fredoka(
                                     fontSize: 21,
                                     fontWeight: FontWeight.w500,
@@ -100,14 +100,6 @@ class _ArScreenState extends State<ArScreen> {
                                         .arDocumentEntity
                                         ?.description ??
                                     "-",
-                                style: GoogleFonts.fredoka(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: purpleColor),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                "ajshfkashfliasdhfoaushfaiusfhask;jfhaskfhasukhfaiwpuhfiuawhfiuahweufhaskjdhfaisuhfiuasesuanfjkashfkashfusk",
                                 style: GoogleFonts.fredoka(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
