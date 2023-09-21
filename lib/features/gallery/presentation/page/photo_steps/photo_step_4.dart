@@ -2,13 +2,19 @@ import 'dart:io';
 
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/widgets/button.dart';
-import 'package:dental_hero/features/gallery/presentation/blocs/image_picker_bloc.dart';
+import 'package:dental_hero/features/auth/presentation/blocs/auth/auth_bloc.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/bullet_list.dart';
 import 'package:dental_hero/features/gallery/presentation/widget/photo_box.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_events.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../blocs/image_picker/image_picker_event.dart';
+import '../../blocs/image_picker/image_picker_state.dart';
 
 class PhotoStep4Screen extends StatelessWidget {
   const PhotoStep4Screen({super.key});
@@ -19,10 +25,36 @@ class PhotoStep4Screen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: lightBlueColor,
-      appBar: _buildAppbar(height, width),
-      body: _buildBody(height, width, context),
-    );
+        backgroundColor: lightBlueColor,
+        appBar: _buildAppbar(height, width),
+        body: BlocListener<ImagePickerBloc, ImagePickerState>(
+          listener: (context, state) {
+            if (state is SuccessImagePickerState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('Foto berhasil diunggah!'),
+                ),
+              );
+
+              // reload home data
+              BlocProvider.of<HomeBloc>(context).add(LoadDataEvent(
+                  userId: BlocProvider.of<AuthBloc>(context).state.user!.id!));
+
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/home', (route) => false);
+            }
+
+            if (state is FailedImagePickerState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Foto gagal diunggah!'),
+                ),
+              );
+            }
+          },
+          child: _buildBody(height, width, context),
+        ));
   }
 
   _buildAppbar(double height, double width) {
@@ -122,6 +154,12 @@ class PhotoStep4Screen extends StatelessWidget {
                 const SizedBox(height: 12),
                 BlocBuilder<ImagePickerBloc, ImagePickerState>(
                   builder: (context, state) {
+                    if (state is LoadingImagePickerState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
                     if (state is ImagePickedState) {
                       final image = state.image;
 
@@ -173,7 +211,10 @@ class PhotoStep4Screen extends StatelessWidget {
                                 child: Button(
                                   text: 'Selesai',
                                   width: double.infinity,
-                                  onTap: () {},
+                                  onTap: () {
+                                    BlocProvider.of<ImagePickerBloc>(context)
+                                        .add(SubmitImageEvent());
+                                  },
                                 ),
                               ),
                             ],

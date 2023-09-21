@@ -14,6 +14,7 @@ dependencies:
   confetti: ^0.7.0
   equatable: ^2.0.5
   firebase_core: ^2.15.1
+  firebase_storage: ^11.2.7
   flutter:
     sdk: flutter
   flutter_archive: ^5.0.0

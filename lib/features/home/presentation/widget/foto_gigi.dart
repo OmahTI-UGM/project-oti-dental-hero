@@ -1,19 +1,25 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
+import 'package:dental_hero/core/constants/snapshot_state_enum.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FotoGigi extends StatelessWidget {
+  final bool isActive;
   final bool isCompleted;
-  FotoGigi({
+  final SnapshotState snapshotState;
+
+  const FotoGigi({
     super.key,
+    required this.isActive,
     required this.isCompleted,
+    required this.snapshotState,
   });
 
   @override
   Widget build(BuildContext context) {
-    return isCompleted
+    return isActive
         ? Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -43,13 +49,19 @@ class FotoGigi extends StatelessWidget {
                   GestureDetector(
                     child: Container(
                       width: 82,
-                      decoration: BoxDecoration(
-                        color: shadeBlueColor,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: purpleColor,
-                        ),
-                      ),
+                      decoration: !isCompleted
+                          ? BoxDecoration(
+                              color: shadeBlueColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: purpleColor,
+                              ),
+                            )
+                          : BoxDecoration(
+                              color: shadeGrayColor,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.grey.shade700),
+                            ),
                       height: 50,
                       child: const Center(
                           child: OutlineText(
@@ -61,9 +73,13 @@ class FotoGigi extends StatelessWidget {
                       )),
                     ),
                     onTap: () {
+                      if (isCompleted) {
+                        return;
+                      }
                       Navigator.pushNamed(
                         context,
                         '/photo-steps',
+                        arguments: snapshotState,
                       );
                     },
                   ),
@@ -71,8 +87,8 @@ class FotoGigi extends StatelessWidget {
           )
         : Container(
             width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

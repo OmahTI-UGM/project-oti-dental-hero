@@ -17,15 +17,23 @@ class AuthSharedPrefsService {
       return null;
     }
 
-    return UserModel.fromJson(jsonDecode(userJson));
+    final map = jsonDecode(userJson);
+
+    return UserModel.fromJson(map);
   }
 
   void saveUserModel(UserModel user) async {
-    await _prefs.setString("user", user.toJson());
+    await _prefs.setString(
+      "user",
+      user.toJson(),
+    );
   }
 
   void saveUserEntity(UserEntity user) async {
-    await _prefs.setString("user", UserModel.fromEntity(user).toJson());
+    await _prefs.setString(
+      "user",
+      UserModel.fromEntity(user).toJson(),
+    );
   }
 
   Future<bool> removeUser() async {

@@ -1,6 +1,6 @@
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/core/common/outline_text.dart';
-import 'package:dental_hero/features/gallery/presentation/blocs/album_switch_cubit.dart';
+import 'package:dental_hero/features/gallery/presentation/blocs/ui/album_switch_cubit.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
