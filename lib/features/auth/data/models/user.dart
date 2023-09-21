@@ -54,8 +54,8 @@ class UserModel extends UserEntity {
       "fullName": "$fullName",
       "birthDate": "$birthDate",
       "email": "$email",
-      "disability": "$disability"
-      "score": "$score"
+      "disability": "$disability",
+      "score": $score
     }
     ''';
   }

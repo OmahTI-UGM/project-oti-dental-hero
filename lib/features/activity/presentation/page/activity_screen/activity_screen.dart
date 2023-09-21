@@ -26,7 +26,7 @@ class ActivityScreen extends StatelessWidget {
   const ActivityScreen({
     super.key,
     this.timeState = TimeState.day,
-    this.seconds = 180,
+    this.seconds = 120,
   });
 
   @override
@@ -197,7 +197,7 @@ class ActivityScreen extends StatelessWidget {
   }
 
   _countScore(int duration) {
-    int maxDuration = 180;
+    int maxDuration = 120;
 
     int score = 100 - (duration / maxDuration * 100).round();
 
