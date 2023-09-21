@@ -13,4 +13,9 @@ abstract class GalleryRepository {
     required List<XFile> imageFiles,
     required SnapshotState snapshotState,
   });
+
+  Future<DataState<void>?> createInitialComparisonSnapshot({
+    required String userId,
+    int days = 30,
+  });
 }

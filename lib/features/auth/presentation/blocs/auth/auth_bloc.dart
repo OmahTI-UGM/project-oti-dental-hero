@@ -5,6 +5,7 @@ import 'package:dental_hero/features/auth/domain/usecases/check_auth.dart';
 import 'package:dental_hero/features/auth/domain/usecases/login.dart';
 import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
+import 'package:dental_hero/features/gallery/domain/usecases/create_initial_comparison_snapshot.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
@@ -15,10 +16,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckAuthUseCase _checkAuthUseCase;
   final LogoutUseCase _logoutUseCase;
   final CreateInitialActivitiesUseCase _createInitialActivitiesUseCase;
+  final CreateInitialComparisonSnapshotUseCase
+      _createInitialComparisonSnapshotUseCase;
 
-  AuthBloc(this._loginUseCase, this._registerUseCase, this._checkAuthUseCase,
-      this._logoutUseCase, this._createInitialActivitiesUseCase)
-      : super(const AuthInitial()) {
+  AuthBloc(
+    this._loginUseCase,
+    this._registerUseCase,
+    this._checkAuthUseCase,
+    this._logoutUseCase,
+    this._createInitialActivitiesUseCase,
+    this._createInitialComparisonSnapshotUseCase,
+  ) : super(const AuthInitial()) {
     on<LoginEvent>(onLogin);
     on<RegisterEvent>(onRegister);
     on<LogoutEvent>(onLogout);
@@ -66,6 +74,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         userId: dataState.data!.id!,
         days: 30,
       ));
+
+      // create initial comparison snapshot
+      await _createInitialComparisonSnapshotUseCase(
+          params: CreateInitialComparisonSnapshotParams(
+              userId: dataState.data!.id!, days: 30));
     }
 
     if (dataState is DataFailed) {

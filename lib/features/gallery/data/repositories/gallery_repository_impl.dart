@@ -53,4 +53,19 @@ class GalleryRepositoryImpl implements GalleryRepository {
       return DataFailed(error: e);
     }
   }
+
+  @override
+  Future<DataState<void>?> createInitialComparisonSnapshot({
+    required String userId,
+    int days = 30,
+  }) async {
+    try {
+      await _galleryApiService.createInitialComparisonSnapshot(
+          userId: userId, days: days);
+
+      return const DataSuccess(data: null);
+    } on Exception catch (e) {
+      return DataFailed(error: e);
+    }
+  }
 }

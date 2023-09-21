@@ -3,10 +3,14 @@ import 'package:dental_hero/features/gallery/domain/entities/comparison_snapshot
 class ComparisonSnapshotModel extends ComparisonSnapshotEntity {
   const ComparisonSnapshotModel({
     String? id,
+    DateTime? before,
+    DateTime? after,
     List<String>? beforeImageUrls,
     List<String>? afterImageUrls,
   }) : super(
           id: id,
+          before: before,
+          after: after,
           beforeImageUrls: beforeImageUrls,
           afterImageUrls: afterImageUrls,
         );
@@ -14,6 +18,8 @@ class ComparisonSnapshotModel extends ComparisonSnapshotEntity {
   factory ComparisonSnapshotModel.fromJson(Map<String, dynamic> map) {
     return ComparisonSnapshotModel(
       id: map['id'],
+      before: map['before'],
+      after: map['after'],
       beforeImageUrls: map['beforeImageUrls'],
       afterImageUrls: map['afterImageUrls'],
     );
@@ -25,6 +31,16 @@ class ComparisonSnapshotModel extends ComparisonSnapshotEntity {
       beforeImageUrls: entity.beforeImageUrls,
       afterImageUrls: entity.afterImageUrls,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'before': before,
+      'after': after,
+      'beforeImageUrls': beforeImageUrls,
+      'afterImageUrls': afterImageUrls,
+    };
   }
 
   @override

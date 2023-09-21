@@ -100,4 +100,26 @@ class GalleryApiService {
           : 'afterImageUrls': imageUrls,
     });
   }
+
+  Future<void> createInitialComparisonSnapshot({
+    required String userId,
+    int days = 30,
+  }) async {
+    final now = DateTime.now();
+    final currentDate = DateTime(now.year, now.month, now.day);
+
+    final ComparisonSnapshotModel comparisonSnapshotModel =
+        ComparisonSnapshotModel(
+      before: currentDate,
+      after: currentDate.add(
+        const Duration(days: 30),
+      ), // 30 days after,
+    );
+
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('comparison_snapshots')
+        .add(comparisonSnapshotModel.toMap());
+  }
 }

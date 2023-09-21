@@ -24,6 +24,7 @@ import 'package:dental_hero/features/auth/domain/usecases/logout.dart';
 import 'package:dental_hero/features/auth/domain/usecases/register.dart';
 import 'package:dental_hero/features/auth/presentation/blocs/ui/dropdown_bloc.dart';
 import 'package:dental_hero/features/gallery/data/data_sources/remote/gallery_api_service.dart';
+import 'package:dental_hero/features/gallery/domain/usecases/create_initial_comparison_snapshot.dart';
 import 'package:dental_hero/features/gallery/domain/usecases/update_comparison_snapshot_images.dart';
 import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
 import 'package:dental_hero/features/gallery/presentation/blocs/image_picker/image_picker_bloc.dart';
@@ -124,9 +125,12 @@ Future<void> initializeDependencies() async {
       GetComparisonSnapshotUseCase(repository: sl()));
   sl.registerSingleton<UpdateComparisonSnapshotUseCase>(
       UpdateComparisonSnapshotUseCase(repository: sl()));
+  sl.registerSingleton<CreateInitialComparisonSnapshotUseCase>(
+      CreateInitialComparisonSnapshotUseCase(repository: sl()));
 
   // Blocs
-  sl.registerFactory<AuthBloc>(() => AuthBloc(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory<AuthBloc>(
+      () => AuthBloc(sl(), sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory<HomeBloc>(() => HomeBloc(sl()));
   sl.registerFactory<DropdownBloc>(() => DropdownBloc());
   sl.registerFactory<TimerBloc>(() => TimerBloc(ticker: const Ticker()));
