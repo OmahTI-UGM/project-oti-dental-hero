@@ -51,6 +51,9 @@ class _ArScreenState extends State<ArScreen> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message!)));
               BlocProvider.of<ArBloc>(context).add(ArResetEvent());
+            } else if (state is ArLoading) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Loading...")));
             } else if (state is ArFailure) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message!)));
@@ -113,6 +116,19 @@ class _ArScreenState extends State<ArScreen> {
                 ),
               ),
             ),
+            BlocBuilder<ArBloc, ArState>(builder: (context, state) {
+              if (state is ArLoading) {
+                // background overlay
+                return Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            })
           ])),
     );
   }
@@ -156,6 +172,8 @@ class _ArScreenState extends State<ArScreen> {
       arAnchorManager!.removeAnchor(anchor!);
     }
 
+    arBloc.add(ArLoadEvent());
+
     var singleHitTestResult = hitTestResults.firstWhere(
         (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
 
@@ -185,6 +203,7 @@ class _ArScreenState extends State<ArScreen> {
     } else {
       arSessionManager!.onError("Adding Anchor failed");
     }
+    arBloc.add(ArSettledEvent());
   }
 
   _buildAppbar(double height, double width, BuildContext context) {
