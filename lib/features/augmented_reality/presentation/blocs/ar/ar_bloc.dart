@@ -31,11 +31,11 @@ abstract class ArEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ArStartedEvent extends ArEvent {}
-
-class ArStoppedEvent extends ArEvent {}
+class ArLoadEvent extends ArEvent {}
 
 class ArResetEvent extends ArEvent {}
+
+class ArSettledEvent extends ArEvent {}
 
 class ArSuccessEvent extends ArEvent {
   final String? message;
@@ -57,6 +57,14 @@ class ArBloc extends Bloc<ArEvent, ArState> {
 
     on<ArFailedEvent>((event, emit) {
       emit(ArFailure(message: event.message));
+    });
+
+    on<ArLoadEvent>((event, emit) {
+      emit(ArLoading());
+    });
+
+    on<ArSettledEvent>((event, emit) {
+      emit(const ArSuccess(message: "Model Loaded Successfully"));
     });
   }
 }
