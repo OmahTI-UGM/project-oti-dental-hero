@@ -85,7 +85,9 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/help');
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: shadeBlueColor,
@@ -110,7 +112,9 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/about');
+            },
             child: Container(
               decoration: BoxDecoration(
                 color: shadeBlueColor,
