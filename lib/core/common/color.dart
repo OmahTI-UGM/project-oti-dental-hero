@@ -8,3 +8,4 @@ const darkGrayColor = Color(0xff838D99);
 const purpleColor = Color(0xff6A658A);
 const shadeGrayColor = Color(0xff838D99);
 const lightBlueColor = Color(0xffE9F3FF);
+const blueGrayColor = Color(0xff70A1D7);
