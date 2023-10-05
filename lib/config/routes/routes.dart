@@ -11,6 +11,7 @@ import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_2.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_3.dart';
 import 'package:dental_hero/features/gallery/presentation/page/photo_steps/photo_step_4.dart';
+import 'package:dental_hero/features/home/presentation/page/calendar_screen/calendar_screen.dart';
 import 'package:dental_hero/features/home/presentation/page/home_screen/home_screen.dart';
 import 'package:dental_hero/features/settings/presentation/pages/settings_screen/settings_screen.dart';
 import 'package:dental_hero/features/statistic/presentation/page/statistic_screen/statistic_sceen.dart';
@@ -75,6 +76,9 @@ class AppRoutes {
 
       case '/qr':
         return MaterialPageRoute(builder: (_) => const QrScreen());
+
+      case '/calendar':
+        return MaterialPageRoute(builder: (_) => const CalendarScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
