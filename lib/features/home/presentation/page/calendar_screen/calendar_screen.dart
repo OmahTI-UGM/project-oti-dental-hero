@@ -1,6 +1,9 @@
 import 'package:dental_hero/core/common/color.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_bloc.dart';
+import 'package:dental_hero/features/home/presentation/blocs/home/home_state.dart';
 import 'package:dental_hero/features/home/presentation/widget/calendar_card.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -98,15 +101,34 @@ class CalendarScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, // 4 items per row
-                ),
-                itemCount: 30, // Total number of items
-                itemBuilder: (BuildContext context, int index) {
-                  return CalendarCard(index: index + 1);
-                },
-              ),
+              child:
+                  BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+                final activityGroups = state.activityGroups ?? {};
+                final keys = activityGroups.keys.toList();
+
+                keys.sort((a, b) => a.compareTo(b));
+
+                if (state is HomeLoading || state is HomeInitial) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4, // 4 items per row
+                  ),
+                  itemCount: keys.length, // Total number of items
+                  itemBuilder: (BuildContext context, int index) {
+                    final groupDate = keys[index];
+
+                    return CalendarCard(
+                      index: index + 1,
+                      activityGroup: activityGroups[groupDate] ?? [],
+                    );
+                  },
+                );
+              }),
             ),
           ]),
         ),
