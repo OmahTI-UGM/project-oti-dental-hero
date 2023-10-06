@@ -156,7 +156,7 @@ class HomeScreen extends StatelessWidget {
               return CustomTimelineTile(
                 isLast: true,
                 isActive: false,
-                number: 32,
+                number: 31,
                 child: FotoGigi(
                   isActive: _isNow(state.comparisonSnapshot!.after!),
                   isCompleted:
@@ -171,7 +171,7 @@ class HomeScreen extends StatelessWidget {
 
             return CustomTimelineTile(
                 isActive: _isNow(groupDate),
-                number: index + 1,
+                number: index,
                 child: ActivityCard(
                   activityGroup: activityGroups[groupDate] ?? [],
                   isActive: _isNow(keys[index - 1]),

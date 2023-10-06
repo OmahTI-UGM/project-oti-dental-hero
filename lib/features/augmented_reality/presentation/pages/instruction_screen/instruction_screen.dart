@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dental_hero/core/common/color.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/widget/instruction_card.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
@@ -148,16 +146,14 @@ class InstructionScreen extends StatelessWidget {
                         const SizedBox(width: 4),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.75,
-                          child: Expanded(
-                            child: Text(
-                              'Setelah beberapa saat, model AR gigi menyikat akan muncul di layar. Anda bisa langsung berinteraksi dengannya. Untuk melihatnya dengan lebih jelas atau lebih besar, cukup maju dan arahkan kamera Anda lebih dekat ke bidang tersebut.',
-                              style: GoogleFonts.fredoka(
-                                color: purpleColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.justify,
+                          child: Text(
+                            'Setelah beberapa saat, model AR gigi menyikat akan muncul di layar. Anda bisa langsung berinteraksi dengannya. Untuk melihatnya dengan lebih jelas atau lebih besar, cukup maju dan arahkan kamera Anda lebih dekat ke bidang tersebut.',
+                            style: GoogleFonts.fredoka(
+                              color: purpleColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
                             ),
+                            textAlign: TextAlign.justify,
                           ),
                         ),
                       ],

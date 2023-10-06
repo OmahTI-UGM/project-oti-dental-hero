@@ -44,16 +44,14 @@ class InstructionCard extends StatelessWidget {
                 const SizedBox(width: 4),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
-                  child: Expanded(
-                    child: Text(
-                      text,
-                      style: GoogleFonts.fredoka(
-                        color: purpleColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.justify,
+                  child: Text(
+                    text,
+                    style: GoogleFonts.fredoka(
+                      color: purpleColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
+                    textAlign: TextAlign.justify,
                   ),
                 ),
               ],
