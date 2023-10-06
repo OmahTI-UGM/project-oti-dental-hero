@@ -3,6 +3,7 @@ import 'package:dental_hero/core/constants/time_state_enum.dart';
 import 'package:dental_hero/features/activity/presentation/page/activity_screen/activity_screen.dart';
 import 'package:dental_hero/features/activity/presentation/page/result_screen/result_screen.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/pages/ar_screen/ar_screen.dart';
+import 'package:dental_hero/features/augmented_reality/presentation/pages/instruction_screen/instruction_screen.dart';
 import 'package:dental_hero/features/augmented_reality/presentation/pages/qr_screen/qr_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/login_screen/login_screen.dart';
 import 'package:dental_hero/features/auth/presentation/page/register_screen/register_screen.dart';
@@ -89,6 +90,8 @@ class AppRoutes {
       case '/about':
         return MaterialPageRoute(builder: (_) => const AboutScreen());
 
+      case '/instruction':
+        return MaterialPageRoute(builder: (_) => const InstructionScreen());
 
       default:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

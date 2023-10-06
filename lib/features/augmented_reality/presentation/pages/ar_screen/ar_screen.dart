@@ -269,22 +269,7 @@ class _ArScreenState extends State<ArScreen> {
                       icon: const Icon(Icons.info),
                       color: shadeBlueColor,
                       onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text("Petunjuk Penggunaan"),
-                                content: const Text(
-                                    "1. Arahkan kamera ke permukaan datar\n2. Ketuk permukaan datar untuk menampilkan model 3D"),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text("OK"))
-                                ],
-                              );
-                            });
+                        Navigator.pushNamed(context, '/instruction');
                       },
                     )
                   ],

@@ -66,26 +66,42 @@ class _QrScreenState extends State<QrScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/images/icon_back.png',
+                          ),
+                          iconSize: 36,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () {
+                            BlocProvider.of<QrBloc>(context)
+                                .add(const QrResetEvent());
+
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/home', (route) => false);
+                          },
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          "Scan Kartu",
+                          style: GoogleFonts.fredoka(
+                              color: purpleColor,
+                              fontSize: 21,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                     IconButton(
-                      icon: Image.asset(
-                        'assets/images/icon_back.png',
-                      ),
-                      iconSize: 36,
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      icon: const Icon(Icons.info),
+                      color: shadeBlueColor,
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/instruction');
                       },
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      "Scan Kartu",
-                      style: GoogleFonts.fredoka(
-                          color: purpleColor,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    )
                   ],
                 ),
               )),
