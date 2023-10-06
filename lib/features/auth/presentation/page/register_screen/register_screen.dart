@@ -49,6 +49,7 @@ class RegisterScreen extends StatelessWidget {
   _buildBody(BuildContext context) {
     final dropDownItems = [
       'Tidak ada',
+      'Autis',
       'Tuna Netra',
       'Tuna Rungu',
       'Tuna Daksa',

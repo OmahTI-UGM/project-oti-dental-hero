@@ -33,13 +33,7 @@ class HomeScreen extends StatelessWidget {
         iconSize: 70,
         padding: const EdgeInsets.only(left: 8),
         onPressed: () {
-          showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime.now(),
-            initialEntryMode: DatePickerEntryMode.calendarOnly,
-          );
+          Navigator.pushNamed(context, '/calendar');
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
