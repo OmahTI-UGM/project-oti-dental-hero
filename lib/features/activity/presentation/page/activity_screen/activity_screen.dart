@@ -130,7 +130,7 @@ class ActivityScreen extends StatelessWidget {
             height: height * 0.8,
             width: width,
             child: VideoBackground(
-              videoPath: 'assets/videos/Activity.mp4',
+              videoPath: 'assets/videos/Video.mp4',
             )),
       ),
       Center(
